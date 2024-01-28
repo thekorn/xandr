@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:xandr_android/src/messages.g.dart' as messages;
 import 'package:xandr_platform_interface/xandr_platform_interface.dart';
@@ -12,9 +14,9 @@ class XandrAndroid extends XandrPlatform {
   }
 
   @override
-  void registerEventDelegate() {
+  void registerEventStream({required StreamController<String> controller}) {
     messages.XandrFlutterApi.setup(
-      const XandrEventHandler(),
+      XandrEventHandler(controller: controller),
     );
   }
 
@@ -36,7 +38,10 @@ class XandrEventHandler implements messages.XandrFlutterApi {
   /// ```dart
   /// const XandrEventHandler();
   /// ```
-  const XandrEventHandler();
+  const XandrEventHandler({required StreamController<String> controller})
+      : _controller = controller;
+
+  final StreamController<String> _controller;
 
   @override
   void onAdLoaded(
@@ -53,11 +58,13 @@ class XandrEventHandler implements messages.XandrFlutterApi {
     debugPrint('xandr.onAdLoaded: $viewId, size=${width}x$height, '
         'creativeId=$creativeId, adType=$adType, tagId=$tagId, '
         'auctionId=$auctionId, cpm=$cpm, memberId=$memberId');
+    _controller.add('xandr.onAdLoaded');
   }
 
   @override
   void onAdLoadedError(int viewId, String reason) {
     debugPrint("xandr.onAdLoadedError: $viewId, reason='$reason'");
+    _controller.add('xandr.onAdLoadedError');
   }
 
   @override
@@ -69,10 +76,12 @@ class XandrEventHandler implements messages.XandrFlutterApi {
   ) {
     debugPrint("xandr.onNativeAdLoaded: $viewId, title='$title', "
         "description='$description', imageUrl='$imageUrl'");
+    _controller.add('xandr.onNativeAdLoaded');
   }
 
   @override
   void onNativeAdLoadedError(int viewId, String reason) {
     debugPrint("xandr.onNativeAdLoadedError: $viewId, reason='$reason'");
+    _controller.add('xandr.onNativeAdLoadedError');
   }
 }

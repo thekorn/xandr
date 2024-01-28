@@ -40,6 +40,7 @@ class AdBanner extends StatelessWidget {
         customKeywords: customKeywords ?? {},
         allowNativeDemand: allowNativeDemand,
         autoRefreshInterval: autoRefreshInterval,
+        controller: controller,
       ),
     );
   }
@@ -53,6 +54,7 @@ class _HostAdBannerView extends StatelessWidget {
     required CustomKeywords customKeywords,
     required bool allowNativeDemand,
     required Duration autoRefreshInterval,
+    required this.controller,
   }) : creationParams = <String, dynamic>{
           'placementID': placementID,
           'inventoryCode': inventoryCode,
@@ -63,13 +65,19 @@ class _HostAdBannerView extends StatelessWidget {
         };
   static const StandardMessageCodec _decoder = StandardMessageCodec();
   final Map<String, dynamic> creationParams;
+  final XandrController controller;
 
   @override
   Widget build(BuildContext context) {
     // FIXME(thekorn): use proper host platform implementation
     return AndroidView(
       viewType: 'de.thekorn.xandr/ad_banner',
-      onPlatformViewCreated: (id) => debugPrint('Created banner view: $id'),
+      onPlatformViewCreated: (id) {
+        debugPrint('Created banner view: $id');
+        controller.listen(id, (event) {
+          debugPrint('Received event for $id: $event');
+        });
+      },
       creationParams: creationParams,
       creationParamsCodec: _decoder,
     );
