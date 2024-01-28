@@ -9,7 +9,7 @@ class MethodChannelXandr extends XandrPlatform {
   final methodChannel = const MethodChannel('xandr');
 
   @override
-  Future<String?> getPlatformName() {
-    return methodChannel.invokeMethod<String>('getPlatformName');
+  Future<bool> init(int memberId) async {
+    return (await methodChannel.invokeMethod<bool>('init', [memberId]))!;
   }
 }

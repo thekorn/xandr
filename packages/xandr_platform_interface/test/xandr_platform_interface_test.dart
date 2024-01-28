@@ -1,30 +1,24 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:xandr_platform_interface/xandr_platform_interface.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import 'package:xandr_platform_interface/src/method_channel.dart';
 
-class XandrMock extends XandrPlatform {
-  static const mockPlatformName = 'Mock';
-
-  @override
-  Future<String?> getPlatformName() async => mockPlatformName;
-}
+@GenerateNiceMocks([MockSpec<MethodChannelXandr>()])
+import 'xandr_platform_interface_test.mocks.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  group('XandrPlatformInterface', () {
-    late XandrPlatform xandrPlatform;
+  late MockMethodChannelXandr api;
 
-    setUp(() {
-      xandrPlatform = XandrMock();
-      XandrPlatform.instance = xandrPlatform;
-    });
+  setUp(() {
+    api = MockMethodChannelXandr();
+  });
 
-    group('getPlatformName', () {
-      test('returns correct name', () async {
-        expect(
-          await XandrPlatform.instance.getPlatformName(),
-          equals(XandrMock.mockPlatformName),
-        );
-      });
-    });
+  test('init', () async {
+    when(
+      api.init(123456),
+    ).thenAnswer((_) async => true);
+    final success = await api.init(123456);
+    expect(success, true);
   });
 }

@@ -1,44 +1,24 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:xandr/xandr.dart';
-import 'package:xandr_platform_interface/xandr_platform_interface.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import 'package:xandr_platform_interface/src/method_channel.dart';
 
-class MockXandrPlatform extends Mock
-    with MockPlatformInterfaceMixin
-    implements XandrPlatform {}
+@GenerateNiceMocks([MockSpec<MethodChannelXandr>()])
+import 'xandr_test.mocks.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  late MockMethodChannelXandr api;
 
-  group('Xandr', () {
-    late XandrPlatform xandrPlatform;
+  setUp(() {
+    api = MockMethodChannelXandr();
+  });
 
-    setUp(() {
-      xandrPlatform = MockXandrPlatform();
-      XandrPlatform.instance = xandrPlatform;
-    });
-
-    group('getPlatformName', () {
-      test('returns correct name when platform implementation exists',
-          () async {
-        const platformName = '__test_platform__';
-        when(
-          () => xandrPlatform.getPlatformName(),
-        ).thenAnswer((_) async => platformName);
-
-        final actualPlatformName = await getPlatformName();
-        expect(actualPlatformName, equals(platformName));
-      });
-
-      test('throws exception when platform implementation is missing',
-          () async {
-        when(
-          () => xandrPlatform.getPlatformName(),
-        ).thenAnswer((_) async => null);
-
-        expect(getPlatformName, throwsException);
-      });
-    });
+  test('init', () async {
+    when(
+      api.init(123456),
+    ).thenAnswer((_) async => true);
+    final success = await api.init(123456);
+    expect(success, true);
   });
 }

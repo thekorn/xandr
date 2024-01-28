@@ -1,44 +1,24 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:xandr_ios/xandr_ios.dart';
-import 'package:xandr_platform_interface/xandr_platform_interface.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import 'package:xandr_ios/src/messages.g.dart';
+
+@GenerateNiceMocks([MockSpec<XandrHostApi>()])
+import 'xandr_ios_test.mocks.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  late MockXandrHostApi api;
 
-  group('XandrIOS', () {
-    const kPlatformName = 'iOS';
-    late XandrIOS xandr;
-    late List<MethodCall> log;
+  setUp(() {
+    api = MockXandrHostApi();
+  });
 
-    setUp(() async {
-      xandr = XandrIOS();
-
-      log = <MethodCall>[];
-      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-          .setMockMethodCallHandler(xandr.methodChannel, (methodCall) async {
-        log.add(methodCall);
-        switch (methodCall.method) {
-          case 'getPlatformName':
-            return kPlatformName;
-          default:
-            return null;
-        }
-      });
-    });
-
-    test('can be registered', () {
-      XandrIOS.registerWith();
-      expect(XandrPlatform.instance, isA<XandrIOS>());
-    });
-
-    test('getPlatformName returns correct name', () async {
-      final name = await xandr.getPlatformName();
-      expect(
-        log,
-        <Matcher>[isMethodCall('getPlatformName', arguments: null)],
-      );
-      expect(name, equals(kPlatformName));
-    });
+  test('init', () async {
+    when(
+      api.init(memberId: 123456),
+    ).thenAnswer((_) async => true);
+    final success = await api.init(memberId: 123456);
+    expect(success, true);
   });
 }
