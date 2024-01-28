@@ -54,12 +54,24 @@ class _XandrExampleState extends State<XandrExample> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             debugPrint('Xandr SDK initialized, success=${snapshot.hasData}');
-            return AdBanner(
-              controller: _controller,
-              //placementID: '17058950',
-              inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-              adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
-              customKeywords: useDemoAds,
+            return Column(
+              children: [
+                AdBanner(
+                  controller: _controller,
+                  //placementID: '17058950',
+                  inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
+                  adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
+                  customKeywords: useDemoAds,
+                ),
+                AdBanner(
+                  controller: _controller,
+                  //placementID: '17058950',
+                  inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
+                  adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
+                  customKeywords: useDemoAds,
+                  allowNativeDemand: true,
+                ),
+              ],
             );
           } else if (snapshot.hasError) {
             return const Text('Error initializing Xandr SDK');

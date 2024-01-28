@@ -29,7 +29,6 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
             "de.thekorn.xandr/ad_banner",
             BannerViewFactory(
                 binding.activity,
-                flutterPluginBinding.binaryMessenger,
                 this.flutterState
             )
         )
@@ -59,7 +58,7 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun init(memberId: Long, callback: (kotlin.Result<Boolean>) -> Unit) {
+    override fun init(memberId: Long, callback: (Result<Boolean>) -> Unit) {
         this.flutterState.memberId = memberId.toInt()
         XandrAd.init(
             memberId.toInt(),

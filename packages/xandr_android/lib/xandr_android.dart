@@ -56,17 +56,23 @@ class XandrEventHandler implements messages.XandrFlutterApi {
   }
 
   @override
-  void onAdLoadedError(int viewId) {
-    debugPrint('onAdLoadedError: $viewId');
+  void onAdLoadedError(int viewId, String reason) {
+    debugPrint("xandr.onAdLoadedError: $viewId, reason='$reason'");
   }
 
   @override
-  void onNativeAdLoaded(int viewId) {
-    debugPrint('onNativeAdLoaded: $viewId');
+  void onNativeAdLoaded(
+    int viewId,
+    String title,
+    String description,
+    String imageUrl,
+  ) {
+    debugPrint("xandr.onNativeAdLoaded: $viewId, title='$title', "
+        "description='$description', imageUrl='$imageUrl'");
   }
 
   @override
-  void onNativeAdLoadedError(int viewId) {
-    debugPrint('onNativeAdLoadedError: $viewId');
+  void onNativeAdLoadedError(int viewId, String reason) {
+    debugPrint("xandr.onNativeAdLoadedError: $viewId, reason='$reason'");
   }
 }

@@ -38,7 +38,12 @@ abstract class XandrFlutterApi {
     double cpm,
     int memberId,
   ) {}
-  void onAdLoadedError(int viewId) {}
-  void onNativeAdLoaded(int viewId) {}
-  void onNativeAdLoadedError(int viewId) {}
+  void onAdLoadedError(int viewId, String reason) {}
+  void onNativeAdLoaded(
+    int viewId,
+    String title,
+    String description,
+    String imageUrl,
+  ) {}
+  void onNativeAdLoadedError(int viewId, String reason) {}
 }

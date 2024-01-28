@@ -105,11 +105,11 @@ class XandrFlutterApi(private val binaryMessenger: BinaryMessenger) {
       } 
     }
   }
-  fun onAdLoadedError(viewIdArg: Long, callback: (Result<Unit>) -> Unit)
+  fun onAdLoadedError(viewIdArg: Long, reasonArg: String, callback: (Result<Unit>) -> Unit)
 {
     val channelName = "dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoadedError"
     val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
-    channel.send(listOf(viewIdArg)) {
+    channel.send(listOf(viewIdArg, reasonArg)) {
       if (it is List<*>) {
         if (it.size > 1) {
           callback(Result.failure(FlutterError(it[0] as String, it[1] as String, it[2] as String?)))
@@ -121,11 +121,11 @@ class XandrFlutterApi(private val binaryMessenger: BinaryMessenger) {
       } 
     }
   }
-  fun onNativeAdLoaded(viewIdArg: Long, callback: (Result<Unit>) -> Unit)
+  fun onNativeAdLoaded(viewIdArg: Long, titleArg: String, descriptionArg: String, imageUrlArg: String, callback: (Result<Unit>) -> Unit)
 {
     val channelName = "dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded"
     val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
-    channel.send(listOf(viewIdArg)) {
+    channel.send(listOf(viewIdArg, titleArg, descriptionArg, imageUrlArg)) {
       if (it is List<*>) {
         if (it.size > 1) {
           callback(Result.failure(FlutterError(it[0] as String, it[1] as String, it[2] as String?)))
@@ -137,11 +137,11 @@ class XandrFlutterApi(private val binaryMessenger: BinaryMessenger) {
       } 
     }
   }
-  fun onNativeAdLoadedError(viewIdArg: Long, callback: (Result<Unit>) -> Unit)
+  fun onNativeAdLoadedError(viewIdArg: Long, reasonArg: String, callback: (Result<Unit>) -> Unit)
 {
     val channelName = "dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoadedError"
     val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
-    channel.send(listOf(viewIdArg)) {
+    channel.send(listOf(viewIdArg, reasonArg)) {
       if (it is List<*>) {
         if (it.size > 1) {
           callback(Result.failure(FlutterError(it[0] as String, it[1] as String, it[2] as String?)))

@@ -10,8 +10,6 @@ import com.appnexus.opensdk.BannerAdView
 import com.appnexus.opensdk.NativeAdResponse
 import com.appnexus.opensdk.ResultCode
 import io.flutter.Log
-import io.flutter.plugin.common.BinaryMessenger
-import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.platform.PlatformView
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -120,10 +118,7 @@ class XandrAdListener(
                 adResponse.adType.toString(), adResponse.tagId, adResponse.auctionId,
                 adResponse.cpm, adResponse.buyMemberId.toLong()) { }
         } else {
-            val errorEvent = BannerAdErrorEvent("something went wrong")
-            //val json = Gson().toJson(errorEvent)
-            Log.d("Xandr.BannerView", "sending BannerAdErrorEvent $errorEvent for $widgetId")
-            flutterApi.onAdLoadedError(0) { }
+            flutterApi.onAdLoadedError(widgetId.toLong(), "Unknown error while loading banner ad") { }
         }
     }
 
@@ -133,19 +128,9 @@ class XandrAdListener(
             ">>> Ad Loaded, NativeAdResponse=$adResonse, title=${adResonse?.title} for $widgetId"
         )
         if (adResonse != null) {
-            val adEvent = NativeBannerAdEvent(adResonse.title, adResonse.description, adResonse.imageUrl)
-            //val json = Gson().toJson(adEvent)
-            //Log.d(
-            //    "Xandr.BannerView",
-            //    ">>> GSON=$json"
-            //)
-            Log.d("Xandr.BannerView", "sending NativeBannerAdEvent $adEvent for $widgetId")
-            flutterApi.onNativeAdLoaded(0) { }
+            flutterApi.onNativeAdLoaded(widgetId.toLong(), adResonse.title, adResonse.description, adResonse.imageUrl) { }
         } else {
-            val errorEvent = BannerAdErrorEvent("something went wrong")
-            //val json = Gson().toJson(errorEvent)
-            Log.d("Xandr.BannerView", "sending BannerAdErrorEvent $errorEvent for $widgetId")
-            flutterApi.onNativeAdLoadedError(0){ }
+            flutterApi.onNativeAdLoadedError(widgetId.toLong(), "Unknown error while loading native banner ad"){ }
         }
 
 
