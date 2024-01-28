@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-
-class XandrController {
-  Future<bool> init({
-    required int memberId,
-  }) async {
-    return true;
-  }
-}
+import 'package:xandr/xandr.dart';
 
 class AdSize {
   const AdSize(this.width, this.height);
@@ -29,7 +22,7 @@ class XandrBuilder extends FutureBuilder<bool> {
     required super.builder,
     required int memberId,
     super.key,
-  }) : super(future: controller.init(memberId: memberId));
+  }) : super(future: controller.init(memberId));
 }
 
 void main() {
@@ -92,6 +85,7 @@ class _XandrExampleState extends State<XandrExample> {
         memberId: 10094,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            debugPrint('Xandr SDK initialized, success=${snapshot.hasData}');
             return AdBanner(
               controller: _controller,
               placementID: '17058950',
