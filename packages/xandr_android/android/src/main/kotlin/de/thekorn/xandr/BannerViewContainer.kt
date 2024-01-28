@@ -25,7 +25,8 @@ class BannerViewContainer(
     init {
         Log.d(
             "Xandr.BannerView",
-            "Initializing $activity id=$widgetId xandr-initialized=${state.isInitialized} args=$args"
+            "Initializing $activity id=$widgetId " +
+                "xandr-initialized=${state.isInitialized} args=$args"
         )
 
         val params = args as HashMap<*, *>
@@ -38,7 +39,8 @@ class BannerViewContainer(
 
         Log.d(
             "Xandr.BannerView",
-            "using placementID='$placementID', inventoryCode='$inventoryCode', adSizes='$adSizes', allowNativeDemand=$allowNativeDemand"
+            "using placementID='$placementID', inventoryCode='$inventoryCode', " +
+                "adSizes='$adSizes', allowNativeDemand=$allowNativeDemand"
         )
 
         this.banner = BannerAdView(activity)
@@ -64,8 +66,8 @@ class BannerViewContainer(
         this.banner.allowNativeDemand = allowNativeDemand
 
         state.isInitialized.invokeOnCompletion {
-            /// need to make sure the sdk is initialized to access the memberId
-            /// docs: Note that if both inventory code and placement ID are passed in, the
+            // / need to make sure the sdk is initialized to access the memberId
+            // / docs: Note that if both inventory code and placement ID are passed in, the
             //        inventory code will be passed to the server instead of the placement ID.
             if (inventoryCode != null) {
                 this.banner.setInventoryCodeAndMemberID(state.memberId, inventoryCode)
@@ -98,7 +100,6 @@ class BannerViewContainer(
     override fun dispose() {
         this.banner.destroy()
     }
-
 }
 
 class XandrAdListener(
@@ -108,32 +109,45 @@ class XandrAdListener(
     override fun onAdLoaded(view: AdView?) {
         Log.d(
             "Xandr.BannerView",
-            ">>> Ad Loaded, id=${view?.id} widgetId=$widgetId, w=${view?.creativeWidth}, h=${view?.creativeHeight}"
+            ">>> Ad Loaded, id=${view?.id} widgetId=$widgetId, w=${view?.creativeWidth}," +
+                " h=${view?.creativeHeight}"
         )
 
         if (view != null) {
             val adResponse = view.adResponseInfo
-            flutterApi.onAdLoaded(widgetId.toLong(),
+            flutterApi.onAdLoaded(
+                widgetId.toLong(),
                 view.creativeWidth.toLong(), view.creativeHeight.toLong(), adResponse.creativeId,
                 adResponse.adType.toString(), adResponse.tagId, adResponse.auctionId,
-                adResponse.cpm, adResponse.buyMemberId.toLong()) { }
+                adResponse.cpm, adResponse.buyMemberId.toLong()
+            ) { }
         } else {
-            flutterApi.onAdLoadedError(widgetId.toLong(), "Unknown error while loading banner ad") { }
+            flutterApi.onAdLoadedError(
+                widgetId.toLong(),
+                "Unknown error while loading banner ad"
+            ) { }
         }
     }
 
     override fun onAdLoaded(adResonse: NativeAdResponse?) {
         Log.d(
             "Xandr.BannerView",
-            ">>> Ad Loaded, NativeAdResponse=$adResonse, title=${adResonse?.title} for $widgetId"
+            ">>> Ad Loaded, NativeAdResponse=$adResonse, title=${adResonse?.title} " +
+                "for $widgetId"
         )
         if (adResonse != null) {
-            flutterApi.onNativeAdLoaded(widgetId.toLong(), adResonse.title, adResonse.description, adResonse.imageUrl) { }
+            flutterApi.onNativeAdLoaded(
+                widgetId.toLong(),
+                adResonse.title,
+                adResonse.description,
+                adResonse.imageUrl
+            ) { }
         } else {
-            flutterApi.onNativeAdLoadedError(widgetId.toLong(), "Unknown error while loading native banner ad"){ }
+            flutterApi.onNativeAdLoadedError(
+                widgetId.toLong(),
+                "Unknown error while loading native banner ad"
+            ) { }
         }
-
-
     }
 
     override fun onAdRequestFailed(p0: AdView?, p1: ResultCode?) {
