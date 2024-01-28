@@ -2,15 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xandr/ad_banner.dart';
 import 'package:xandr/ad_size.dart';
 import 'package:xandr/xandr.dart';
-
-class XandrBuilder extends FutureBuilder<bool> {
-  XandrBuilder({
-    required XandrController controller,
-    required super.builder,
-    required int memberId,
-    super.key,
-  }) : super(future: controller.init(memberId));
-}
+import 'package:xandr/xandr_builder.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,7 +52,10 @@ class _XandrExampleState extends State<XandrExample> {
                   controller: _controller,
                   //placementID: '17058950',
                   inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-                  adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
+                  adSizes: const [
+                    AdSize(1, 1),
+                    AdSize(728, 90),
+                  ], //[AdSize(300, 250)],
                   customKeywords: useDemoAds,
                 ),
                 AdBanner(
@@ -69,7 +64,8 @@ class _XandrExampleState extends State<XandrExample> {
                   inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
                   adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
                   customKeywords: useDemoAds,
-                  allowNativeDemand: true,
+                  width: 10,
+                  height: 10,
                 ),
               ],
             );
