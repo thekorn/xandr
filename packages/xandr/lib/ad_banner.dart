@@ -7,15 +7,21 @@ import 'package:xandr/xandr.dart';
 
 class AdBanner extends StatelessWidget {
   AdBanner({
-    required this.placementID,
     required this.adSizes,
     required this.controller,
+    this.placementID,
+    this.inventoryCode,
     super.key,
     this.customKeywords,
     this.autoRefreshInterval = const Duration(seconds: 30),
     this.allowNativeDemand = false,
-  }) : assert(adSizes.isNotEmpty, 'adSizes must not be empty');
-  final String placementID;
+  })  : assert(adSizes.isNotEmpty, 'adSizes must not be empty'),
+        assert(
+          placementID != null || inventoryCode != null,
+          'placementID or inventoryCode must not be null',
+        );
+  final String? placementID;
+  final String? inventoryCode;
   final List<AdSize> adSizes;
   final CustomKeywords? customKeywords;
   final XandrController controller;
@@ -29,6 +35,7 @@ class AdBanner extends StatelessWidget {
       height: adSizes.first.height.toDouble(),
       child: _HostAdBannerView(
         placementID: placementID,
+        inventoryCode: inventoryCode,
         adSizes: adSizes,
         customKeywords: customKeywords ?? {},
         allowNativeDemand: allowNativeDemand,
@@ -40,13 +47,15 @@ class AdBanner extends StatelessWidget {
 
 class _HostAdBannerView extends StatelessWidget {
   _HostAdBannerView({
-    required String placementID,
+    required String? placementID,
+    required String? inventoryCode,
     required List<AdSize> adSizes,
     required CustomKeywords customKeywords,
     required bool allowNativeDemand,
     required Duration autoRefreshInterval,
   }) : creationParams = <String, dynamic>{
-          'inventoryCode': placementID,
+          'placementID': placementID,
+          'inventoryCode': inventoryCode,
           'autoRefreshInterval': autoRefreshInterval.inMilliseconds,
           'adSizes': adSizes.map((e) => e.toJson()).toList(),
           'customKeywords': customKeywords,

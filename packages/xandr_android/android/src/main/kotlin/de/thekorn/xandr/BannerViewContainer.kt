@@ -31,7 +31,8 @@ class BannerViewContainer(
         )
 
         val params = args as HashMap<*, *>
-        val inventoryCode = params["inventoryCode"] as String
+        val placementID = params["placementID"] as String?
+        val inventroyCode = params["inventroyCode"] as String?
         val autoRefreshInterval = params["autoRefreshInterval"] as Int
         val adSizes = params["adSizes"] as ArrayList<HashMap<String, Int>>
         val customKeywords = params["customKeywords"] as HashMap<String, String>
@@ -39,7 +40,7 @@ class BannerViewContainer(
 
         Log.d(
             "Xandr.BannerView",
-            "using inventory code '$inventoryCode', adSizes '$adSizes', allowNativeDemand=$allowNativeDemand"
+            "using placementID='$placementID', inventroyCode='$inventroyCode', adSizes='$adSizes', allowNativeDemand=$allowNativeDemand"
         )
 
         this.banner = BannerAdView(activity)
@@ -66,7 +67,13 @@ class BannerViewContainer(
 
         state.isInitialized.invokeOnCompletion {
             /// need to make sure the sdk is initialized to access the memberId
-            this.banner.setInventoryCodeAndMemberID(state.memberId, inventoryCode)
+            /// docs: Note that if both inventory code and placement ID are passed in, the
+            //        inventory code will be passed to the server instead of the placement ID.
+            if (inventroyCode != null) {
+                this.banner.setInventoryCodeAndMemberID(state.memberId, inventroyCode)
+            } else {
+                this.banner.placementID = placementID
+            }
             Log.d("Xandr.BannerView", "Initializing DONE")
         }
     }
