@@ -32,7 +32,7 @@ melos run test
 
 # run sample app
 melos run run:example -- -d sdk     # android
-melos run run:example -- -d IPhone  # ios
+#melos run run:example -- -d IPhone  # ios /* not implemented yet */
 ```
 
 ## resources
