@@ -26,9 +26,9 @@ class XandrHostApi {
   static const MessageCodec<Object?> pigeonChannelCodec =
       StandardMessageCodec();
 
-  Future<bool> init({required int memberId}) async {
+  Future<bool> initXandrSdk({required int memberId}) async {
     const String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_ios.XandrHostApi.init';
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.initXandrSdk';
     final BasicMessageChannel<Object?> __pigeon_channel =
         BasicMessageChannel<Object?>(
       __pigeon_channelName,

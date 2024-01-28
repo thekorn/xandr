@@ -4,67 +4,67 @@
 import Foundation
 
 #if os(iOS)
-    import Flutter
+  import Flutter
 #elseif os(macOS)
-    import FlutterMacOS
+  import FlutterMacOS
 #else
-    #error("Unsupported platform.")
+  #error("Unsupported platform.")
 #endif
 
 private func wrapResult(_ result: Any?) -> [Any?] {
-    return [result]
+  return [result]
 }
 
 private func wrapError(_ error: Any) -> [Any?] {
-    if let flutterError = error as? FlutterError {
-        return [
-            flutterError.code,
-            flutterError.message,
-            flutterError.details,
-        ]
-    }
+  if let flutterError = error as? FlutterError {
     return [
-        "\(error)",
-        "\(type(of: error))",
-        "Stacktrace: \(Thread.callStackSymbols)",
+      flutterError.code,
+      flutterError.message,
+      flutterError.details,
     ]
+  }
+  return [
+    "\(error)",
+    "\(type(of: error))",
+    "Stacktrace: \(Thread.callStackSymbols)",
+  ]
 }
 
 private func isNullish(_ value: Any?) -> Bool {
-    return value is NSNull || value == nil
+  return value is NSNull || value == nil
 }
 
 private func nilOrValue<T>(_ value: Any?) -> T? {
-    if value is NSNull { return nil }
-    return value as! T?
+  if value is NSNull { return nil }
+  return value as! T?
 }
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol XandrHostApi {
-    func init(memberId: Int64, completion: @escaping (Result<Bool, Error>) -> Void)
+  func initXandrSdk(memberId: Int64, completion: @escaping (Result<Bool, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-enum XandrHostApiSetup {
-    /// The codec used by XandrHostApi.
-    /// Sets up an instance of `XandrHostApi` to handle messages through the `binaryMessenger`.
-    static func setUp(binaryMessenger: FlutterBinaryMessenger, api: XandrHostApi?) {
-        let initChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.init", binaryMessenger: binaryMessenger)
-        if let api = api {
-            initChannel.setMessageHandler { message, reply in
-                let args = message as! [Any?]
-                let memberIdArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
-                api.init(memberId: memberIdArg) { result in
-                    switch result {
-                    case let .success(res):
-                        reply(wrapResult(res))
-                    case let .failure(error):
-                        reply(wrapError(error))
-                    }
-                }
-            }
-        } else {
-            initChannel.setMessageHandler(nil)
+class XandrHostApiSetup {
+  /// The codec used by XandrHostApi.
+  /// Sets up an instance of `XandrHostApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: XandrHostApi?) {
+    let initXandrSdkChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.initXandrSdk", binaryMessenger: binaryMessenger)
+    if let api = api {
+      initXandrSdkChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let memberIdArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
+        api.initXandrSdk(memberId: memberIdArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
         }
+      }
+    } else {
+      initXandrSdkChannel.setMessageHandler(nil)
     }
+  }
 }

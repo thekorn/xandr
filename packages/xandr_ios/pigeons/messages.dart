@@ -20,7 +20,7 @@ import 'package:pigeon/pigeon.dart';
 @HostApi()
 abstract class XandrHostApi {
   @async
-  bool init({
+  bool initXandrSdk({
     required int memberId,
   });
 }

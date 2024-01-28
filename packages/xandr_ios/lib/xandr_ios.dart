@@ -12,6 +12,6 @@ class XandrIOS extends XandrPlatform {
 
   @override
   Future<bool> init(int memberId) async {
-    return _api.init(memberId: memberId);
+    return _api.initXandrSdk(memberId: memberId);
   }
 }
