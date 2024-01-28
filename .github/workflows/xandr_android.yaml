@@ -1,0 +1,33 @@
+name: xandr_android
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/xandr_android.yaml"
+      - "packages/xandr_android/**"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/xandr_android.yaml"
+      - "packages/xandr_android/**"
+
+jobs:
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      flutter_channel: stable
+      flutter_version: 3.16.7
+      working_directory: packages/xandr_android
+      coverage_excludes: "lib/src/*.g.dart"
+      min_coverage: 0
+
+  pana:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/pana.yml@v1
+    with:
+      min_score: 0
+

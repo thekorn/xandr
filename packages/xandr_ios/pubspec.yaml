@@ -1,0 +1,28 @@
+name: xandr_ios
+description: iOS implementation of the xandr plugin
+version: 0.1.0+1
+homepage: https://github.com/thekorn/xandr
+repository: https://github.com/thekorn/xandr
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+flutter:
+  plugin:
+    implements: xandr
+    platforms:
+      ios:
+        pluginClass: XandrPlugin
+        dartPluginClass: XandrIOS
+
+dependencies:
+  flutter:
+    sdk: flutter
+  xandr_platform_interface: ^0.1.0+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  plugin_platform_interface: ^2.0.0
+  very_good_analysis: ^5.1.0

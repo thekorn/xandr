@@ -1,0 +1,33 @@
+name: xandr_ios
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/xandr_ios.yaml"
+      - "packages/xandr_ios/**"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/xandr_ios.yaml"
+      - "packages/xandr_ios/**"
+
+jobs:
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      flutter_channel: stable
+      flutter_version: 3.16.7
+      working_directory: packages/xandr_ios
+      coverage_excludes: "lib/src/*.g.dart"
+      min_coverage: 0
+
+  pana:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/pana.yml@v1
+    with:
+      min_score: 0
+

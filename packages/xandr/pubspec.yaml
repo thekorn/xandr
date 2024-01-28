@@ -1,0 +1,32 @@
+name: xandr
+description: xandr plugin for flutter
+version: 0.1.0+1
+homepage: https://github.com/thekorn/xandr
+repository: https://github.com/thekorn/xandr
+
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        default_package: xandr_android
+      ios:
+        default_package: xandr_ios
+
+dependencies:
+  flutter:
+    sdk: flutter
+  xandr_android: ^0.1.0+1
+  xandr_ios: ^0.1.0+1
+  xandr_platform_interface: ^0.1.0+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.0
+  plugin_platform_interface: ^2.1.6
+  very_good_analysis: ^5.1.0

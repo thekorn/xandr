@@ -1,0 +1,32 @@
+name: xandr_platform_interface
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/xandr_platform_interface.yaml"
+      - "packages/xandr_platform_interface/**"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/xandr_platform_interface.yaml"
+      - "packages/xandr_platform_interface/**"
+
+jobs:
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      flutter_channel: stable
+      flutter_version: 3.16.7
+      working_directory: packages/xandr_platform_interface
+      min_coverage: 0
+
+  pana:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/pana.yml@v1
+    with:
+      min_score: 0
+

@@ -1,0 +1,27 @@
+version: 2
+enable-beta-ecosystems: true
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/xandr"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/xandr/example"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/xandr_platform_interface"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/xandr_android"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/xandr_ios"
+    schedule:
+      interval: "daily"

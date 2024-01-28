@@ -1,0 +1,9 @@
+name: xandr_workspace
+homepage: https://github.com/thekorn/xandr
+repository: https://github.com/thekorn/xandr
+
+environment:
+  sdk: '>=3.2.3 <4.0.0'
+  flutter: '>=3.0.0'
+dev_dependencies:
+  melos: ^4.0.0

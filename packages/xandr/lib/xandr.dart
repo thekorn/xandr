@@ -1,0 +1,10 @@
+import 'package:xandr_platform_interface/xandr_platform_interface.dart';
+
+XandrPlatform get _platform => XandrPlatform.instance;
+
+/// Returns the name of the current platform.
+Future<String> getPlatformName() async {
+  final platformName = await _platform.getPlatformName();
+  if (platformName == null) throw Exception('Unable to get platform name.');
+  return platformName;
+}
