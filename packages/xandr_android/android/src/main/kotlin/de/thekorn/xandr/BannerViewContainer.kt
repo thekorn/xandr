@@ -1,5 +1,6 @@
 package de.thekorn.xandr
 
+import XandrFlutterApi
 import android.app.Activity
 import android.view.View
 import com.appnexus.opensdk.AdListener
@@ -14,42 +15,20 @@ import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.platform.PlatformView
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-class MyStreamHandler(private var eventSink: QueuingEventSink) : EventChannel.StreamHandler {
-    override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
-        eventSink.setDelegate(events)
-    }
-
-    override fun onCancel(arguments: Any?) {
-        eventSink.setDelegate(null)
-    }
-}
-
 class BannerViewContainer(
     activity: Activity,
-    messenger: BinaryMessenger,
     private var state: FlutterState,
     private var widgetId: Int,
     args: Any?
 ) :
     PlatformView {
     private val banner: BannerAdView
-    private val eventChannel: EventChannel
-    private val eventSink: QueuingEventSink
 
     init {
         Log.d(
             "Xandr.BannerView",
             "Initializing $activity id=$widgetId xandr-initialized=${state.isInitialized} args=$args"
         )
-
-        this.eventChannel = EventChannel(
-            messenger, "flutter.io/xandr/adEvents$widgetId"
-        )
-
-        this.eventSink = QueuingEventSink()
-
-        eventChannel.setStreamHandler(MyStreamHandler(this.eventSink))
-
 
         val params = args as HashMap<*, *>
         val inventoryCode = params["inventoryCode"] as String
@@ -99,7 +78,7 @@ class BannerViewContainer(
             "Return view, xandr-initialized=${state.isInitialized.isCompleted}"
         )
 
-        this.banner.adListener = XandrAdListener(widgetId, eventSink)
+        this.banner.adListener = XandrAdListener(widgetId, this.state.flutterApi)
 
         state.isInitialized.invokeOnCompletion {
             Log.d(
@@ -119,7 +98,7 @@ class BannerViewContainer(
 
 class XandrAdListener(
     private var widgetId: Int,
-    private var eventSink: QueuingEventSink
+    private var flutterApi: XandrFlutterApi
 ) : AdListener {
     override fun onAdLoaded(view: AdView?) {
         Log.d(
@@ -147,12 +126,12 @@ class XandrAdListener(
             //    ">>> GSON=$json"
             //)
             Log.d("Xandr.BannerView", "sending BannerAdEvent $adEvent for $widgetId")
-            //eventSink.success(json)
+            flutterApi.onAdLoaded(view.id.toLong()) { }
         } else {
             val errorEvent = BannerAdErrorEvent("something went wrong")
             //val json = Gson().toJson(errorEvent)
             Log.d("Xandr.BannerView", "sending BannerAdErrorEvent $errorEvent for $widgetId")
-            eventSink.success(errorEvent)
+            flutterApi.onAdLoadedError(0) { }
         }
     }
 
@@ -169,12 +148,12 @@ class XandrAdListener(
             //    ">>> GSON=$json"
             //)
             Log.d("Xandr.BannerView", "sending NativeBannerAdEvent $adEvent for $widgetId")
-            //eventSink.success(json)
+            flutterApi.onNativeAdLoaded(0) { }
         } else {
             val errorEvent = BannerAdErrorEvent("something went wrong")
             //val json = Gson().toJson(errorEvent)
             Log.d("Xandr.BannerView", "sending BannerAdErrorEvent $errorEvent for $widgetId")
-            //eventSink.success(errorEvent)
+            flutterApi.onNativeAdLoadedError(0){ }
         }
 
 

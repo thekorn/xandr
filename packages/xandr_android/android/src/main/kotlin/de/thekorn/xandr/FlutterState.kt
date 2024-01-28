@@ -1,5 +1,6 @@
 package de.thekorn.xandr
 
+import XandrFlutterApi
 import XandrHostApi
 import android.content.Context
 import io.flutter.plugin.common.BinaryMessenger
@@ -13,9 +14,11 @@ class FlutterState(
     val isInitialized: CompletableDeferred<Boolean> = CompletableDeferred()
 
     var memberId by Delegates.notNull<Int>()
+    lateinit var flutterApi: XandrFlutterApi
 
     fun startListening(methodCallHandler: XandrPlugin) {
         XandrHostApi.setUp(this.binaryMessenger, methodCallHandler)
+        this.flutterApi = XandrFlutterApi(this.binaryMessenger)
     }
 
     fun stopListening() {

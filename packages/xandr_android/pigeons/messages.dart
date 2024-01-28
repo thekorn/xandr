@@ -24,3 +24,11 @@ abstract class XandrHostApi {
     required int memberId,
   });
 }
+
+@FlutterApi()
+abstract class XandrFlutterApi {
+  void onAdLoaded(int viewId) {}
+  void onAdLoadedError(int viewId) {}
+  void onNativeAdLoaded(int viewId) {}
+  void onNativeAdLoadedError(int viewId) {}
+}

@@ -20,7 +20,6 @@ class BannerViewFactory(
     ): PlatformView {
         return BannerViewContainer(
             activity,
-            messenger,
             this.state,
             id,
             args

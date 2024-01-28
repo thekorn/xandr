@@ -21,6 +21,13 @@ abstract class XandrPlatform extends PlatformInterface {
   /// Defaults to [MethodChannelXandr].
   static XandrPlatform get instance => _instance;
 
+  /// Registers the event delegate.
+  void registerEventDelegate() {
+    throw UnimplementedError(
+      'registerEventDelegate() has not been implemented.',
+    );
+  }
+
   /// Platform-specific plugins should set this with their own platform-specific
   /// class that extends [XandrPlatform] when they register themselves.
   static set instance(XandrPlatform instance) {
