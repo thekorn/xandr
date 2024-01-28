@@ -1,63 +1,109 @@
 import 'package:flutter/material.dart';
-import 'package:xandr/xandr.dart';
 
-void main() => runApp(const MyApp());
+class XandrController {
+  Future<bool> init({
+    required int memberId,
+  }) async {
+    return true;
+  }
+}
+
+class AdSize {
+  const AdSize(this.width, this.height);
+  final int width;
+  final int height;
+
+  Map<String, int> toJson() => <String, int>{
+        'width': width,
+        'height': height,
+      };
+}
+
+typedef CustomKeywords = Map<String, String>;
+
+const CustomKeywords useDemoAds = {'kw': 'demoads'};
+
+class XandrBuilder extends FutureBuilder<bool> {
+  XandrBuilder({
+    required XandrController controller,
+    required super.builder,
+    required int memberId,
+    super.key,
+  }) : super(future: controller.init(memberId: memberId));
+}
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HomePage());
+    return const MaterialApp(home: XandrExample());
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class XandrExample extends StatefulWidget {
+  const XandrExample({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<XandrExample> createState() => _XandrExampleState();
 }
 
-class _HomePageState extends State<HomePage> {
-  String? _platformName;
+class AdBanner extends StatelessWidget {
+  const AdBanner({
+    required this.inventoryCode,
+    required this.adSizes,
+    required this.controller,
+    super.key,
+    this.customKeywords,
+  });
+  final String inventoryCode;
+  final List<AdSize> adSizes;
+  final CustomKeywords? customKeywords;
+  final XandrController controller;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Xandr Example')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (_platformName == null)
-              const SizedBox.shrink()
-            else
-              Text(
-                'Platform Name: $_platformName',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () async {
-                if (!context.mounted) return;
-                try {
-                  final result = await getPlatformName();
-                  setState(() => _platformName = result);
-                } catch (error) {
-                  if (!context.mounted) return;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      content: Text('$error'),
-                    ),
-                  );
-                }
-              },
-              child: const Text('Get Platform Name'),
-            ),
-          ],
-        ),
+    return const Placeholder();
+  }
+}
+
+class _XandrExampleState extends State<XandrExample> {
+  late final XandrController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = XandrController();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTextStyle(
+      style: Theme.of(context).textTheme.displayMedium!,
+      textAlign: TextAlign.center,
+      child: XandrBuilder(
+        controller: _controller,
+        memberId: 123,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return AdBanner(
+              controller: _controller,
+              inventoryCode: 'test',
+              adSizes: const [AdSize(728, 90)],
+              customKeywords: useDemoAds,
+            );
+          } else if (snapshot.hasError) {
+            return const Text('Error initializing Xandr SDK');
+          } else {
+            return const Text('Initializing Xandr SDK...');
+          }
+        },
       ),
     );
   }
