@@ -39,8 +39,20 @@ class XandrEventHandler implements messages.XandrFlutterApi {
   const XandrEventHandler();
 
   @override
-  void onAdLoaded(int viewId) {
-    debugPrint('onAdLoaded: $viewId');
+  void onAdLoaded(
+    int viewId,
+    int width,
+    int height,
+    String creativeId,
+    String adType,
+    String tagId,
+    String auctionId,
+    double cpm,
+    int memberId,
+  ) {
+    debugPrint('xandr.onAdLoaded: $viewId, size=${width}x$height, '
+        'creativeId=$creativeId, adType=$adType, tagId=$tagId, '
+        'auctionId=$auctionId, cpm=$cpm, memberId=$memberId');
   }
 
   @override

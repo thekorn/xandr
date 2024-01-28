@@ -113,27 +113,12 @@ class XandrAdListener(
             ">>> Ad Loaded, id=${view?.id} widgetId=$widgetId, w=${view?.creativeWidth}, h=${view?.creativeHeight}"
         )
 
-        val event = hashMapOf<String, Any>()
         if (view != null) {
-            event["width"] = view.creativeWidth
-            event["height"] = view.creativeHeight
             val adResponse = view.adResponseInfo
-
-            event["creativeId"] = adResponse.creativeId
-            event["adType"] = adResponse.adType.toString()
-            event["tagId"] = adResponse.tagId
-            event["auctionId"] = adResponse.auctionId
-            event["cpm"] = adResponse.cpm
-            event["memberId"] = adResponse.buyMemberId
-
-            val adEvent = BannerAdEvent(view.creativeWidth, view.creativeHeight, adResponse.creativeId, adResponse.adType.toString(), adResponse.tagId, adResponse.auctionId, adResponse.cpm, adResponse.buyMemberId)
-            //val json = Gson().toJson(adEvent)
-            //Log.d(
-            //    "Xandr.BannerView",
-            //    ">>> GSON=$json"
-            //)
-            Log.d("Xandr.BannerView", "sending BannerAdEvent $adEvent for $widgetId")
-            flutterApi.onAdLoaded(view.id.toLong()) { }
+            flutterApi.onAdLoaded(widgetId.toLong(),
+                view.creativeWidth.toLong(), view.creativeHeight.toLong(), adResponse.creativeId,
+                adResponse.adType.toString(), adResponse.tagId, adResponse.auctionId,
+                adResponse.cpm, adResponse.buyMemberId.toLong()) { }
         } else {
             val errorEvent = BannerAdErrorEvent("something went wrong")
             //val json = Gson().toJson(errorEvent)

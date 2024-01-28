@@ -27,7 +27,17 @@ abstract class XandrHostApi {
 
 @FlutterApi()
 abstract class XandrFlutterApi {
-  void onAdLoaded(int viewId) {}
+  void onAdLoaded(
+    int viewId,
+    int width,
+    int height,
+    String creativeId,
+    String adType,
+    String tagId,
+    String auctionId,
+    double cpm,
+    int memberId,
+  ) {}
   void onAdLoadedError(int viewId) {}
   void onNativeAdLoaded(int viewId) {}
   void onNativeAdLoadedError(int viewId) {}

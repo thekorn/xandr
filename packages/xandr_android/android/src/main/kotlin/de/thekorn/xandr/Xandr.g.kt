@@ -89,11 +89,11 @@ class XandrFlutterApi(private val binaryMessenger: BinaryMessenger) {
       StandardMessageCodec()
     }
   }
-  fun onAdLoaded(viewIdArg: Long, callback: (Result<Unit>) -> Unit)
+  fun onAdLoaded(viewIdArg: Long, widthArg: Long, heightArg: Long, creativeIdArg: String, adTypeArg: String, tagIdArg: String, auctionIdArg: String, cpmArg: Double, memberIdArg: Long, callback: (Result<Unit>) -> Unit)
 {
     val channelName = "dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded"
     val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
-    channel.send(listOf(viewIdArg)) {
+    channel.send(listOf(viewIdArg, widthArg, heightArg, creativeIdArg, adTypeArg, tagIdArg, auctionIdArg, cpmArg, memberIdArg)) {
       if (it is List<*>) {
         if (it.size > 1) {
           callback(Result.failure(FlutterError(it[0] as String, it[1] as String, it[2] as String?)))
