@@ -1,20 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:xandr/ad_banner.dart';
+import 'package:xandr/ad_size.dart';
 import 'package:xandr/xandr.dart';
-
-class AdSize {
-  const AdSize(this.width, this.height);
-  final int width;
-  final int height;
-
-  Map<String, int> toJson() => <String, int>{
-        'width': width,
-        'height': height,
-      };
-}
-
-typedef CustomKeywords = Map<String, String>;
-
-const CustomKeywords useDemoAds = {'kw': 'demoads'};
 
 class XandrBuilder extends FutureBuilder<bool> {
   XandrBuilder({
@@ -44,25 +31,6 @@ class XandrExample extends StatefulWidget {
 
   @override
   State<XandrExample> createState() => _XandrExampleState();
-}
-
-class AdBanner extends StatelessWidget {
-  const AdBanner({
-    required this.placementID,
-    required this.adSizes,
-    required this.controller,
-    super.key,
-    this.customKeywords,
-  });
-  final String placementID;
-  final List<AdSize> adSizes;
-  final CustomKeywords? customKeywords;
-  final XandrController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
 }
 
 class _XandrExampleState extends State<XandrExample> {

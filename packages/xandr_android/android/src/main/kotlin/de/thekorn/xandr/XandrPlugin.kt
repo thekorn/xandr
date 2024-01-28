@@ -25,15 +25,14 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        TODO("Not yet implemented")
-        //this.flutterPluginBinding.platformViewRegistry.registerViewFactory(
-        //    "platform-xandr/banner",
-        //    BannerViewFactory(
-        //        binding.activity,
-        //        flutterPluginBinding.binaryMessenger,
-        //        this.flutterState
-        //    )
-        //)
+        this.flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            "de.thekorn.xandr/ad_banner",
+            BannerViewFactory(
+                binding.activity,
+                flutterPluginBinding.binaryMessenger,
+                this.flutterState
+            )
+        )
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
@@ -74,4 +73,7 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         }
     }
 }
+
+
+
 
