@@ -30,6 +30,9 @@ private fun wrapError(exception: Throwable): List<Any?> {
   }
 }
 
+private fun createConnectionError(channelName: String): FlutterError {
+  return FlutterError("channel-error",  "Unable to establish connection on channel: '$channelName'.", "")}
+
 /**
  * Error class for passing custom error details to Flutter via a thrown PlatformException.
  * @property code The error code.
@@ -74,6 +77,80 @@ interface XandrHostApi {
           channel.setMessageHandler(null)
         }
       }
+    }
+  }
+}
+/** Generated class from Pigeon that represents Flutter messages that can be called from Kotlin. */
+@Suppress("UNCHECKED_CAST")
+class XandrFlutterApi(private val binaryMessenger: BinaryMessenger) {
+  companion object {
+    /** The codec used by XandrFlutterApi. */
+    val codec: MessageCodec<Any?> by lazy {
+      StandardMessageCodec()
+    }
+  }
+  fun onAdLoaded(viewIdArg: Long, widthArg: Long, heightArg: Long, creativeIdArg: String, adTypeArg: String, tagIdArg: String, auctionIdArg: String, cpmArg: Double, memberIdArg: Long, callback: (Result<Unit>) -> Unit)
+{
+    val channelName = "dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded"
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
+    channel.send(listOf(viewIdArg, widthArg, heightArg, creativeIdArg, adTypeArg, tagIdArg, auctionIdArg, cpmArg, memberIdArg)) {
+      if (it is List<*>) {
+        if (it.size > 1) {
+          callback(Result.failure(FlutterError(it[0] as String, it[1] as String, it[2] as String?)))
+        } else {
+          callback(Result.success(Unit))
+        }
+      } else {
+        callback(Result.failure(createConnectionError(channelName)))
+      } 
+    }
+  }
+  fun onAdLoadedError(viewIdArg: Long, reasonArg: String, callback: (Result<Unit>) -> Unit)
+{
+    val channelName = "dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoadedError"
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
+    channel.send(listOf(viewIdArg, reasonArg)) {
+      if (it is List<*>) {
+        if (it.size > 1) {
+          callback(Result.failure(FlutterError(it[0] as String, it[1] as String, it[2] as String?)))
+        } else {
+          callback(Result.success(Unit))
+        }
+      } else {
+        callback(Result.failure(createConnectionError(channelName)))
+      } 
+    }
+  }
+  fun onNativeAdLoaded(viewIdArg: Long, titleArg: String, descriptionArg: String, imageUrlArg: String, callback: (Result<Unit>) -> Unit)
+{
+    val channelName = "dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded"
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
+    channel.send(listOf(viewIdArg, titleArg, descriptionArg, imageUrlArg)) {
+      if (it is List<*>) {
+        if (it.size > 1) {
+          callback(Result.failure(FlutterError(it[0] as String, it[1] as String, it[2] as String?)))
+        } else {
+          callback(Result.success(Unit))
+        }
+      } else {
+        callback(Result.failure(createConnectionError(channelName)))
+      } 
+    }
+  }
+  fun onNativeAdLoadedError(viewIdArg: Long, reasonArg: String, callback: (Result<Unit>) -> Unit)
+{
+    val channelName = "dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoadedError"
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
+    channel.send(listOf(viewIdArg, reasonArg)) {
+      if (it is List<*>) {
+        if (it.size > 1) {
+          callback(Result.failure(FlutterError(it[0] as String, it[1] as String, it[2] as String?)))
+        } else {
+          callback(Result.success(Unit))
+        }
+      } else {
+        callback(Result.failure(createConnectionError(channelName)))
+      } 
     }
   }
 }

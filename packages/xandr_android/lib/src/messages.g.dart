@@ -15,6 +15,17 @@ PlatformException _createConnectionError(String channelName) {
   );
 }
 
+List<Object?> wrapResponse(
+    {Object? result, PlatformException? error, bool empty = false}) {
+  if (empty) {
+    return <Object?>[];
+  }
+  if (error == null) {
+    return <Object?>[result];
+  }
+  return <Object?>[error.code, error.message, error.details];
+}
+
 class XandrHostApi {
   /// Constructor for [XandrHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
@@ -52,6 +63,185 @@ class XandrHostApi {
       );
     } else {
       return (__pigeon_replyList[0] as bool?)!;
+    }
+  }
+}
+
+abstract class XandrFlutterApi {
+  static const MessageCodec<Object?> pigeonChannelCodec =
+      StandardMessageCodec();
+
+  void onAdLoaded(int viewId, int width, int height, String creativeId,
+      String adType, String tagId, String auctionId, double cpm, int memberId);
+
+  void onAdLoadedError(int viewId, String reason);
+
+  void onNativeAdLoaded(
+      int viewId, String title, String description, String imageUrl);
+
+  void onNativeAdLoadedError(int viewId, String reason);
+
+  static void setup(XandrFlutterApi? api, {BinaryMessenger? binaryMessenger}) {
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel =
+          BasicMessageChannel<Object?>(
+              'dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded',
+              pigeonChannelCodec,
+              binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final int? arg_viewId = (args[0] as int?);
+          assert(arg_viewId != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded was null, expected non-null int.');
+          final int? arg_width = (args[1] as int?);
+          assert(arg_width != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded was null, expected non-null int.');
+          final int? arg_height = (args[2] as int?);
+          assert(arg_height != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded was null, expected non-null int.');
+          final String? arg_creativeId = (args[3] as String?);
+          assert(arg_creativeId != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded was null, expected non-null String.');
+          final String? arg_adType = (args[4] as String?);
+          assert(arg_adType != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded was null, expected non-null String.');
+          final String? arg_tagId = (args[5] as String?);
+          assert(arg_tagId != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded was null, expected non-null String.');
+          final String? arg_auctionId = (args[6] as String?);
+          assert(arg_auctionId != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded was null, expected non-null String.');
+          final double? arg_cpm = (args[7] as double?);
+          assert(arg_cpm != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded was null, expected non-null double.');
+          final int? arg_memberId = (args[8] as int?);
+          assert(arg_memberId != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded was null, expected non-null int.');
+          try {
+            api.onAdLoaded(
+                arg_viewId!,
+                arg_width!,
+                arg_height!,
+                arg_creativeId!,
+                arg_adType!,
+                arg_tagId!,
+                arg_auctionId!,
+                arg_cpm!,
+                arg_memberId!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          } catch (e) {
+            return wrapResponse(
+                error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<
+              Object?>(
+          'dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoadedError',
+          pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoadedError was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final int? arg_viewId = (args[0] as int?);
+          assert(arg_viewId != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoadedError was null, expected non-null int.');
+          final String? arg_reason = (args[1] as String?);
+          assert(arg_reason != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoadedError was null, expected non-null String.');
+          try {
+            api.onAdLoadedError(arg_viewId!, arg_reason!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          } catch (e) {
+            return wrapResponse(
+                error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<
+              Object?>(
+          'dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded',
+          pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final int? arg_viewId = (args[0] as int?);
+          assert(arg_viewId != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded was null, expected non-null int.');
+          final String? arg_title = (args[1] as String?);
+          assert(arg_title != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.');
+          final String? arg_description = (args[2] as String?);
+          assert(arg_description != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.');
+          final String? arg_imageUrl = (args[3] as String?);
+          assert(arg_imageUrl != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.');
+          try {
+            api.onNativeAdLoaded(
+                arg_viewId!, arg_title!, arg_description!, arg_imageUrl!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          } catch (e) {
+            return wrapResponse(
+                error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<
+              Object?>(
+          'dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoadedError',
+          pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoadedError was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final int? arg_viewId = (args[0] as int?);
+          assert(arg_viewId != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoadedError was null, expected non-null int.');
+          final String? arg_reason = (args[1] as String?);
+          assert(arg_reason != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoadedError was null, expected non-null String.');
+          try {
+            api.onNativeAdLoadedError(arg_viewId!, arg_reason!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          } catch (e) {
+            return wrapResponse(
+                error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
     }
   }
 }

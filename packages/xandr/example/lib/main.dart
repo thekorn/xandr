@@ -1,20 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:xandr/ad_banner.dart';
+import 'package:xandr/ad_size.dart';
 import 'package:xandr/xandr.dart';
-
-class AdSize {
-  const AdSize(this.width, this.height);
-  final int width;
-  final int height;
-
-  Map<String, int> toJson() => <String, int>{
-        'width': width,
-        'height': height,
-      };
-}
-
-typedef CustomKeywords = Map<String, String>;
-
-const CustomKeywords useDemoAds = {'kw': 'demoads'};
 
 class XandrBuilder extends FutureBuilder<bool> {
   XandrBuilder({
@@ -46,25 +33,6 @@ class XandrExample extends StatefulWidget {
   State<XandrExample> createState() => _XandrExampleState();
 }
 
-class AdBanner extends StatelessWidget {
-  const AdBanner({
-    required this.placementID,
-    required this.adSizes,
-    required this.controller,
-    super.key,
-    this.customKeywords,
-  });
-  final String placementID;
-  final List<AdSize> adSizes;
-  final CustomKeywords? customKeywords;
-  final XandrController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
-
 class _XandrExampleState extends State<XandrExample> {
   late final XandrController _controller;
 
@@ -82,15 +50,28 @@ class _XandrExampleState extends State<XandrExample> {
       textAlign: TextAlign.center,
       child: XandrBuilder(
         controller: _controller,
-        memberId: 10094,
+        memberId: 9517, //10094,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             debugPrint('Xandr SDK initialized, success=${snapshot.hasData}');
-            return AdBanner(
-              controller: _controller,
-              placementID: '17058950',
-              adSizes: const [AdSize(300, 250)],
-              customKeywords: useDemoAds,
+            return Column(
+              children: [
+                AdBanner(
+                  controller: _controller,
+                  //placementID: '17058950',
+                  inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
+                  adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
+                  customKeywords: useDemoAds,
+                ),
+                AdBanner(
+                  controller: _controller,
+                  //placementID: '17058950',
+                  inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
+                  adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
+                  customKeywords: useDemoAds,
+                  allowNativeDemand: true,
+                ),
+              ],
             );
           } else if (snapshot.hasError) {
             return const Text('Error initializing Xandr SDK');

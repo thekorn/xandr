@@ -1,36 +1,13 @@
 package de.thekorn.xandr
 
 import XandrHostApi
-import android.content.Context
-import com.appnexus.opensdk.InitListener
-import com.appnexus.opensdk.SDKSettings
 import com.appnexus.opensdk.XandrAd
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import io.flutter.plugin.common.BinaryMessenger
-import kotlinx.coroutines.CompletableDeferred
-import kotlin.properties.Delegates
 import io.flutter.Log
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-
-class FlutterState(
-    var applicationContext: Context,
-    private var binaryMessenger: BinaryMessenger,
-) {
-    val isInitialized: CompletableDeferred<Boolean> = CompletableDeferred()
-
-    var memberId by Delegates.notNull<Int>()
-
-    fun startListening(methodCallHandler: XandrPlugin) {
-        XandrHostApi.setUp(this.binaryMessenger, methodCallHandler)
-    }
-
-    fun stopListening() {
-        XandrHostApi.setUp(this.binaryMessenger, null)
-    }
-}
 
 class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
     private lateinit var flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
@@ -48,15 +25,13 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        TODO("Not yet implemented")
-        //this.flutterPluginBinding.platformViewRegistry.registerViewFactory(
-        //    "platform-xandr/banner",
-        //    BannerViewFactory(
-        //        binding.activity,
-        //        flutterPluginBinding.binaryMessenger,
-        //        this.flutterState
-        //    )
-        //)
+        this.flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            "de.thekorn.xandr/ad_banner",
+            BannerViewFactory(
+                binding.activity,
+                this.flutterState
+            )
+        )
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
@@ -83,7 +58,7 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun init(memberId: Long, callback: (kotlin.Result<Boolean>) -> Unit) {
+    override fun init(memberId: Long, callback: (Result<Boolean>) -> Unit) {
         this.flutterState.memberId = memberId.toInt()
         XandrAd.init(
             memberId.toInt(),
@@ -98,13 +73,6 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
     }
 }
 
-class AdInitListener(private val flutterState: FlutterState) : InitListener {
-    override fun onInitFinished(success: Boolean) {
-        Log.d(
-            "Xandr",
-            "finished initializing, success=$success, sdkVersion=${SDKSettings.getSDKVersion()}"
-        )
-        this.flutterState.isInitialized.complete(success)
-    }
 
-}
+
+
