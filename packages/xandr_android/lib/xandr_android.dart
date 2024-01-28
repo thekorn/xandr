@@ -14,7 +14,9 @@ class XandrAndroid extends XandrPlatform {
   }
 
   @override
-  void registerEventStream({required StreamController<String> controller}) {
+  void registerEventStream({
+    required StreamController<BannerAdEvent> controller,
+  }) {
     messages.XandrFlutterApi.setup(
       XandrEventHandler(controller: controller),
     );
@@ -38,10 +40,10 @@ class XandrEventHandler implements messages.XandrFlutterApi {
   /// ```dart
   /// const XandrEventHandler();
   /// ```
-  const XandrEventHandler({required StreamController<String> controller})
+  const XandrEventHandler({required StreamController<BannerAdEvent> controller})
       : _controller = controller;
 
-  final StreamController<String> _controller;
+  final StreamController<BannerAdEvent> _controller;
 
   @override
   void onAdLoaded(
@@ -58,13 +60,25 @@ class XandrEventHandler implements messages.XandrFlutterApi {
     debugPrint('xandr.onAdLoaded: $viewId, size=${width}x$height, '
         'creativeId=$creativeId, adType=$adType, tagId=$tagId, '
         'auctionId=$auctionId, cpm=$cpm, memberId=$memberId');
-    _controller.add('xandr.onAdLoaded');
+    _controller.add(
+      BannerAdLoadedEvent(
+        width: width,
+        height: height,
+        viewId: viewId,
+        creativeId: creativeId,
+        adType: adType,
+        tagId: tagId,
+        auctionId: auctionId,
+        cpm: cpm,
+        memberId: memberId,
+      ),
+    );
   }
 
   @override
   void onAdLoadedError(int viewId, String reason) {
     debugPrint("xandr.onAdLoadedError: $viewId, reason='$reason'");
-    _controller.add('xandr.onAdLoadedError');
+    _controller.add(BannerAdLoadedErrorEvent(viewId: viewId, reason: reason));
   }
 
   @override
@@ -76,12 +90,131 @@ class XandrEventHandler implements messages.XandrFlutterApi {
   ) {
     debugPrint("xandr.onNativeAdLoaded: $viewId, title='$title', "
         "description='$description', imageUrl='$imageUrl'");
-    _controller.add('xandr.onNativeAdLoaded');
+    _controller.add(
+      NativeBannerAdLoadedEvent(
+        viewId: viewId,
+        title: title,
+        description: description,
+        imageUrl: imageUrl,
+      ),
+    );
   }
 
   @override
   void onNativeAdLoadedError(int viewId, String reason) {
     debugPrint("xandr.onNativeAdLoadedError: $viewId, reason='$reason'");
-    _controller.add('xandr.onNativeAdLoadedError');
+    _controller
+        .add(NativeBannerAdLoadedErrorEvent(viewId: viewId, reason: reason));
   }
+}
+
+/// Represents an error event for a banner ad.
+/// This class is an abstract class that extends [BannerAdEvent].
+abstract class BannerAdErrorEvent extends BannerAdEvent {
+  /// Represents an event that occurs when a banner ad encounters an error.
+  ///
+  /// This event provides information about the error that occurred.
+  BannerAdErrorEvent({
+    required super.viewId,
+    required this.reason,
+  });
+
+  /// The reason describing the error.
+  final String reason;
+}
+
+/// Represents an event that is triggered when a banner ad is successfully
+/// loaded.
+class BannerAdLoadedEvent extends BannerAdEvent {
+  /// Represents an event indicating that a banner ad has been loaded.
+  ///
+  /// This event is triggered when a banner ad is successfully loaded and ready
+  /// to be displayed.
+
+  BannerAdLoadedEvent({
+    required super.viewId,
+    required this.width,
+    required this.height,
+    required this.creativeId,
+    required this.adType,
+    required this.tagId,
+    required this.auctionId,
+    required this.cpm,
+    required this.memberId,
+  });
+
+  /// The width of the object.
+  final int width;
+
+  /// The height of the widget.
+  final int height;
+
+  /// The ID of the creative.
+  final String creativeId;
+
+  /// The type of the ad.
+  final String adType;
+
+  /// The tag ID for Xandr Android.
+  final String tagId;
+
+  /// The unique identifier for the auction.
+  final String auctionId;
+
+  /// The cost per thousand impressions (CPM) for the Xandr Android package.
+  final double cpm;
+
+  /// The member ID.
+  final int memberId;
+}
+
+/// Represents an event that occurs when a banner ad fails to load.
+/// This event is a subclass of [BannerAdErrorEvent].
+class BannerAdLoadedErrorEvent extends BannerAdErrorEvent {
+  /// Represents an event that occurs when a banner ad fails to load.
+  ///
+  /// This event is triggered when there is an error while loading a banner ad.
+  /// It provides information about the error that occurred.
+  BannerAdLoadedErrorEvent({
+    required super.viewId,
+    required super.reason,
+  });
+}
+
+/// Represents an event indicating that a native banner ad has been loaded.
+/// This event is a subclass of [BannerAdEvent].
+class NativeBannerAdLoadedEvent extends BannerAdEvent {
+  /// Represents an event indicating that a native banner ad has been loaded.
+  ///
+  /// This event is triggered when a native banner ad is successfully loaded
+  /// and ready to be displayed.
+  NativeBannerAdLoadedEvent({
+    required super.viewId,
+    required this.title,
+    required this.description,
+    required this.imageUrl,
+  });
+
+  /// The title which should be shown within the native ad.
+  final String title;
+
+  /// The description which should be shown within the native ad.
+  final String description;
+
+  /// The URL of the main image within in the native ad.
+  final String imageUrl;
+}
+
+/// Represents an event that is triggered when a native banner ad fails to load.
+/// Extends the [BannerAdErrorEvent] class.
+class NativeBannerAdLoadedErrorEvent extends BannerAdErrorEvent {
+  /// Represents an event that occurs when a native banner ad fails to load.
+  ///
+  /// This event is triggered when there is an error while loading a native
+  /// banner ad.
+  /// It provides information about the error that occurred.
+  NativeBannerAdLoadedErrorEvent({
+    required super.viewId,
+    required super.reason,
+  });
 }

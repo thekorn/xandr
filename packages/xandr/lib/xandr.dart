@@ -24,7 +24,7 @@ class XandrController {
     _platform.registerEventStream(controller: _eventStreamController);
   }
 
-  final StreamController<String> _eventStreamController =
+  final StreamController<BannerAdEvent> _eventStreamController =
       StreamController.broadcast();
 
   /// Initializes the Xandr SDK.
@@ -40,15 +40,15 @@ class XandrController {
   ///
   /// Example usage:
   /// ```dart
-  /// StreamSubscription<String> subscription = listen();
+  /// StreamSubscription<BannerAdEvent> subscription = listen();
   /// subscription.cancel();
   /// ```
-  StreamSubscription<String> listen(
+  StreamSubscription<BannerAdEvent> listen(
     int widgetId,
-    void Function(String) callback,
+    void Function(BannerAdEvent) callback,
   ) {
     return _eventStreamController.stream
-        //.where((event) => event.startsWith('$widgetId:'))
+        .where((event) => event.viewId == widgetId)
         .listen(callback);
   }
 }

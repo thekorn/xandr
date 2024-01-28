@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:xandr_platform_interface/src/method_channel.dart';
+import 'package:xandr_platform_interface/xandr_platform_interface.dart';
 
 /// The interface that implementations of xandr must implement.
 ///
@@ -24,7 +25,9 @@ abstract class XandrPlatform extends PlatformInterface {
   static XandrPlatform get instance => _instance;
 
   /// Registers the event delegate.
-  void registerEventStream({required StreamController<String> controller}) {
+  void registerEventStream({
+    required StreamController<BannerAdEvent> controller,
+  }) {
     throw UnimplementedError(
       'registerEventDelegate() has not been implemented.',
     );

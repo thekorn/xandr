@@ -75,7 +75,7 @@ class _HostAdBannerView extends StatelessWidget {
       onPlatformViewCreated: (id) {
         debugPrint('Created banner view: $id');
         controller.listen(id, (event) {
-          debugPrint('Received event for $id: $event');
+          debugPrint('>>>> Received event for $id: $event');
         });
       },
       creationParams: creationParams,
