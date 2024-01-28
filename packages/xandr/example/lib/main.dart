@@ -55,13 +55,13 @@ class XandrExample extends StatefulWidget {
 
 class AdBanner extends StatelessWidget {
   const AdBanner({
-    required this.inventoryCode,
+    required this.placementID,
     required this.adSizes,
     required this.controller,
     super.key,
     this.customKeywords,
   });
-  final String inventoryCode;
+  final String placementID;
   final List<AdSize> adSizes;
   final CustomKeywords? customKeywords;
   final XandrController controller;
@@ -89,13 +89,13 @@ class _XandrExampleState extends State<XandrExample> {
       textAlign: TextAlign.center,
       child: XandrBuilder(
         controller: _controller,
-        memberId: 123,
+        memberId: 10094,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return AdBanner(
               controller: _controller,
-              inventoryCode: 'test',
-              adSizes: const [AdSize(728, 90)],
+              placementID: '17058950',
+              adSizes: const [AdSize(300, 250)],
               customKeywords: useDemoAds,
             );
           } else if (snapshot.hasError) {
