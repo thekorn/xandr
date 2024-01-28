@@ -11,11 +11,7 @@ class BannerViewFactory(
     private val state: FlutterState
 ) :
     PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-    override fun create(
-        context: Context,
-        id: Int,
-        args: Any?
-    ): PlatformView {
+    override fun create(context: Context, id: Int, args: Any?): PlatformView {
         return BannerViewContainer(
             activity,
             this.state,

@@ -12,5 +12,4 @@ class AdInitListener(private val flutterState: FlutterState) : InitListener {
         )
         this.flutterState.isInitialized.complete(success)
     }
-
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:xandr_platform_interface/xandr_platform_interface.dart';
 
@@ -19,8 +21,11 @@ class XandrController {
   /// controller.start();
   /// ```
   XandrController() {
-    _platform.registerEventDelegate();
+    _platform.registerEventStream(controller: _eventStreamController);
   }
+
+  final StreamController<BannerAdEvent> _eventStreamController =
+      StreamController.broadcast();
 
   /// Initializes the Xandr SDK.
   ///
@@ -28,5 +33,22 @@ class XandrController {
   Future<bool> init(int memberId) async {
     debugPrint('init xandr with memberId=$memberId');
     return _platform.init(memberId);
+  }
+
+  /// Listens to the stream of strings and returns a [StreamSubscription] that
+  /// can be used to cancel the subscription.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// StreamSubscription<BannerAdEvent> subscription = listen();
+  /// subscription.cancel();
+  /// ```
+  StreamSubscription<BannerAdEvent> listen(
+    int widgetId,
+    void Function(BannerAdEvent) callback,
+  ) {
+    return _eventStreamController.stream
+        .where((event) => event.viewId == widgetId)
+        .listen(callback);
   }
 }

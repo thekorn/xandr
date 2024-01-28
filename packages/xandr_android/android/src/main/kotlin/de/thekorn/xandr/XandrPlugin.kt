@@ -2,11 +2,10 @@ package de.thekorn.xandr
 
 import XandrHostApi
 import com.appnexus.opensdk.XandrAd
-
+import io.flutter.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import io.flutter.Log
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
@@ -72,7 +71,3 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         }
     }
 }
-
-
-
-

@@ -4,12 +4,12 @@ import XandrFlutterApi
 import XandrHostApi
 import android.content.Context
 import io.flutter.plugin.common.BinaryMessenger
-import kotlinx.coroutines.CompletableDeferred
 import kotlin.properties.Delegates
+import kotlinx.coroutines.CompletableDeferred
 
 class FlutterState(
     var applicationContext: Context,
-    private var binaryMessenger: BinaryMessenger,
+    private var binaryMessenger: BinaryMessenger
 ) {
     val isInitialized: CompletableDeferred<Boolean> = CompletableDeferred()
 
