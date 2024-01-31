@@ -1,12 +1,16 @@
-// ignore_for_file: public_member_api_docs
-
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:xandr/ad_size.dart';
 import 'package:xandr/xandr.dart';
 import 'package:xandr_android/xandr_android.dart';
 
+/// A widget that displays an banner advertisement.
 class AdBanner extends StatefulWidget {
+  /// Represents an ad banner widget.
+  ///
+  /// This widget is used to display an advertisement banner.
+  /// It can be customized with various properties to control the appearance
+  /// and behavior of the ad.
   AdBanner({
     required this.adSizes,
     required this.controller,
@@ -25,14 +29,37 @@ class AdBanner extends StatefulWidget {
         ),
         width = width ?? adSizes.first.width.toDouble(),
         height = height ?? adSizes.first.height.toDouble();
+
+  /// The placement ID for the ad banner.
   final String? placementID;
+
+  /// The inventory code for the ad banner.
   final String? inventoryCode;
+
+  /// Represents a banner ad with multiple sizes.
+  ///
+  /// The [AdBanner] class is used to display banner ads in different sizes.
+  /// The [adSizes] property is a list of [AdSize] objects that represent the
+  /// available sizes for the banner ad.
   final List<AdSize> adSizes;
+
+  /// The custom keywords for the ad banner.
   final CustomKeywords? customKeywords;
+
+  /// The Xandr ad banner controller.
+  /// Use this controller to interact with the Xandr ad banner.
   final XandrController controller;
+
+  /// The interval at which the ad banner should automatically refresh.
   final Duration autoRefreshInterval;
+
+  /// Whether to allow native demand for the ad banner.
   final bool allowNativeDemand;
+
+  /// The width of the ad banner.
   final double width;
+
+  /// The height of the ad banner.
   final double height;
 
   @override
@@ -129,7 +156,13 @@ class _HostAdBannerView extends StatelessWidget {
   }
 }
 
+/// A delegate for handling events related to banner ads.
 class BannerAdEventDelegate {
+  /// A delegate for handling events related to a banner ad.
+  ///
+  /// This delegate provides callbacks for various events that can occur
+  /// during the lifecycle of a banner ad, such as when the ad is loaded,
+  /// when an error occurs, or when the ad is clicked.
   BannerAdEventDelegate({
     this.onBannerAdLoaded,
     this.onBannerAdLoadedError,
@@ -137,9 +170,33 @@ class BannerAdEventDelegate {
     this.onNativeBannerAdLoadedError,
   });
 
+  /// A callback function that is called when a banner ad is loaded.
+  ///
+  /// The [onBannerAdLoaded] function takes a [BannerAdLoadedEvent] as a
+  /// parameter,
+  /// which provides information about the loaded banner ad.
+  /// If the [onBannerAdLoaded] function is not provided, no action will be
+  /// taken when a banner ad is loaded.
   final void Function(BannerAdLoadedEvent)? onBannerAdLoaded;
+
+  /// Callback function that is called when a banner ad fails to load.
+  ///
+  /// The [onBannerAdLoadedError] function is a callback that is triggered
+  /// when a banner ad fails to load.
+  /// It takes an optional parameter of type [BannerAdLoadedErrorEvent],
+  /// which provides information about the error.
+  /// If the banner ad loads successfully, this function will not be called.
   final void Function(BannerAdLoadedErrorEvent)? onBannerAdLoadedError;
+
+  /// Callback function that is called when a native banner ad is loaded.
+  ///
+  /// The [onNativeBannerAdLoaded] function takes a [NativeBannerAdLoadedEvent]
+  /// as a parameter.
+  /// This event contains information about the loaded native banner ad.
   final void Function(NativeBannerAdLoadedEvent)? onNativeBannerAdLoaded;
+
+  /// Callback function that is called when there is an error loading a native
+  /// banner ad.
   final void Function(NativeBannerAdLoadedErrorEvent)?
       onNativeBannerAdLoadedError;
 }

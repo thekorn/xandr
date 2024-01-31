@@ -1,14 +1,9 @@
 package de.thekorn.xandr
 
-import XandrFlutterApi
 import android.app.Activity
 import android.view.View
-import com.appnexus.opensdk.AdListener
 import com.appnexus.opensdk.AdSize
-import com.appnexus.opensdk.AdView
 import com.appnexus.opensdk.BannerAdView
-import com.appnexus.opensdk.NativeAdResponse
-import com.appnexus.opensdk.ResultCode
 import io.flutter.Log
 import io.flutter.plugin.platform.PlatformView
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -99,103 +94,5 @@ class BannerViewContainer(
 
     override fun dispose() {
         this.banner.destroy()
-    }
-}
-
-class XandrAdListener(
-    private var widgetId: Int,
-    private var flutterApi: XandrFlutterApi
-) : AdListener {
-    override fun onAdLoaded(view: AdView?) {
-        Log.d(
-            "Xandr.BannerView",
-            ">>> Ad Loaded, id=${view?.id} widgetId=$widgetId, w=${view?.creativeWidth}," +
-                " h=${view?.creativeHeight}"
-        )
-
-        if (view != null) {
-            val adResponse = view.adResponseInfo
-            flutterApi.onAdLoaded(
-                widgetId.toLong(),
-                view.creativeWidth.toLong(), view.creativeHeight.toLong(), adResponse.creativeId,
-                adResponse.adType.toString(), adResponse.tagId, adResponse.auctionId,
-                adResponse.cpm, adResponse.buyMemberId.toLong()
-            ) { }
-        } else {
-            flutterApi.onAdLoadedError(
-                widgetId.toLong(),
-                "Unknown error while loading banner ad"
-            ) { }
-        }
-    }
-
-    override fun onAdLoaded(adResonse: NativeAdResponse?) {
-        Log.d(
-            "Xandr.BannerView",
-            ">>> Ad Loaded, NativeAdResponse=$adResonse, title=${adResonse?.title} " +
-                "for $widgetId"
-        )
-        if (adResonse != null) {
-            flutterApi.onNativeAdLoaded(
-                widgetId.toLong(),
-                adResonse.title,
-                adResonse.description,
-                adResonse.imageUrl
-            ) { }
-        } else {
-            flutterApi.onNativeAdLoadedError(
-                widgetId.toLong(),
-                "Unknown error while loading native banner ad"
-            ) { }
-        }
-    }
-
-    override fun onAdRequestFailed(p0: AdView?, p1: ResultCode?) {
-        Log.d(
-            "Xandr.BannerView",
-            ">>> Ad Request failed, AdView:p0=$p0 ResultCode:p1=$p1"
-        )
-    }
-
-    override fun onAdExpanded(p0: AdView?) {
-        Log.d(
-            "Xandr.BannerView",
-            ">>> Ad expanded, AdView:p0=$p0"
-        )
-    }
-
-    override fun onAdCollapsed(p0: AdView?) {
-        Log.d(
-            "Xandr.BannerView",
-            ">>> Ad collapsed, AdView:p0=$p0"
-        )
-    }
-
-    override fun onAdClicked(p0: AdView?) {
-        Log.d(
-            "Xandr.BannerView",
-            ">>> Ad clicked, AdView:p0=$p0"
-        )
-    }
-
-    override fun onAdClicked(p0: AdView?, p1: String?) {
-        Log.d(
-            "Xandr.BannerView",
-            ">>> Ad clicked, AdView:p0=$p0 String:p1=$p1"
-        )
-    }
-
-    override fun onLazyAdLoaded(p0: AdView?) {
-        Log.d(
-            "Xandr.BannerView",
-            ">>> Ad lazy loaded, AdView:p0=$p0"
-        )
-    }
-
-    override fun onAdImpression(p0: AdView?) {
-        Log.d(
-            "Xandr.BannerView",
-            ">>> Ad impressions, AdView:p0=$p0"
-        )
     }
 }

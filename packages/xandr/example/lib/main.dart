@@ -14,7 +14,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: XandrExample());
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const XandrExample(),
+    );
   }
 }
 
@@ -37,44 +44,80 @@ class _XandrExampleState extends State<XandrExample> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTextStyle(
-      style: Theme.of(context).textTheme.displayMedium!,
-      textAlign: TextAlign.center,
-      child: XandrBuilder(
-        controller: _controller,
-        memberId: 9517, //10094,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            debugPrint('Xandr SDK initialized, success=${snapshot.hasData}');
-            return Column(
-              children: [
-                AdBanner(
-                  controller: _controller,
-                  //placementID: '17058950',
-                  inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-                  adSizes: const [
-                    AdSize(1, 1),
-                    AdSize(728, 90),
-                  ], //[AdSize(300, 250)],
-                  customKeywords: useDemoAds,
-                ),
-                AdBanner(
-                  controller: _controller,
-                  //placementID: '17058950',
-                  inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-                  adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
-                  customKeywords: useDemoAds,
-                  width: 10,
-                  height: 10,
-                ),
-              ],
-            );
-          } else if (snapshot.hasError) {
-            return const Text('Error initializing Xandr SDK');
-          } else {
-            return const Text('Initializing Xandr SDK...');
-          }
-        },
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('xandr sample - banner'),
+      ),
+      body: Center(
+        child: XandrBuilder(
+          controller: _controller,
+          memberId: 9517, //10094,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              debugPrint('Xandr SDK initialized, success=${snapshot.hasData}');
+              return Column(
+                children: [
+                  const Text(
+                      'Lorem Ipsum is simply dummy text of the printing and '
+                      'typesetting industry. Lorem Ipsum has been the boo '
+                      'standard dummy text ever since the 1500s, when an aha '
+                      'printer took a galley of type and scrambled it to make'),
+                  AdBanner(
+                    controller: _controller,
+                    //placementID: '17058950',
+                    inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
+                    adSizes: const [
+                      AdSize(1, 1),
+                      AdSize(728, 90),
+                    ], //[AdSize(300, 250)],
+                    width: 90,
+                    height: 90,
+                    //customKeywords: useDemoAds,
+                  ),
+                  const Text(
+                      'Lorem Ipsum is simply dummy text of the printing and '
+                      'typesetting industry. Lorem Ipsum has been the boo '
+                      'standard dummy text ever since the 1500s, when an aha '
+                      'printer took a galley of type and scrambled it to make'),
+                  const Text(
+                      'Lorem Ipsum is simply dummy text of the printing and '
+                      'typesetting industry. Lorem Ipsum has been the boo '
+                      'standard dummy text ever since the 1500s, when an aha '
+                      'printer took a galley of type and scrambled it to make'),
+                  AdBanner(
+                    controller: _controller,
+                    //placementID: '17058950',
+                    inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
+                    adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
+                    //customKeywords: useDemoAds,
+                    width: 90,
+                    height: 90,
+                  ),
+                  const Text(
+                      'Lorem Ipsum is simply dummy text of the printing and '
+                      'typesetting industry. Lorem Ipsum has been the boo '
+                      'standard dummy text ever since the 1500s, when an aha '
+                      'printer took a galley of type and scrambled it to make'),
+                  const Text(
+                      'Lorem Ipsum is simply dummy text of the printing and '
+                      'typesetting industry. Lorem Ipsum has been the boo '
+                      'standard dummy text ever since the 1500s, when an aha '
+                      'printer took a galley of type and scrambled it to make'),
+                  const Text(
+                      'Lorem Ipsum is simply dummy text of the printing and '
+                      'typesetting industry. Lorem Ipsum has been the boo '
+                      'standard dummy text ever since the 1500s, when an aha '
+                      'printer took a galley of type and scrambled it to make'),
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return const Text('Error initializing Xandr SDK');
+            } else {
+              return const Text('Initializing Xandr SDK...');
+            }
+          },
+        ),
       ),
     );
   }

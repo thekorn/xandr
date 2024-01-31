@@ -23,6 +23,17 @@ abstract class XandrHostApi {
   bool init({
     required int memberId,
   });
+
+  @async
+  bool loadInterstitialAd({
+    required int widgetId,
+    String? placementID,
+    String? inventoryCode,
+    Map<String, String>? customKeywords,
+  });
+
+  @async
+  bool showInterstitialAd({int? autoDismissDelay});
 }
 
 @FlutterApi()
