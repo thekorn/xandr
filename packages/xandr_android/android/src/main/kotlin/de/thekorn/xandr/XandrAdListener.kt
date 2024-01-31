@@ -15,7 +15,7 @@ open class XandrAdListener(
         Log.d(
             "Xandr.BannerView",
             ">>> Ad Loaded, id=${view?.id} widgetId=$widgetId, w=${view?.creativeWidth}," +
-                    " h=${view?.creativeHeight}"
+                " h=${view?.creativeHeight}"
         )
 
         if (view != null) {
@@ -38,7 +38,7 @@ open class XandrAdListener(
         Log.d(
             "Xandr.BannerView",
             ">>> Ad Loaded, NativeAdResponse=$adResonse, title=${adResonse?.title} " +
-                    "for $widgetId"
+                "for $widgetId"
         )
         if (adResonse != null) {
             flutterApi.onNativeAdLoaded(
@@ -104,7 +104,6 @@ open class XandrAdListener(
         )
     }
 }
-
 
 class XandrInterstitialAdListener(
     widgetId: Long,

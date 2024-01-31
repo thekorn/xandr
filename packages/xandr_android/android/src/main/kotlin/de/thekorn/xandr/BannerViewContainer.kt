@@ -96,4 +96,3 @@ class BannerViewContainer(
         this.banner.destroy()
     }
 }
-
