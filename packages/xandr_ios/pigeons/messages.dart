@@ -23,4 +23,38 @@ abstract class XandrHostApi {
   bool initXandrSdk({
     required int memberId,
   });
+
+  @async
+  bool loadInterstitialAd({
+    required int widgetId,
+    String? placementID,
+    String? inventoryCode,
+    Map<String, String>? customKeywords,
+  });
+
+  @async
+  bool showInterstitialAd({int? autoDismissDelay});
+}
+
+@FlutterApi()
+abstract class XandrFlutterApi {
+  void onAdLoaded(
+    int viewId,
+    int width,
+    int height,
+    String creativeId,
+    String adType,
+    String tagId,
+    String auctionId,
+    double cpm,
+    int memberId,
+  ) {}
+  void onAdLoadedError(int viewId, String reason) {}
+  void onNativeAdLoaded(
+    int viewId,
+    String title,
+    String description,
+    String imageUrl,
+  ) {}
+  void onNativeAdLoadedError(int viewId, String reason) {}
 }

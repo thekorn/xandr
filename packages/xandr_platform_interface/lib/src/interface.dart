@@ -24,12 +24,12 @@ abstract class XandrPlatform extends PlatformInterface {
   /// Defaults to [MethodChannelXandr].
   static XandrPlatform get instance => _instance;
 
-  /// Registers the event delegate.
+  /// Registers the event stream.
   void registerEventStream({
     required StreamController<BannerAdEvent> controller,
   }) {
     throw UnimplementedError(
-      'registerEventDelegate() has not been implemented.',
+      'registerEventStream() has not been implemented.',
     );
   }
 

@@ -14,7 +14,7 @@ void main() {
     api = MockXandrHostApi();
   });
 
-  test('init', () async {
+  test('initXandrSdk', () async {
     when(
       api.initXandrSdk(memberId: 123456),
     ).thenAnswer((_) async => true);
