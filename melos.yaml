@@ -79,3 +79,11 @@ scripts:
       concurrency: 1
     packageFilters:
         scope: 'xandr_example'
+
+  run:example:interstitial:
+    run: fvm flutter run -t lib/main_interstitial.dart
+    description: Run the example app showing interstitial ads.
+    exec:
+      concurrency: 1
+    packageFilters:
+        scope: 'xandr_example'

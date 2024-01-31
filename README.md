@@ -22,16 +22,19 @@ However there are three main concepts:
   - simplifies handling of the global `XandrController()`
   - makes sure that all child-ads are only requested once the sdk is successfully initialized
 - there is an `AdBanner()` widget which:
-  - is for now the only available ad type
-  - can requests banners by size options, `placementId` and/or `inventoryCode`
+  - can request banners by size options, `placementId` and/or `inventoryCode`
   - `customKeywords` are also supported
   - behind the scenes the widget size is adjusted accordingly, and the ad is reloaded after a given amount of time
+- there is an `InterstitialAd()` which:
+  - can request an interstitial by `placementId` and/or `inventoryCode`
+  - `customKeywords` are also supported
+  - after the ad is loaded, it can be shown by calling `show()`
 
 ### sample code:
 
 For a running examples please check the sample app at [example/lib/main.dart](packages/xandr/example/lib/main.dart) - the sample app can be run using `melos run run:example -- -d sdk` (android only atm).
 
-In order to initialize the xandr sdk, run:
+In order to initialize the xandr sdk, and show a banner ad run:
 
 ```dart
 _controller = XandrController();
@@ -68,3 +71,56 @@ Also, results of the `AdResponse` are propagated to the flutter side:
 I/flutter (16949): xandr.onAdLoaded: 0, size=728x90, creativeId=158504583, adType=BANNER, tagId=20835075, auctionId=6349340599071400911, cpm=0.10855, memberId=9517
 ...
 ```
+
+Loading an interstitial ad is similar, however its a two step process:
+
+  1. loading the ad
+
+```dart
+...
+_interstitialAd = InterstitialAd(
+  controller: _controller,
+  inventoryCode: 'bunte_webphone_news_gallery_oop_0',
+);
+...
+```
+
+  2. showing the ad with optional auto-hide after a given amount of time
+
+```dart
+XandrInterstitialBuilder(
+  interstitialAd: _interstitialAd,
+  builder: (context, snapshot) {
+    if (snapshot.hasData) {
+      debugPrint('Xandr interstitial ad loaded, '
+          'success=${snapshot.hasData}');
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: () async {
+              debugPrint('show interstitial ad...');
+              final result =
+                  await _interstitialAd.show(autoDismissDelay: 10);
+              debugPrint(
+                'interstitial ad has been closed result=$result',
+              );
+            },
+            child: const Text('Show Interstitial Ad'),
+          ),
+        ],
+      );
+    } else if (snapshot.hasError) {
+      return const Text('Error loading Xandr interstitial ad');
+    } else {
+      return const Text('Loading Xandr interstitial ad...');
+    }
+  },
+)
+```
+
+***Result:***
+
+![](./docs/images/android_interstitial.gif)
+
+To run the interstitial example app, run `melos run run:example:interstitial -- -d sdk` (android only atm).
