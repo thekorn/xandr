@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:xandr/ad_interstitial.dart';
-import 'package:xandr/ad_size.dart';
 import 'package:xandr/xandr.dart';
 import 'package:xandr/xandr_builder.dart';
 
@@ -36,7 +35,6 @@ class _XandrExampleState extends State<XandrExample> {
     _controller = XandrController();
     _interstitialAd = InterstitialAd(
       controller: _controller,
-      //placementID: '17058950',
       inventoryCode: 'bunte_webphone_news_gallery_oop_0',
       //customKeywords: useDemoAds,
     );
