@@ -8,6 +8,7 @@ import 'dart:async' as _i4;
 import 'package:flutter/services.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:xandr_platform_interface/src/method_channel.dart' as _i3;
+import 'package:xandr_platform_interface/xandr_platform_interface.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -59,4 +60,46 @@ class MockMethodChannelXandr extends _i1.Mock
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
+
+  @override
+  _i4.Future<bool> loadInterstitialAd(
+    String? placementID,
+    String? inventoryCode,
+    Map<String, String>? customKeywords,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #loadInterstitialAd,
+          [
+            placementID,
+            inventoryCode,
+            customKeywords,
+          ],
+        ),
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
+
+  @override
+  _i4.Future<bool> showInterstitialAd(Duration? autoDismissDelay) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showInterstitialAd,
+          [autoDismissDelay],
+        ),
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
+
+  @override
+  void registerEventStream(
+          {required _i4.StreamController<_i5.BannerAdEvent>? controller}) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #registerEventStream,
+          [],
+          {#controller: controller},
+        ),
+        returnValueForMissingStub: null,
+      );
 }
