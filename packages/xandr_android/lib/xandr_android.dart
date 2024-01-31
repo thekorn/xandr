@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:xandr_android/src/messages.g.dart' as messages;
@@ -25,6 +26,27 @@ class XandrAndroid extends XandrPlatform {
   @override
   Future<bool> init(int memberId) async {
     return _api.init(memberId: memberId);
+  }
+
+  @override
+  Future<bool> loadInterstitialAd(
+    String? placementID,
+    String? inventoryCode,
+    CustomKeywords? customKeywords,
+  ) async {
+    final rng = Random();
+    final widgetId = rng.nextInt(1000);
+    return _api.loadInterstitialAd(
+      widgetId: widgetId,
+      placementID: placementID,
+      inventoryCode: inventoryCode,
+      customKeywords: customKeywords,
+    );
+  }
+
+  @override
+  Future<bool> showInterstitialAd(int? autoDismissDelay) {
+    return _api.showInterstitialAd(autoDismissDelay: autoDismissDelay);
   }
 }
 
