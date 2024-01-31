@@ -13,7 +13,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: XandrExample());
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const XandrExample(),
+    );
   }
 }
 
@@ -42,50 +49,55 @@ class _XandrExampleState extends State<XandrExample> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTextStyle(
-      style: Theme.of(context).textTheme.displayMedium!,
-      textAlign: TextAlign.center,
-      child: XandrBuilder(
-        controller: _controller,
-        memberId: 9517, //10094,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            debugPrint('Xandr SDK initialized, success=${snapshot.hasData}');
-            return XandrInterstitialBuilder(
-              interstitialAd: _interstitialAd,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  debugPrint('Xandr interstitial ad loaded, '
-                      'success=${snapshot.hasData}');
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () async {
-                          debugPrint('show interstitial ad...');
-                          final result =
-                              await _interstitialAd.show(autoDismissDelay: 10);
-                          debugPrint(
-                            'interstitial ad has been closed result=$result',
-                          );
-                        },
-                        child: const Text('Show Interstitial Ad'),
-                      ),
-                    ],
-                  );
-                } else if (snapshot.hasError) {
-                  return const Text('Error loading Xandr interstitial ad');
-                } else {
-                  return const Text('Loading Xandr interstitial ad...');
-                }
-              },
-            );
-          } else if (snapshot.hasError) {
-            return const Text('Error initializing Xandr SDK');
-          } else {
-            return const Text('Initializing Xandr SDK...');
-          }
-        },
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('xandr sample - interstitial'),
+      ),
+      body: Center(
+        child: XandrBuilder(
+          controller: _controller,
+          memberId: 9517, //10094,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              debugPrint('Xandr SDK initialized, success=${snapshot.hasData}');
+              return XandrInterstitialBuilder(
+                interstitialAd: _interstitialAd,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    debugPrint('Xandr interstitial ad loaded, '
+                        'success=${snapshot.hasData}');
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () async {
+                            debugPrint('show interstitial ad...');
+                            final result = await _interstitialAd.show(
+                              autoDismissDelay: 10,
+                            );
+                            debugPrint(
+                              'interstitial ad has been closed result=$result',
+                            );
+                          },
+                          child: const Text('Show Interstitial Ad'),
+                        ),
+                      ],
+                    );
+                  } else if (snapshot.hasError) {
+                    return const Text('Error loading Xandr interstitial ad');
+                  } else {
+                    return const Text('Loading Xandr interstitial ad...');
+                  }
+                },
+              );
+            } else if (snapshot.hasError) {
+              return const Text('Error initializing Xandr SDK');
+            } else {
+              return const Text('Initializing Xandr SDK...');
+            }
+          },
+        ),
       ),
     );
   }
