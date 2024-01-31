@@ -9,3 +9,12 @@ abstract class BannerAdEvent {
   /// The unique identifier for the view.
   final int viewId;
 }
+
+/// A typedef representing a map of custom keywords.
+///
+/// The keys are strings representing the keyword names,
+/// and the values are strings representing the keyword values.
+typedef CustomKeywords = Map<String, String>;
+
+/// A constant representing the use of demo ads.
+const CustomKeywords useDemoAds = {'kw': 'demoads'};

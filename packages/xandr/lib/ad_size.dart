@@ -1,5 +1,7 @@
 // TODO(thekorn): move to somewhere else
 
+export 'package:xandr_platform_interface/xandr_platform_interface.dart';
+
 /// Represents the size of an ad.
 ///
 /// Use this class to define the dimensions of an ad.
@@ -30,12 +32,3 @@ class AdSize {
         'height': height,
       };
 }
-
-/// A typedef representing a map of custom keywords.
-///
-/// The keys are strings representing the keyword names,
-/// and the values are strings representing the keyword values.
-typedef CustomKeywords = Map<String, String>;
-
-/// A constant representing the use of demo ads.
-const CustomKeywords useDemoAds = {'kw': 'demoads'};

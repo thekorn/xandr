@@ -12,4 +12,24 @@ class MethodChannelXandr extends XandrPlatform {
   Future<bool> init(int memberId) async {
     return (await methodChannel.invokeMethod<bool>('init', [memberId]))!;
   }
+
+  @override
+  Future<bool> loadInterstitialAd(
+    String? placementID,
+    String? inventoryCode,
+    CustomKeywords? customKeywords,
+  ) async {
+    return (await methodChannel.invokeMethod<bool>('loadInterstitialAd', [
+      placementID,
+      inventoryCode,
+      customKeywords,
+    ]))!;
+  }
+
+  @override
+  Future<bool> showInterstitialAd(int? autoDismissDelay) async {
+    return (await methodChannel.invokeMethod<bool>('showInterstitialAd', [
+      autoDismissDelay,
+    ]))!;
+  }
 }
