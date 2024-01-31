@@ -45,8 +45,10 @@ class XandrAndroid extends XandrPlatform {
   }
 
   @override
-  Future<bool> showInterstitialAd(int? autoDismissDelay) {
-    return _api.showInterstitialAd(autoDismissDelay: autoDismissDelay);
+  Future<bool> showInterstitialAd(Duration? autoDismissDelay) {
+    return _api.showInterstitialAd(
+      autoDismissDelay: autoDismissDelay?.inSeconds,
+    );
   }
 }
 

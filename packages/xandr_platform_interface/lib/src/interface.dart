@@ -55,7 +55,7 @@ abstract class XandrPlatform extends PlatformInterface {
   }
 
   /// Return the current platform name.
-  Future<bool> showInterstitialAd(int? autoDismissDelay) {
+  Future<bool> showInterstitialAd(Duration? autoDismissDelay) {
     throw UnimplementedError('showInterstitialAd() has not been implemented.');
   }
 }

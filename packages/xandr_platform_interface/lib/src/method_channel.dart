@@ -27,9 +27,9 @@ class MethodChannelXandr extends XandrPlatform {
   }
 
   @override
-  Future<bool> showInterstitialAd(int? autoDismissDelay) async {
+  Future<bool> showInterstitialAd(Duration? autoDismissDelay) async {
     return (await methodChannel.invokeMethod<bool>('showInterstitialAd', [
-      autoDismissDelay,
+      autoDismissDelay?.inMilliseconds,
     ]))!;
   }
 }

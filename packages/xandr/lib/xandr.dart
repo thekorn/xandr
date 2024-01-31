@@ -55,7 +55,7 @@ class XandrController {
   }
 
   /// shows an interstitial ad.
-  Future<bool> showInterstitialAd({int? autoDismissDelay}) async {
+  Future<bool> showInterstitialAd({Duration? autoDismissDelay}) async {
     debugPrint('showInterstitialAd');
     return _platform.showInterstitialAd(autoDismissDelay);
   }

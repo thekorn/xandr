@@ -74,7 +74,7 @@ class _XandrExampleState extends State<XandrExample> {
                           onPressed: () async {
                             debugPrint('show interstitial ad...');
                             final result = await _interstitialAd.show(
-                              autoDismissDelay: 10,
+                              autoDismissDelay: const Duration(seconds: 10),
                             );
                             debugPrint(
                               'interstitial ad has been closed result=$result',
