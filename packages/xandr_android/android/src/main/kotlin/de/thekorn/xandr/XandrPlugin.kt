@@ -1,16 +1,13 @@
 package de.thekorn.xandr
 
-import XandrFlutterApi
 import XandrHostApi
 import android.app.Activity
-import com.appnexus.opensdk.AdView
 import com.appnexus.opensdk.InterstitialAdView
 import com.appnexus.opensdk.XandrAd
 import io.flutter.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
@@ -93,7 +90,7 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         customKeywords: Map<String, String>?,
         callback: (Result<Boolean>) -> Unit
     ) {
-        var interstitial = InterstitialAdView(activity)
+        val interstitial = InterstitialAdView(activity)
         interstitialAd = InterstitialAd(interstitial)
         interstitial.adListener = XandrInterstitialAdListener(
             widgetId,
@@ -138,30 +135,5 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         interstitialAd.isClosed.invokeOnCompletion {
             callback(Result.success(interstitialAd.isClosed.getCompleted()))
         }
-    }
-}
-
-class InterstitialAd(
-    var interstitial: InterstitialAdView
-) {
-    val isLoaded: CompletableDeferred<Boolean> = CompletableDeferred()
-    val isClosed: CompletableDeferred<Boolean> = CompletableDeferred()
-}
-
-class XandrInterstitialAdListener(
-    widgetId: Long,
-    flutterApi: XandrFlutterApi,
-    private var interstitialAd: InterstitialAd
-) : XandrAdListener(widgetId.toInt(), flutterApi) {
-    override fun onAdLoaded(view: AdView?) {
-        super.onAdLoaded(view)
-        interstitialAd.isLoaded.complete(true)
-        Log.d("Xandr.Interstitial", "onAdLoaded")
-    }
-
-    override fun onAdCollapsed(p0: AdView?) {
-        super.onAdCollapsed(p0)
-        interstitialAd.isClosed.complete(true)
-        Log.d("Xandr.Interstitial", "onAdCollapsed")
     }
 }
