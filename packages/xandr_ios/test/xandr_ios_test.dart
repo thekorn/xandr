@@ -16,9 +16,9 @@ void main() {
 
   test('init', () async {
     when(
-      api.init(memberId: 123456),
+      api.initXandrSdk(memberId: 123456),
     ).thenAnswer((_) async => true);
-    final success = await api.init(memberId: 123456);
+    final success = await api.initXandrSdk(memberId: 123456);
     expect(success, true);
   });
 }
