@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:xandr/ad_size.dart';
 import 'package:xandr_platform_interface/xandr_platform_interface.dart';
 
 XandrPlatform get _platform => XandrPlatform.instance;
@@ -33,6 +34,30 @@ class XandrController {
   Future<bool> init(int memberId) async {
     debugPrint('init xandr with memberId=$memberId');
     return _platform.init(memberId);
+  }
+
+  /// loads an interstitial ad.
+  Future<bool> loadInterstitialAd({
+    String? placementID,
+    String? inventoryCode,
+    CustomKeywords? customKeywords,
+  }) async {
+    debugPrint('loadInterstitialAd');
+    assert(
+      placementID != null || inventoryCode != null,
+      'placementID or inventoryCode must not be null',
+    );
+    return _platform.loadInterstitialAd(
+      placementID,
+      inventoryCode,
+      customKeywords,
+    );
+  }
+
+  /// shows an interstitial ad.
+  Future<bool> showInterstitialAd({int? autoDismissDelay}) async {
+    debugPrint('showInterstitialAd');
+    return _platform.showInterstitialAd(autoDismissDelay);
   }
 
   /// Listens to the stream of strings and returns a [StreamSubscription] that

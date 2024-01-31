@@ -102,7 +102,7 @@ class BannerViewContainer(
     }
 }
 
-class XandrAdListener(
+open class XandrAdListener(
     private var widgetId: Int,
     private var flutterApi: XandrFlutterApi
 ) : AdListener {
