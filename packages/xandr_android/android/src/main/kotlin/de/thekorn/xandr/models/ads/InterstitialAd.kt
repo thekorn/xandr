@@ -1,4 +1,4 @@
-package de.thekorn.xandr.models
+package de.thekorn.xandr.models.ads
 
 import android.content.Context
 import com.appnexus.opensdk.InterstitialAdView

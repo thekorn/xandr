@@ -2,10 +2,7 @@ package de.thekorn.xandr
 
 import android.app.Activity
 import android.view.View
-import androidx.core.content.ContextCompat
-import com.appnexus.opensdk.ANClickThroughAction
-import com.appnexus.opensdk.BannerAdView
-import de.thekorn.xandr.listeners.XandrAdListener
+import de.thekorn.xandr.models.ads.BannerAd
 import de.thekorn.xandr.models.BannerViewOptions
 import de.thekorn.xandr.models.FlutterState
 import io.flutter.Log
@@ -19,7 +16,7 @@ class BannerViewContainer(
     private val bannerViewOptions: BannerViewOptions?
 ) :
     PlatformView {
-    private val banner: BannerAdView
+    private val banner: BannerAd
 
     init {
         Log.d(
@@ -28,62 +25,10 @@ class BannerViewContainer(
                 "xandr-initialized=${state.isInitialized} bannerViewOptions=$bannerViewOptions"
         )
 
-        this.banner = BannerAdView(activity)
+        this.banner = BannerAd(activity, state, widgetId)
 
-        bannerViewOptions?.let {
-            it.adSizes?.let { adSizes ->
-                this.banner.adSizes = adSizes
-            }
-
-            it.autoRefreshInterval?.let { autoRefreshInterval ->
-                this.banner.autoRefreshInterval = autoRefreshInterval
-            }
-
-            it.customKeywords?.forEach { kw ->
-                this.banner.addCustomKeywords(kw.key, kw.value)
-            }
-
-            it.allowNativeDemand?.let { allowNativeDemand ->
-                this.banner.allowNativeDemand = allowNativeDemand
-            }
-
-            it.shouldServePSAs?.let { shouldServePSAs ->
-                this.banner.shouldServePSAs = shouldServePSAs
-            }
-
-            it.clickThroughAction?.let { clickThroughAction ->
-                when (clickThroughAction) {
-                    "open_device_browser" -> {
-                        this.banner.clickThroughAction = ANClickThroughAction.OPEN_DEVICE_BROWSER
-                    }
-                    "open_sdk_browser" -> {
-                        this.banner.clickThroughAction = ANClickThroughAction.OPEN_SDK_BROWSER
-                    }
-                    "return_url" -> {
-                        this.banner.clickThroughAction = ANClickThroughAction.RETURN_URL
-                    }
-                }
-            }
-            it.loadsInBackground?.let { loadsInBackground ->
-                this.banner.loadsInBackground = loadsInBackground
-            }
-            it.resizeAdToFitContainer?.let { resizeAdToFitContainer ->
-                this.banner.resizeAdToFitContainer = resizeAdToFitContainer
-            }
-        }
-
-        state.isInitialized.invokeOnCompletion {
-            // / need to make sure the sdk is initialized to access the memberId
-            // / docs: Note that if both inventory code and placement ID are passed in, the
-            //        inventory code will be passed to the server instead of the placement ID.
-            bannerViewOptions?.let {
-                if (it.inventoryCode != null) {
-                    this.banner.setInventoryCodeAndMemberID(state.memberId, it.inventoryCode)
-                } else {
-                    this.banner.placementID = it.placementID
-                }
-                Log.d("Xandr.BannerView", "Initializing DONE")
-            }
+        if (bannerViewOptions != null) {
+            this.banner.configure(bannerViewOptions)
         }
     }
 
@@ -109,17 +54,6 @@ class BannerViewContainer(
     }
 
     fun loadAd() {
-        Log.d("Xandr.BannerView", "loadAd; id=$widgetId")
-        this.banner.adListener = null
-
-        this.banner.adListener = XandrAdListener(
-            widgetId,
-            this.state.flutterApi,
-            this.bannerViewOptions
-        )
-        this.banner.setBackgroundColor(
-            ContextCompat.getColor(activity, android.R.color.transparent)
-        )
         this.banner.loadAd()
     }
 

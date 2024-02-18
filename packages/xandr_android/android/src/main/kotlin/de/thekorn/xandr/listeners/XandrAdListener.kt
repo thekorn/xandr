@@ -1,17 +1,11 @@
 package de.thekorn.xandr.listeners
 
 import XandrFlutterApi
-import android.view.View
-import android.view.ViewGroup
-import android.webkit.WebView
-import android.widget.FrameLayout
-import com.appnexus.opensdk.ANAdResponseInfo
 import com.appnexus.opensdk.AdListener
 import com.appnexus.opensdk.AdView
 import com.appnexus.opensdk.NativeAdResponse
 import com.appnexus.opensdk.ResultCode
-import de.thekorn.xandr.models.BannerViewOptions
-import de.thekorn.xandr.models.InterstitialAd
+import de.thekorn.xandr.models.ads.InterstitialAd
 import io.flutter.Log
 
 // / FIXME: create explicit XandrBannerAdListener
@@ -20,7 +14,7 @@ import io.flutter.Log
 open class XandrAdListener(
     private var widgetId: Int,
     private var flutterApi: XandrFlutterApi,
-    private val bannerViewOptions: BannerViewOptions?
+    //private val bannerViewOptions: BannerViewOptions?
 ) : AdListener {
     override fun onAdLoaded(view: AdView?) {
         Log.d(
@@ -143,7 +137,7 @@ open class XandrAdListener(
         )
     }
 
-    private fun AdView.resize(wId: Long, adResponse: ANAdResponseInfo) {
+    /*private fun AdView.resize(wId: Long, adResponse: ANAdResponseInfo) {
         this.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
             override fun onLayoutChange(
                 view: View?,
@@ -183,14 +177,14 @@ open class XandrAdListener(
                 }
             }
         })
-    }
+    }*/
 }
 
 class XandrInterstitialAdListener(
     widgetId: Long,
     flutterApi: XandrFlutterApi,
     private var interstitialAd: InterstitialAd
-) : XandrAdListener(widgetId.toInt(), flutterApi, null) {
+) : XandrAdListener(widgetId.toInt(), flutterApi) {
     override fun onAdLoaded(view: AdView?) {
         super.onAdLoaded(view)
         interstitialAd.isLoaded.complete(true)
