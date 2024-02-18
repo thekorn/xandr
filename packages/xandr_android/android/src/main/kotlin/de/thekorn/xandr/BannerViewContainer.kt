@@ -38,8 +38,8 @@ class BannerViewContainer(
                 this.banner.autoRefreshInterval = it.autoRefreshInterval
             }
 
-            it.customKeywords?.forEach {
-                this.banner.addCustomKeywords(it.key, it.value)
+            it.customKeywords?.forEach { x ->
+                this.banner.addCustomKeywords(x.key, x.value)
             }
 
             if (it.allowNativeDemand != null) {
@@ -93,7 +93,11 @@ class BannerViewContainer(
             "Return view, xandr-initialized=${state.isInitialized.isCompleted}"
         )
 
-        this.banner.adListener = XandrAdListener(widgetId, this.state.flutterApi)
+        this.banner.adListener = XandrAdListener(
+            widgetId,
+            this.state.flutterApi,
+            this.bannerViewOptions
+        )
 
         state.isInitialized.invokeOnCompletion {
             Log.d(

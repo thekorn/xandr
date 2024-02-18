@@ -64,7 +64,6 @@ fun Map<*, *>.toBannerAdViewOptions(): BannerViewOptions {
         // TODO: implement
         clickThroughAction = this["clickThroughAction"] as String?,
         autoRefreshInterval = this["autoRefreshInterval"] as Int?,
-        // TODO: implement
         resizeWhenLoaded = this["resizeWhenLoaded"] as Boolean?,
         allowNativeDemand = this["allowNativeDemand"] as Boolean?
     )
