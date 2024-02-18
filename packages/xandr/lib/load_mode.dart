@@ -9,9 +9,14 @@ class LoadMode {
 
   /// factory method to create a class [WhenInViewport]
   factory LoadMode.whenInViewport(
-    Stream<ScrollPosition> checkIfInViewport,
-    int pixelOffset,
-  ) = WhenInViewport;
+    Stream<ScrollPosition> checkIfInViewport, {
+    int? pixelOffset,
+  }) {
+    return WhenInViewport(
+      checkIfInViewport: checkIfInViewport,
+      pixelOffset: pixelOffset,
+    );
+  }
 }
 
 /// Use this class to automatically load the ad when it's created in the native
@@ -42,7 +47,7 @@ class LoadWhenCreated extends LoadMode {
 /// Use the factory method [LoadMode.whenInViewport] to create it.
 class WhenInViewport extends LoadMode {
   /// load ad when it's in the viewport
-  WhenInViewport(this.checkIfInViewport, int? pixelOffset)
+  WhenInViewport({required this.checkIfInViewport, int? pixelOffset})
       : pixelOffset = pixelOffset ?? 0,
         super._();
 
