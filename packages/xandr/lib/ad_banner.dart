@@ -29,6 +29,7 @@ class AdBanner extends StatefulWidget {
     this.resizeAdToFitContainer = false,
     this.loadsInBackground,
     this.shouldServePSAs,
+    this.enableLazyLoad,
     LoadMode? loadMode,
     double? width,
     double? height,
@@ -91,6 +92,11 @@ class AdBanner extends StatefulWidget {
   ///
   /// They are not enabled by default.
   final bool? shouldServePSAs;
+
+  /// The flag indicating whether lazy loading is enabled for the ad banner.
+  /// lazy loading banner ads is a performance optimization that defers the
+  /// creation of the internal ad view until the ad is actually loaded.
+  final bool? enableLazyLoad;
 
   /// The load mode for the ad banner, determines when the ad is loaded.
   final LoadMode loadMode;
@@ -189,6 +195,7 @@ class _AdBannerState extends State<AdBanner> {
         loadMode: widget.loadMode,
         onDoneLoading: onDoneLoading,
         widgetId: _widgetId,
+        enableLazyLoad: widget.enableLazyLoad,
         delegate: BannerAdEventDelegate(
           onBannerAdLoaded: (event) {
             debugPrint('>>>> onBannerAdLoaded: $event');
@@ -245,6 +252,7 @@ class _HostAdBannerView extends StatelessWidget {
     ClickThroughAction? clickThroughAction,
     bool? loadsInBackground,
     bool? shouldServePSAs,
+    bool? enableLazyLoad,
     this.delegate,
   })  : _onDoneLoading = onDoneLoading,
         creationParams = <String, dynamic>{
@@ -268,6 +276,9 @@ class _HostAdBannerView extends StatelessWidget {
     }
     if (shouldServePSAs != null) {
       creationParams['shouldServePSAs'] = shouldServePSAs;
+    }
+    if (enableLazyLoad != null) {
+      creationParams['enableLazyLoad'] = enableLazyLoad;
     }
   }
 

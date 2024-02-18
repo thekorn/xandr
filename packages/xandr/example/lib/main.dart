@@ -100,6 +100,7 @@ class _XandrExampleState extends State<XandrExample> {
                       adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
                       //customKeywords: useDemoAds,
                       resizeAdToFitContainer: true,
+                      enableLazyLoad: true,
                     ),
                     //FIXME: not working
                     //const Text(
