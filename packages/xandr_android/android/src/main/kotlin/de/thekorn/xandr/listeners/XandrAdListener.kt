@@ -29,9 +29,26 @@ open class XandrAdListener(
                 " h=${view?.creativeHeight}"
         )
 
-        if (bannerViewOptions?.resizeWhenLoaded != null && bannerViewOptions.resizeWhenLoaded) {
+        // FIXME: implement resizeWhenLoaded
+
+        if (view != null) {
+            val adResponse = view.adResponseInfo
+            flutterApi.onAdLoaded(
+                widgetId.toLong(),
+                view.creativeWidth.toLong(), view.creativeHeight.toLong(),
+                adResponse.creativeId, adResponse.adType.toString(), adResponse.tagId,
+                adResponse.auctionId, adResponse.cpm, adResponse.buyMemberId.toLong()
+            ) { }
+        } else {
+            flutterApi.onAdLoadedError(
+                widgetId.toLong(),
+                "Unknown error while loading banner ad"
+            ) { }
+        }
+
+/*        if (bannerViewOptions?.resizeWhenLoaded != null && bannerViewOptions.resizeWhenLoaded) {
             if (view != null) {
-                view.resize(view.adResponseInfo)
+                //view.resize(widgetId.toLong(), view.adResponseInfo)
             } else {
                 flutterApi.onAdLoadedError(
                     widgetId.toLong(),
@@ -53,7 +70,7 @@ open class XandrAdListener(
                     "Unknown error while loading banner ad"
                 ) { }
             }
-        }
+        }*/
     }
 
     override fun onAdLoaded(adResonse: NativeAdResponse?) {
@@ -126,7 +143,7 @@ open class XandrAdListener(
         )
     }
 
-    private fun AdView.resize(adResponse: ANAdResponseInfo) {
+    private fun AdView.resize(wId: Long, adResponse: ANAdResponseInfo) {
         this.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
             override fun onLayoutChange(
                 view: View?,
@@ -139,10 +156,12 @@ open class XandrAdListener(
                 oldRight: Int,
                 oldBottom: Int
             ) {
+                Log.d("AdView.resize", "Loaded, onLayoutChange widgetId=$wId")
                 (this@resize as ViewGroup).getChildAt(0)?.let { adWebView ->
                     val h = (bannerViewOptions?.layoutHeight ?: 0)
                     val screenHeight = (h * resources.displayMetrics.density).toInt()
                     if (screenHeight != 0 && screenHeight != adWebView.height && oldBottom != 0) {
+                        Log.d("AdView.resize", "Loaded, post web-view widgetId=$wId")
                         // post avoid "requestLayout() improperly called by com.appnexus.opensdk.AdWebView"
                         adWebView.post {
                             adWebView.layoutParams = FrameLayout.LayoutParams(
@@ -152,7 +171,7 @@ open class XandrAdListener(
                             (adWebView as WebView).settings.useWideViewPort = true
                             adWebView.invalidate()
                             flutterApi.onAdLoaded(
-                                widgetId.toLong(),
+                                wId,
                                 adWebView.width.toLong(), adWebView.height.toLong(),
                                 adResponse.creativeId, adResponse.adType.toString(),
                                 adResponse.tagId, adResponse.auctionId,
