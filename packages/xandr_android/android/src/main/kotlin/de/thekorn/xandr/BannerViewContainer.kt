@@ -4,7 +4,9 @@ import android.app.Activity
 import android.view.View
 import com.appnexus.opensdk.ANClickThroughAction
 import com.appnexus.opensdk.BannerAdView
+import de.thekorn.xandr.listeners.XandrAdListener
 import de.thekorn.xandr.models.BannerViewOptions
+import de.thekorn.xandr.models.FlutterState
 import io.flutter.Log
 import io.flutter.plugin.platform.PlatformView
 import kotlinx.coroutines.ExperimentalCoroutinesApi

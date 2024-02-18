@@ -1,10 +1,11 @@
-package de.thekorn.xandr
+package de.thekorn.xandr.listeners
 
 import XandrFlutterApi
 import com.appnexus.opensdk.AdListener
 import com.appnexus.opensdk.AdView
 import com.appnexus.opensdk.NativeAdResponse
 import com.appnexus.opensdk.ResultCode
+import de.thekorn.xandr.models.InterstitialAd
 import io.flutter.Log
 
 open class XandrAdListener(

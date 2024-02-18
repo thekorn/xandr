@@ -1,8 +1,9 @@
-package de.thekorn.xandr
+package de.thekorn.xandr.models
 
 import XandrFlutterApi
 import XandrHostApi
 import android.content.Context
+import de.thekorn.xandr.XandrPlugin
 import io.flutter.plugin.common.BinaryMessenger
 import kotlin.properties.Delegates
 import kotlinx.coroutines.CompletableDeferred
