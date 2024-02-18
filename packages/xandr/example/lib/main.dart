@@ -64,6 +64,43 @@ class _XandrExampleState extends State<XandrExample> {
                         'typesetting industry. Lorem Ipsum has been the boo '
                         'standard dummy text ever since the 1500s, when an aha '
                         'printer took a galley of type and scrambled it to m'),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'fit to container:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    AdBanner(
+                      controller: _controller,
+                      //placementID: '17058950',
+                      inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
+                      adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
+                      //customKeywords: useDemoAds,
+                      resizeAdToFitContainer: true,
+                    ),
+                    const Text(
+                        'Lorem Ipsum is simply dummy text of the printing and '
+                        'typesetting industry. Lorem Ipsum has been the boo '
+                        'standard dummy text ever since the 1500s, when an aha '
+                        'printer took a galley of type and scrambled it to n'),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'crop to reserved space:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
                     AdBanner(
                       controller: _controller,
                       //placementID: '17058950',
@@ -81,30 +118,19 @@ class _XandrExampleState extends State<XandrExample> {
                         'Lorem Ipsum is simply dummy text of the printing and '
                         'typesetting industry. Lorem Ipsum has been the boo '
                         'standard dummy text ever since the 1500s, when an aha '
-                        'printer took a galley of type and scrambled it to n'),
-                    const Text(
-                        'Lorem Ipsum is simply dummy text of the printing and '
-                        'typesetting industry. Lorem Ipsum has been the boo '
-                        'standard dummy text ever since the 1500s, when an aha '
-                        'printer took a galley of type and scrambled it to n'),
-                    AdBanner(
-                      controller: _controller,
-                      //placementID: '17058950',
-                      inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-                      adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
-                      //customKeywords: useDemoAds,
-                      resizeAdToFitContainer: true,
-                    ),
-                    const Text(
-                        'Lorem Ipsum is simply dummy text of the printing and '
-                        'typesetting industry. Lorem Ipsum has been the boo '
-                        'standard dummy text ever since the 1500s, when an aha '
                         'printer took a galley of type and scrambled it to v'),
-                    const Text(
-                        'Lorem Ipsum is simply dummy text of the printing and '
-                        'typesetting industry. Lorem Ipsum has been the boo '
-                        'standard dummy text ever since the 1500s, when an aha '
-                        'printer took a galley of type and scrambled it to f'),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'use winning ad size:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
                     AdBanner(
                       controller: _controller,
                       //placementID: '17058950',
