@@ -18,7 +18,8 @@ data class BannerViewOptions(
     val inventoryCode: String? = null,
     val clickThroughAction: String? = null,
     val autoRefreshInterval: Int? = null,
-    val resizeWhenLoaded: Boolean? = null
+    val resizeWhenLoaded: Boolean? = null,
+    val enableLazyLoad: Boolean? = null
 )
 
 fun Map<*, *>.toBannerAdViewOptions(): BannerViewOptions {
@@ -33,7 +34,7 @@ fun Map<*, *>.toBannerAdViewOptions(): BannerViewOptions {
         }
     }
     Log.d(
-        "Xandr.BannerView",
+        "Xandr.BannerViewOptions",
         "using '$adSizes' -> '$sizes'"
     )
 
@@ -58,6 +59,7 @@ fun Map<*, *>.toBannerAdViewOptions(): BannerViewOptions {
         autoRefreshInterval = this["autoRefreshInterval"] as Int?,
         resizeWhenLoaded = this["resizeWhenLoaded"] as Boolean?,
         allowNativeDemand = this["allowNativeDemand"] as Boolean?,
-        loadWhenCreated = this["loadWhenCreated"] as Boolean?
+        loadWhenCreated = this["loadWhenCreated"] as Boolean?,
+        enableLazyLoad = this["enableLazyLoad"] as Boolean?
     )
 }

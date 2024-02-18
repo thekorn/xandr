@@ -5,6 +5,7 @@ import com.appnexus.opensdk.AdListener
 import com.appnexus.opensdk.AdView
 import com.appnexus.opensdk.NativeAdResponse
 import com.appnexus.opensdk.ResultCode
+import de.thekorn.xandr.models.ads.BannerAd
 import de.thekorn.xandr.models.ads.InterstitialAd
 import io.flutter.Log
 
@@ -14,7 +15,6 @@ import io.flutter.Log
 open class XandrAdListener(
     private var widgetId: Int,
     private var flutterApi: XandrFlutterApi,
-    //private val bannerViewOptions: BannerViewOptions?
 ) : AdListener {
     override fun onAdLoaded(view: AdView?) {
         Log.d(
@@ -39,32 +39,6 @@ open class XandrAdListener(
                 "Unknown error while loading banner ad"
             ) { }
         }
-
-/*        if (bannerViewOptions?.resizeWhenLoaded != null && bannerViewOptions.resizeWhenLoaded) {
-            if (view != null) {
-                //view.resize(widgetId.toLong(), view.adResponseInfo)
-            } else {
-                flutterApi.onAdLoadedError(
-                    widgetId.toLong(),
-                    "Unknown error while loading and resizing banner ad"
-                ) { }
-            }
-        } else {
-            if (view != null) {
-                val adResponse = view.adResponseInfo
-                flutterApi.onAdLoaded(
-                    widgetId.toLong(),
-                    view.creativeWidth.toLong(), view.creativeHeight.toLong(),
-                    adResponse.creativeId, adResponse.adType.toString(), adResponse.tagId,
-                    adResponse.auctionId, adResponse.cpm, adResponse.buyMemberId.toLong()
-                ) { }
-            } else {
-                flutterApi.onAdLoadedError(
-                    widgetId.toLong(),
-                    "Unknown error while loading banner ad"
-                ) { }
-            }
-        }*/
     }
 
     override fun onAdLoaded(adResonse: NativeAdResponse?) {
@@ -123,10 +97,10 @@ open class XandrAdListener(
         )
     }
 
-    override fun onLazyAdLoaded(p0: AdView?) {
+    override fun onLazyAdLoaded(adView: AdView?) {
         Log.d(
             "Xandr.BannerView",
-            ">>> Ad lazy loaded, AdView:p0=$p0"
+            ">>> Ad lazy loaded, AdView:p0=$adView"
         )
     }
 
@@ -136,48 +110,6 @@ open class XandrAdListener(
             ">>> Ad impressions, AdView:p0=$p0"
         )
     }
-
-    /*private fun AdView.resize(wId: Long, adResponse: ANAdResponseInfo) {
-        this.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-            override fun onLayoutChange(
-                view: View?,
-                left: Int,
-                top: Int,
-                right: Int,
-                bottom: Int,
-                oldLeft: Int,
-                oldTop: Int,
-                oldRight: Int,
-                oldBottom: Int
-            ) {
-                Log.d("AdView.resize", "Loaded, onLayoutChange widgetId=$wId")
-                (this@resize as ViewGroup).getChildAt(0)?.let { adWebView ->
-                    val h = (bannerViewOptions?.layoutHeight ?: 0)
-                    val screenHeight = (h * resources.displayMetrics.density).toInt()
-                    if (screenHeight != 0 && screenHeight != adWebView.height && oldBottom != 0) {
-                        Log.d("AdView.resize", "Loaded, post web-view widgetId=$wId")
-                        // post avoid "requestLayout() improperly called by com.appnexus.opensdk.AdWebView"
-                        adWebView.post {
-                            adWebView.layoutParams = FrameLayout.LayoutParams(
-                                FrameLayout.LayoutParams.MATCH_PARENT,
-                                screenHeight
-                            )
-                            (adWebView as WebView).settings.useWideViewPort = true
-                            adWebView.invalidate()
-                            flutterApi.onAdLoaded(
-                                wId,
-                                adWebView.width.toLong(), adWebView.height.toLong(),
-                                adResponse.creativeId, adResponse.adType.toString(),
-                                adResponse.tagId, adResponse.auctionId,
-                                adResponse.cpm, adResponse.buyMemberId.toLong()
-                            ) { }
-                        }
-                        removeOnLayoutChangeListener(this)
-                    }
-                }
-            }
-        })
-    }*/
 }
 
 class XandrInterstitialAdListener(
@@ -188,12 +120,30 @@ class XandrInterstitialAdListener(
     override fun onAdLoaded(view: AdView?) {
         super.onAdLoaded(view)
         interstitialAd.isLoaded.complete(true)
-        Log.d("Xandr.Interstitial", "onAdLoaded")
+        Log.d("Xandr.InterstitialView", "onAdLoaded")
     }
 
     override fun onAdCollapsed(p0: AdView?) {
         super.onAdCollapsed(p0)
         interstitialAd.isClosed.complete(true)
-        Log.d("Xandr.Interstitial", "onAdCollapsed")
+        Log.d("Xandr.InterstitialView", "onAdCollapsed")
+    }
+}
+
+
+class XandrBannerAdListener(
+    widgetId: Long,
+    flutterApi: XandrFlutterApi,
+    private var banner: BannerAd
+) : XandrAdListener(widgetId.toInt(), flutterApi) {
+
+
+    override fun onLazyAdLoaded(adView: AdView?) {
+        Log.d(
+            "Xandr.BannerView",
+            ">>> Ad lazy loaded, AdView:p0=$adView"
+        )
+        this.banner.loadLazyAd()
+        return super.onLazyAdLoaded(adView)
     }
 }

@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import com.appnexus.opensdk.ANClickThroughAction
 import com.appnexus.opensdk.BannerAdView
 import de.thekorn.xandr.listeners.XandrAdListener
+import de.thekorn.xandr.listeners.XandrBannerAdListener
 import de.thekorn.xandr.models.BannerViewOptions
 import de.thekorn.xandr.models.FlutterState
 import io.flutter.Log
@@ -58,7 +59,14 @@ class BannerAd(
             it.resizeAdToFitContainer?.let { resizeAdToFitContainer ->
                 this.resizeAdToFitContainer = resizeAdToFitContainer
             }
+            it.enableLazyLoad?.let { enableLazyLoad ->
+                if (enableLazyLoad) {
+                    this.enableLazyLoad()
+                }
+            }
         }
+
+
 
         state.isInitialized.invokeOnCompletion {
             // / need to make sure the sdk is initialized to access the memberId
@@ -79,9 +87,10 @@ class BannerAd(
         Log.d("Xandr.BannerView", "loadAd; id=$widgetId")
         this.adListener = null
 
-        this.adListener = XandrAdListener(
-            widgetId,
-            this.state.flutterApi
+        this.adListener = XandrBannerAdListener(
+            widgetId.toLong(),
+            state.flutterApi,
+            this
         )
         this.setBackgroundColor(
             ContextCompat.getColor(activity, android.R.color.transparent)
