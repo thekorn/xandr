@@ -1,7 +1,8 @@
-package de.thekorn.xandr
+package de.thekorn.xandr.listeners
 
 import com.appnexus.opensdk.InitListener
 import com.appnexus.opensdk.SDKSettings
+import de.thekorn.xandr.models.FlutterState
 import io.flutter.Log
 
 class AdInitListener(private val flutterState: FlutterState) : InitListener {

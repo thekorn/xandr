@@ -4,6 +4,10 @@ import XandrHostApi
 import android.app.Activity
 import com.appnexus.opensdk.InterstitialAdView
 import com.appnexus.opensdk.XandrAd
+import de.thekorn.xandr.listeners.AdInitListener
+import de.thekorn.xandr.listeners.XandrInterstitialAdListener
+import de.thekorn.xandr.models.FlutterState
+import de.thekorn.xandr.models.InterstitialAd
 import io.flutter.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -80,6 +84,16 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         )
         this.flutterState.isInitialized.invokeOnCompletion {
             callback(Result.success(this.flutterState.isInitialized.getCompleted()))
+        }
+    }
+
+    override fun loadAd(widgetId: Long, callback: (Result<Boolean>) -> Unit) {
+        Log.d("Xandr", "loadAd got called, with widgetId=$widgetId")
+        this.flutterState.isInitialized.invokeOnCompletion {
+            val ad = this.flutterState.getBannerView(widgetId.toInt())
+            Log.d("Xandr", "loadAd found ad for widgetId=$widgetId, ad=$ad")
+            ad.loadAd()
+            callback(Result.success(true))
         }
     }
 

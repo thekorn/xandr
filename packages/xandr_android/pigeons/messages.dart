@@ -25,6 +25,11 @@ abstract class XandrHostApi {
   });
 
   @async
+  bool loadAd({
+    required int widgetId,
+  });
+
+  @async
   bool loadInterstitialAd({
     required int widgetId,
     String? placementID,

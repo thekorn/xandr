@@ -1,4 +1,4 @@
-package de.thekorn.xandr
+package de.thekorn.xandr.models
 
 import com.appnexus.opensdk.InterstitialAdView
 import kotlinx.coroutines.CompletableDeferred

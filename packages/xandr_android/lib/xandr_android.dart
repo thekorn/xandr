@@ -29,6 +29,13 @@ class XandrAndroid extends XandrPlatform {
   }
 
   @override
+  Future<bool> loadAd(int widgetId) async {
+    return _api.loadAd(
+      widgetId: widgetId,
+    );
+  }
+
+  @override
   Future<bool> loadInterstitialAd(
     String? placementID,
     String? inventoryCode,
