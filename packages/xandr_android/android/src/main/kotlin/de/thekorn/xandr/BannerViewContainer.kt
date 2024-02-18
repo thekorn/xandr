@@ -30,20 +30,20 @@ class BannerViewContainer(
         this.banner = BannerAdView(activity)
 
         bannerViewOptions?.let {
-            if (it.adSizes != null) {
-                this.banner.adSizes = it.adSizes
+            it.adSizes?.let { adSizes ->
+                this.banner.adSizes = adSizes
             }
 
-            if (it.autoRefreshInterval != null) {
-                this.banner.autoRefreshInterval = it.autoRefreshInterval
+            it.autoRefreshInterval?.let { autoRefreshInterval ->
+                this.banner.autoRefreshInterval = autoRefreshInterval
             }
 
-            it.customKeywords?.forEach { x ->
-                this.banner.addCustomKeywords(x.key, x.value)
+            it.customKeywords?.forEach { kw ->
+                this.banner.addCustomKeywords(kw.key, kw.value)
             }
 
-            if (it.allowNativeDemand != null) {
-                this.banner.allowNativeDemand = it.allowNativeDemand
+            it.allowNativeDemand?.let { allowNativeDemand ->
+                this.banner.allowNativeDemand = allowNativeDemand
             }
 
             it.shouldServePSAs?.let { shouldServePSAs ->

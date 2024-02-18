@@ -19,7 +19,12 @@ class AdBanner extends StatefulWidget {
     super.key,
     this.customKeywords,
     this.autoRefreshInterval = const Duration(seconds: 30),
+    this.resizeWhenLoaded = false,
     this.allowNativeDemand = false,
+    this.clickThroughAction,
+    this.resizeAdToFitContainer = false,
+    this.loadsInBackground,
+    this.shouldServePSAs,
     double? width,
     double? height,
   })  : assert(adSizes.isNotEmpty, 'adSizes must not be empty'),
@@ -50,6 +55,9 @@ class AdBanner extends StatefulWidget {
   /// Use this controller to interact with the Xandr ad banner.
   final XandrController controller;
 
+  /// Whether the banner should be resized when it is loaded.
+  final bool resizeWhenLoaded;
+
   /// The interval at which the ad banner should automatically refresh.
   final Duration autoRefreshInterval;
 
@@ -61,6 +69,22 @@ class AdBanner extends StatefulWidget {
 
   /// The height of the ad banner.
   final double height;
+
+  /// The action to perform when the ad banner is clicked.
+  final ClickThroughAction? clickThroughAction;
+
+  /// Whether the ad should be resized to fit its container.
+  final bool resizeAdToFitContainer;
+
+  /// The flag indicating whether the ad banner loads in the background.
+  final bool? loadsInBackground;
+
+  /// Determines whether PSAs (Public Service Announcements) should be served.
+  /// PSAs (Public Service Announcements) are ads that can be served as a
+  /// last resort, if there are no other ads to show.
+  ///
+  /// They are not enabled by default.
+  final bool? shouldServePSAs;
 
   @override
   State<AdBanner> createState() => _AdBannerState();
@@ -96,7 +120,14 @@ class _AdBannerState extends State<AdBanner> {
         customKeywords: widget.customKeywords ?? {},
         allowNativeDemand: widget.allowNativeDemand,
         autoRefreshInterval: widget.autoRefreshInterval,
+        resizeWhenLoaded: widget.resizeWhenLoaded,
         controller: widget.controller,
+        layoutHeight: _height.toInt(),
+        layoutWidth: _width.toInt(),
+        clickThroughAction: widget.clickThroughAction,
+        resizeAdToFitContainer: widget.resizeAdToFitContainer,
+        loadsInBackground: widget.loadsInBackground,
+        shouldServePSAs: widget.shouldServePSAs,
         delegate: BannerAdEventDelegate(
           onBannerAdLoaded: (event) {
             debugPrint('>>>> onBannerAdLoaded: $event');
@@ -108,6 +139,30 @@ class _AdBannerState extends State<AdBanner> {
   }
 }
 
+/// Enum representing the possible actions when a user clicks on the ad banner.
+enum ClickThroughAction {
+  /// return the plain url.
+  returnUrl,
+
+  /// open the url in the in-app browser.
+  openSdkBrowser,
+
+  /// open the url in the device's default browser.
+  openDeviceBrowser;
+
+  @override
+  String toString() {
+    switch (this) {
+      case ClickThroughAction.returnUrl:
+        return 'return_url';
+      case ClickThroughAction.openSdkBrowser:
+        return 'open_sdk_browser';
+      case ClickThroughAction.openDeviceBrowser:
+        return 'open_device_browser';
+    }
+  }
+}
+
 class _HostAdBannerView extends StatelessWidget {
   _HostAdBannerView({
     required String? placementID,
@@ -116,7 +171,14 @@ class _HostAdBannerView extends StatelessWidget {
     required CustomKeywords customKeywords,
     required bool allowNativeDemand,
     required Duration autoRefreshInterval,
+    required bool resizeWhenLoaded,
     required this.controller,
+    required int layoutHeight,
+    required int layoutWidth,
+    required bool resizeAdToFitContainer,
+    ClickThroughAction? clickThroughAction,
+    bool? loadsInBackground,
+    bool? shouldServePSAs,
     this.delegate,
   }) : creationParams = <String, dynamic>{
           'placementID': placementID,
@@ -125,7 +187,22 @@ class _HostAdBannerView extends StatelessWidget {
           'adSizes': adSizes.map((e) => e.toJson()).toList(),
           'customKeywords': customKeywords,
           'allowNativeDemand': allowNativeDemand,
-        };
+          'resizeWhenLoaded': resizeWhenLoaded,
+          'layoutHeight': layoutHeight,
+          'layoutWidth': layoutWidth,
+          'resizeAdToFitContainer': resizeAdToFitContainer,
+        } {
+    if (clickThroughAction != null) {
+      creationParams['clickThroughAction'] = clickThroughAction.toString();
+    }
+    if (loadsInBackground != null) {
+      creationParams['loadsInBackground'] = loadsInBackground;
+    }
+    if (shouldServePSAs != null) {
+      creationParams['shouldServePSAs'] = shouldServePSAs;
+    }
+  }
+
   static const StandardMessageCodec _decoder = StandardMessageCodec();
   final Map<String, dynamic> creationParams;
   final XandrController controller;

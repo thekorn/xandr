@@ -46,22 +46,14 @@ fun Map<*, *>.toBannerAdViewOptions(): BannerViewOptions {
     return BannerViewOptions(
         adSizes = sizes,
         customKeywords = customKeywords,
-        // TODO: implement
         layoutHeight = this["layoutHeight"] as Int?,
-        // TODO: implement
         layoutWidth = this["layoutWidth"] as Int?,
-        // TODO: implement
         shouldServePSAs = this["shouldServePSAs"] as Boolean?,
-        // TODO: implement
         loadsInBackground = this["loadsInBackground"] as Boolean?,
-        // TODO: implement
         resizeAdToFitContainer = this["resizeAdToFitContainer"] as Boolean?,
-        // TODO: implement
-        loadWhenCreated = this["loadWhenCreated"] as Boolean?,
         placementID = this["placementID"] as String?,
         memberId = this["memberId"] as String?,
         inventoryCode = this["inventoryCode"] as String?,
-        // TODO: implement
         clickThroughAction = this["clickThroughAction"] as String?,
         autoRefreshInterval = this["autoRefreshInterval"] as Int?,
         resizeWhenLoaded = this["resizeWhenLoaded"] as Boolean?,

@@ -14,8 +14,8 @@ import de.thekorn.xandr.models.BannerViewOptions
 import de.thekorn.xandr.models.InterstitialAd
 import io.flutter.Log
 
-/// FIXME: create explicit XandrBannerAdListener
-///  means: XandrAdListener as base plus an interstitial and banner implementation
+// / FIXME: create explicit XandrBannerAdListener
+// /  means: XandrAdListener as base plus an interstitial and banner implementation
 
 open class XandrAdListener(
     private var widgetId: Int,
