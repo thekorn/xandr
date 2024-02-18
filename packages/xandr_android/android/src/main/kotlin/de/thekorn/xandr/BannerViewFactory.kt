@@ -2,6 +2,7 @@ package de.thekorn.xandr
 
 import android.app.Activity
 import android.content.Context
+import de.thekorn.xandr.models.toBannerAdViewOptions
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
@@ -16,7 +17,7 @@ class BannerViewFactory(
             activity,
             this.state,
             id,
-            args
+            (args as? Map<*, *>)?.toBannerAdViewOptions()
         )
     }
 }
