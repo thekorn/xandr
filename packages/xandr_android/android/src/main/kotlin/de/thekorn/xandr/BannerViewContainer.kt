@@ -10,9 +10,9 @@ import io.flutter.plugin.platform.PlatformView
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class BannerViewContainer(
-    private var activity: Activity,
+    activity: Activity,
     private var state: FlutterState,
-    private var widgetId: Int,
+    widgetId: Int,
     private val bannerViewOptions: BannerViewOptions?
 ) :
     PlatformView {
