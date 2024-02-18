@@ -36,6 +36,12 @@ class XandrController {
     return _platform.init(memberId);
   }
 
+  /// loads an ad.
+  Future<bool> loadAd(int widgetId) async {
+    debugPrint('loadAd');
+    return _platform.loadAd(widgetId);
+  }
+
   /// loads an interstitial ad.
   Future<bool> loadInterstitialAd({
     String? placementID,

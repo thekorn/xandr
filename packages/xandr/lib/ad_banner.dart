@@ -1,6 +1,10 @@
+import 'dart:async';
+
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:xandr/ad_size.dart';
+import 'package:xandr/load_mode.dart';
 import 'package:xandr/xandr.dart';
 import 'package:xandr_android/xandr_android.dart';
 
@@ -25,6 +29,7 @@ class AdBanner extends StatefulWidget {
     this.resizeAdToFitContainer = false,
     this.loadsInBackground,
     this.shouldServePSAs,
+    LoadMode? loadMode,
     double? width,
     double? height,
   })  : assert(adSizes.isNotEmpty, 'adSizes must not be empty'),
@@ -33,7 +38,8 @@ class AdBanner extends StatefulWidget {
           'placementID or inventoryCode must not be null',
         ),
         width = width ?? adSizes.first.width.toDouble(),
-        height = height ?? adSizes.first.height.toDouble();
+        height = height ?? adSizes.first.height.toDouble(),
+        loadMode = loadMode ?? LoadMode.whenCreated();
 
   /// The placement ID for the ad banner.
   final String? placementID;
@@ -86,6 +92,9 @@ class AdBanner extends StatefulWidget {
   /// They are not enabled by default.
   final bool? shouldServePSAs;
 
+  /// The load mode for the ad banner, determines when the ad is loaded.
+  final LoadMode loadMode;
+
   @override
   State<AdBanner> createState() => _AdBannerState();
 }
@@ -93,18 +102,67 @@ class AdBanner extends StatefulWidget {
 class _AdBannerState extends State<AdBanner> {
   double _width = 1;
   double _height = 1;
+  bool _loading = false;
+  bool _loaded = false;
+  final Completer<int> _widgetId = Completer();
 
   @override
   void initState() {
-    super.initState();
+    context.toString();
+    if (widget.loadMode is LoadWhenCreated) {
+      _loading = true;
+    } else if (widget.loadMode is WhenInViewport) {
+      (widget.loadMode as WhenInViewport).checkIfInViewport.listen((_) {
+        _checkViewport((widget.loadMode as WhenInViewport).pixelOffset);
+      });
+    }
     _height = widget.height;
     _width = widget.width;
+    super.initState();
+  }
+
+  /// trigger ad loading via [MethodChannel]
+  void loadAd() {
+    if (!_loaded && !_loading) {
+      setState(() {
+        _loading = true;
+      });
+      _widgetId.future.then((value) => widget.controller.loadAd(value));
+    }
+  }
+
+  /// function used only with the [WhenInViewport] loadMode
+  void _checkViewport(int pixelOffset) {
+    final object = context.findRenderObject();
+
+    if (object == null || !object.attached) {
+      return;
+    }
+
+    final viewport = RenderAbstractViewport.of(object);
+    final vpHeight = viewport.paintBounds.height;
+    final vpOffset = viewport.getOffsetToReveal(object, 0);
+
+    final deltaTop = vpOffset.offset - Scrollable.of(context).position.pixels;
+
+    if ((vpHeight - deltaTop) > pixelOffset) {
+      if (!_loading) {
+        loadAd();
+      }
+    }
   }
 
   void changeSize(double width, double height) {
     setState(() {
       _width = width;
       _height = height;
+    });
+  }
+
+  void onDoneLoading({required bool success}) {
+    setState(() {
+      _loading = false;
+      _loaded = success;
     });
   }
 
@@ -128,6 +186,9 @@ class _AdBannerState extends State<AdBanner> {
         resizeAdToFitContainer: widget.resizeAdToFitContainer,
         loadsInBackground: widget.loadsInBackground,
         shouldServePSAs: widget.shouldServePSAs,
+        loadMode: widget.loadMode,
+        onDoneLoading: onDoneLoading,
+        widgetId: _widgetId,
         delegate: BannerAdEventDelegate(
           onBannerAdLoaded: (event) {
             debugPrint('>>>> onBannerAdLoaded: $event');
@@ -163,6 +224,8 @@ enum ClickThroughAction {
   }
 }
 
+typedef _DoneLoadingCallback = void Function({required bool success});
+
 class _HostAdBannerView extends StatelessWidget {
   _HostAdBannerView({
     required String? placementID,
@@ -176,11 +239,15 @@ class _HostAdBannerView extends StatelessWidget {
     required int layoutHeight,
     required int layoutWidth,
     required bool resizeAdToFitContainer,
+    required LoadMode loadMode,
+    required _DoneLoadingCallback onDoneLoading,
+    required this.widgetId,
     ClickThroughAction? clickThroughAction,
     bool? loadsInBackground,
     bool? shouldServePSAs,
     this.delegate,
-  }) : creationParams = <String, dynamic>{
+  })  : _onDoneLoading = onDoneLoading,
+        creationParams = <String, dynamic>{
           'placementID': placementID,
           'inventoryCode': inventoryCode,
           'autoRefreshInterval': autoRefreshInterval.inMilliseconds,
@@ -191,6 +258,7 @@ class _HostAdBannerView extends StatelessWidget {
           'layoutHeight': layoutHeight,
           'layoutWidth': layoutWidth,
           'resizeAdToFitContainer': resizeAdToFitContainer,
+          'loadWhenCreated': loadMode is LoadWhenCreated,
         } {
     if (clickThroughAction != null) {
       creationParams['clickThroughAction'] = clickThroughAction.toString();
@@ -207,6 +275,8 @@ class _HostAdBannerView extends StatelessWidget {
   final Map<String, dynamic> creationParams;
   final XandrController controller;
   final BannerAdEventDelegate? delegate;
+  final _DoneLoadingCallback _onDoneLoading;
+  final Completer<int> widgetId;
 
   @override
   Widget build(BuildContext context) {
@@ -215,14 +285,22 @@ class _HostAdBannerView extends StatelessWidget {
       viewType: 'de.thekorn.xandr/ad_banner',
       onPlatformViewCreated: (id) {
         debugPrint('Created banner view: $id');
+
+        if (!widgetId.isCompleted) {
+          widgetId.complete(id);
+        }
         controller.listen(id, (event) {
           if (event is BannerAdLoadedEvent) {
+            _onDoneLoading(success: true);
             delegate?.onBannerAdLoaded?.call(event);
           } else if (event is BannerAdLoadedErrorEvent) {
+            _onDoneLoading(success: false);
             delegate?.onBannerAdLoadedError?.call(event);
           } else if (event is NativeBannerAdLoadedEvent) {
+            _onDoneLoading(success: true);
             delegate?.onNativeBannerAdLoaded?.call(event);
           } else if (event is NativeBannerAdLoadedErrorEvent) {
+            _onDoneLoading(success: false);
             delegate?.onNativeBannerAdLoadedError?.call(event);
           }
         });

@@ -2,6 +2,7 @@ package de.thekorn.xandr
 
 import android.app.Activity
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.appnexus.opensdk.ANClickThroughAction
 import com.appnexus.opensdk.BannerAdView
 import de.thekorn.xandr.listeners.XandrAdListener
@@ -12,7 +13,7 @@ import io.flutter.plugin.platform.PlatformView
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class BannerViewContainer(
-    activity: Activity,
+    private var activity: Activity,
     private var state: FlutterState,
     private var widgetId: Int,
     private val bannerViewOptions: BannerViewOptions?
@@ -93,20 +94,33 @@ class BannerViewContainer(
             "Return view, xandr-initialized=${state.isInitialized.isCompleted}"
         )
 
-        this.banner.adListener = XandrAdListener(
-            widgetId,
-            this.state.flutterApi,
-            this.bannerViewOptions
-        )
-
         state.isInitialized.invokeOnCompletion {
             Log.d(
                 "Xandr.BannerView",
                 "load add, xandr-initialized=${state.isInitialized.getCompleted()}"
             )
-            this.banner.loadAd()
+            bannerViewOptions?.loadWhenCreated?.let { loadWhenCreated ->
+                if (loadWhenCreated) {
+                    loadAd()
+                }
+            }
         }
         return this.banner
+    }
+
+    fun loadAd() {
+        Log.d("Xandr.BannerView", "loadAd; id=$widgetId")
+        this.banner.adListener = null
+
+        this.banner.adListener = XandrAdListener(
+            widgetId,
+            this.state.flutterApi,
+            this.bannerViewOptions
+        )
+        this.banner.setBackgroundColor(
+            ContextCompat.getColor(activity, android.R.color.transparent)
+        )
+        this.banner.loadAd()
     }
 
     override fun dispose() {

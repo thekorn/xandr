@@ -87,6 +87,16 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         }
     }
 
+    override fun loadAd(widgetId: Long, callback: (Result<Boolean>) -> Unit) {
+        Log.d("Xandr", "loadAd got called, with widgetId=$widgetId")
+        this.flutterState.isInitialized.invokeOnCompletion {
+            val ad = this.flutterState.getBannerView(widgetId.toInt())
+            Log.d("Xandr", "loadAd found ad for widgetId=$widgetId, ad=$ad")
+            ad.loadAd()
+            callback(Result.success(true))
+        }
+    }
+
     override fun loadInterstitialAd(
         widgetId: Long,
         placementID: String?,

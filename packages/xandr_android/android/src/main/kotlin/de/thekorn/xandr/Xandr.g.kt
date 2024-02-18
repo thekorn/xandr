@@ -48,6 +48,7 @@ class FlutterError (
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface XandrHostApi {
   fun init(memberId: Long, callback: (Result<Boolean>) -> Unit)
+  fun loadAd(widgetId: Long, callback: (Result<Boolean>) -> Unit)
   fun loadInterstitialAd(widgetId: Long, placementID: String?, inventoryCode: String?, customKeywords: Map<String, String>?, callback: (Result<Boolean>) -> Unit)
   fun showInterstitialAd(autoDismissDelay: Long?, callback: (Result<Boolean>) -> Unit)
 
@@ -66,6 +67,26 @@ interface XandrHostApi {
             val args = message as List<Any?>
             val memberIdArg = args[0].let { if (it is Int) it.toLong() else it as Long }
             api.init(memberIdArg) { result: Result<Boolean> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.xandr_android.XandrHostApi.loadAd", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val widgetIdArg = args[0].let { if (it is Int) it.toLong() else it as Long }
+            api.loadAd(widgetIdArg) { result: Result<Boolean> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))
