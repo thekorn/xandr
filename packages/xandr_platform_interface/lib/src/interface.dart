@@ -45,6 +45,11 @@ abstract class XandrPlatform extends PlatformInterface {
     throw UnimplementedError('init() has not been implemented.');
   }
 
+  /// loads an ad.
+  Future<bool> loadAd(int widgetId) async {
+    throw UnimplementedError('loadAd() has not been implemented.');
+  }
+
   /// loads an interstitial ad.
   Future<bool> loadInterstitialAd(
     String? placementID,

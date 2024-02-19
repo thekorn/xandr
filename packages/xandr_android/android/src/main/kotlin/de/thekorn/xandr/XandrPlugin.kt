@@ -2,8 +2,11 @@ package de.thekorn.xandr
 
 import XandrHostApi
 import android.app.Activity
-import com.appnexus.opensdk.InterstitialAdView
 import com.appnexus.opensdk.XandrAd
+import de.thekorn.xandr.listeners.AdInitListener
+import de.thekorn.xandr.listeners.XandrInterstitialAdListener
+import de.thekorn.xandr.models.FlutterState
+import de.thekorn.xandr.models.ads.InterstitialAd
 import io.flutter.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -83,6 +86,16 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         }
     }
 
+    override fun loadAd(widgetId: Long, callback: (Result<Boolean>) -> Unit) {
+        Log.d("Xandr", "loadAd got called, with widgetId=$widgetId")
+        this.flutterState.isInitialized.invokeOnCompletion {
+            val ad = this.flutterState.getBannerView(widgetId.toInt())
+            Log.d("Xandr", "loadAd found ad for widgetId=$widgetId, ad=$ad")
+            ad.loadAd()
+            callback(Result.success(true))
+        }
+    }
+
     override fun loadInterstitialAd(
         widgetId: Long,
         placementID: String?,
@@ -90,15 +103,14 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         customKeywords: Map<String, String>?,
         callback: (Result<Boolean>) -> Unit
     ) {
-        val interstitial = InterstitialAdView(activity)
-        interstitialAd = InterstitialAd(interstitial)
-        interstitial.adListener = XandrInterstitialAdListener(
+        interstitialAd = InterstitialAd(activity)
+        interstitialAd.adListener = XandrInterstitialAdListener(
             widgetId,
             this.flutterState.flutterApi,
             interstitialAd
         )
         customKeywords?.forEach {
-            interstitial.addCustomKeywords(it.key, it.value)
+            interstitialAd.addCustomKeywords(it.key, it.value)
         }
 
         this.flutterState.isInitialized.invokeOnCompletion {
@@ -106,11 +118,11 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
             // / docs: Note that if both inventory code and placement ID are passed in, the
             //        inventory code will be passed to the server instead of the placement ID.
             if (inventoryCode != null) {
-                interstitial.setInventoryCodeAndMemberID(flutterState.memberId, inventoryCode)
+                interstitialAd.setInventoryCodeAndMemberID(flutterState.memberId, inventoryCode)
             } else {
-                interstitial.placementID = placementID
+                interstitialAd.placementID = placementID
             }
-            interstitial.loadAd()
+            interstitialAd.loadAd()
             Log.d("Xandr.Interstitial", "Loading DONE")
             interstitialAd.isLoaded.invokeOnCompletion {
                 callback(Result.success(interstitialAd.isLoaded.getCompleted()))
@@ -126,9 +138,9 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
 
         interstitialAd.isLoaded.invokeOnCompletion {
             if (autoDismissDelay == null) {
-                interstitialAd.interstitial.show()
+                interstitialAd.show()
             } else {
-                interstitialAd.interstitial.showWithAutoDismissDelay(autoDismissDelay.toInt())
+                interstitialAd.showWithAutoDismissDelay(autoDismissDelay.toInt())
             }
             Log.d("Xandr.Interstitial", "show")
         }

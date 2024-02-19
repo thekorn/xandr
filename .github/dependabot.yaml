@@ -6,22 +6,30 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "pub"
-    directory: "/xandr"
+    directory: "/packages/xandr"
     schedule:
       interval: "daily"
   - package-ecosystem: "pub"
-    directory: "/xandr/example"
+    directory: "/packages/xandr/example"
     schedule:
       interval: "daily"
   - package-ecosystem: "pub"
-    directory: "/xandr_platform_interface"
+    directory: "/packages/xandr_platform_interface"
     schedule:
       interval: "daily"
   - package-ecosystem: "pub"
-    directory: "/xandr_android"
+    directory: "/packages/xandr_android"
     schedule:
       interval: "daily"
   - package-ecosystem: "pub"
-    directory: "/xandr_ios"
+    directory: "/packages/xandr_ios"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gradle" 
+    directory: "/packages/xandr_android/android" 
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "swift" 
+    directory: "/packages/xandr_ios/ios" 
     schedule:
       interval: "daily"

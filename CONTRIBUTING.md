@@ -41,6 +41,7 @@ melos run run:example -- -d sdk     # android
 
 - [xandr ios SDK](https://github.com/appnexus/mobile-sdk-ios)
 - [xandr android SDK](https://github.com/appnexus/mobile-sdk-android)
+- [deprecated appnexus flutter integration](https://github.com/schibsted/appnexus-flutter)
 
 ### tooling
 

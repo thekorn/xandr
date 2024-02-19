@@ -14,6 +14,11 @@ class MethodChannelXandr extends XandrPlatform {
   }
 
   @override
+  Future<bool> loadAd(int widgetId) async {
+    return (await methodChannel.invokeMethod<bool>('loadAd'))!;
+  }
+
+  @override
   Future<bool> loadInterstitialAd(
     String? placementID,
     String? inventoryCode,
