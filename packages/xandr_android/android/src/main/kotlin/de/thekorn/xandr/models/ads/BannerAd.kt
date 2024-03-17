@@ -5,7 +5,6 @@ import android.app.Activity
 import androidx.core.content.ContextCompat
 import com.appnexus.opensdk.ANClickThroughAction
 import com.appnexus.opensdk.BannerAdView
-import de.thekorn.xandr.listeners.XandrAdListener
 import de.thekorn.xandr.listeners.XandrBannerAdListener
 import de.thekorn.xandr.models.BannerViewOptions
 import de.thekorn.xandr.models.FlutterState
@@ -65,8 +64,6 @@ class BannerAd(
                 }
             }
         }
-
-
 
         state.isInitialized.invokeOnCompletion {
             // / need to make sure the sdk is initialized to access the memberId
