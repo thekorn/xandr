@@ -45,17 +45,80 @@ class FlutterError (
   val details: Any? = null
 ) : Throwable()
 
+enum class HostAPIUserIdSource(val raw: Int) {
+  CRITEO(0),
+  THE_TRADE_DESK(1),
+  NET_ID(2),
+  LIVERAMP(3),
+  UID2(4);
+
+  companion object {
+    fun ofRaw(raw: Int): HostAPIUserIdSource? {
+      return values().firstOrNull { it.raw == raw }
+    }
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class HostAPIUserId (
+  val source: HostAPIUserIdSource,
+  val userId: String
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): HostAPIUserId {
+      val source = HostAPIUserIdSource.ofRaw(list[0] as Int)!!
+      val userId = list[1] as String
+      return HostAPIUserId(source, userId)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      source.raw,
+      userId,
+    )
+  }
+}
+
+@Suppress("UNCHECKED_CAST")
+private object XandrHostApiCodec : StandardMessageCodec() {
+  override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
+    return when (type) {
+      128.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          HostAPIUserId.fromList(it)
+        }
+      }
+      else -> super.readValueOfType(type, buffer)
+    }
+  }
+  override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
+    when (value) {
+      is HostAPIUserId -> {
+        stream.write(128)
+        writeValue(stream, value.toList())
+      }
+      else -> super.writeValue(stream, value)
+    }
+  }
+}
+
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface XandrHostApi {
   fun init(memberId: Long, callback: (Result<Boolean>) -> Unit)
   fun loadAd(widgetId: Long, callback: (Result<Boolean>) -> Unit)
   fun loadInterstitialAd(widgetId: Long, placementID: String?, inventoryCode: String?, customKeywords: Map<String, String>?, callback: (Result<Boolean>) -> Unit)
   fun showInterstitialAd(autoDismissDelay: Long?, callback: (Result<Boolean>) -> Unit)
+  fun setPublisherUserId(publisherUserId: String, callback: (Result<Unit>) -> Unit)
+  fun getPublisherUserId(callback: (Result<String>) -> Unit)
+  fun setUserIds(userIds: List<HostAPIUserId>, callback: (Result<Unit>) -> Unit)
+  fun getUserIds(callback: (Result<List<HostAPIUserId>>) -> Unit)
 
   companion object {
     /** The codec used by XandrHostApi. */
     val codec: MessageCodec<Any?> by lazy {
-      StandardMessageCodec()
+      XandrHostApiCodec
     }
     /** Sets up an instance of `XandrHostApi` to handle messages through the `binaryMessenger`. */
     @Suppress("UNCHECKED_CAST")
@@ -130,6 +193,80 @@ interface XandrHostApi {
             val args = message as List<Any?>
             val autoDismissDelayArg = args[0].let { if (it is Int) it.toLong() else it as Long? }
             api.showInterstitialAd(autoDismissDelayArg) { result: Result<Boolean> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.xandr_android.XandrHostApi.setPublisherUserId", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val publisherUserIdArg = args[0] as String
+            api.setPublisherUserId(publisherUserIdArg) { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.xandr_android.XandrHostApi.getPublisherUserId", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            api.getPublisherUserId() { result: Result<String> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.xandr_android.XandrHostApi.setUserIds", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val userIdsArg = args[0] as List<HostAPIUserId>
+            api.setUserIds(userIdsArg) { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.xandr_android.XandrHostApi.getUserIds", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            api.getUserIds() { result: Result<List<HostAPIUserId>> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))

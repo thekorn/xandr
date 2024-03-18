@@ -63,4 +63,50 @@ abstract class XandrPlatform extends PlatformInterface {
   Future<bool> showInterstitialAd(Duration? autoDismissDelay) {
     throw UnimplementedError('showInterstitialAd() has not been implemented.');
   }
+
+  /// Sets the publisher user ID.
+  ///
+  /// This method is used to set the publisher user ID for the Xandr platform interface.
+  /// The publisher user ID is a unique identifier for the publisher's user.
+  ///
+  /// Parameters:
+  /// - `publisherUserId`: The publisher user ID to be set.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// setPublisherUserId('123456789');
+  /// ```
+  Future<void> setPublisherUserId(String publisherUserId) {
+    throw UnimplementedError('setPublisherUserId() has not been implemented.');
+  }
+
+  /// Returns the publisher user ID.
+  Future<String> getPublisherUserId() {
+    throw UnimplementedError('getPublisherUserId() has not been implemented.');
+  }
+
+  /// Sets the user IDs for the current user.
+  ///
+  /// The [userIds] parameter is a list of [UserId] objects representing the user IDs
+  /// to be set.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// List<UserId> userIds = [
+  ///   UserId.netId(id: '123'),
+  ///   UserId.criteo(id: '456'),
+  /// ];
+  /// setUserIds(userIds);
+  /// ```
+  Future<void> setUserIds(List<UserId> userIds) {
+    throw UnimplementedError('setUserIds() has not been implemented.');
+  }
+
+  /// Returns a list of [UserId] objects.
+  ///
+  /// This method retrieves the user IDs from the platform interface.
+  /// The returned list contains instances of the [UserId] class.
+  Future<List<UserId>> getUserIds() {
+    throw UnimplementedError('getUserIds() has not been implemented.');
+  }
 }

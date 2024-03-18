@@ -1,7 +1,10 @@
 package de.thekorn.xandr
 
+import HostAPIUserId
 import XandrHostApi
 import android.app.Activity
+import com.appnexus.opensdk.ANUserId
+import com.appnexus.opensdk.SDKSettings
 import com.appnexus.opensdk.XandrAd
 import de.thekorn.xandr.listeners.AdInitListener
 import de.thekorn.xandr.listeners.XandrInterstitialAdListener
@@ -147,5 +150,32 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         interstitialAd.isClosed.invokeOnCompletion {
             callback(Result.success(interstitialAd.isClosed.getCompleted()))
         }
+    }
+
+    override fun setPublisherUserId(publisherUserId: String, callback: (Result<Unit>) -> Unit) {
+        SDKSettings.setPublisherUserId(publisherUserId)
+        callback(Result.success(Unit))
+    }
+
+    override fun getPublisherUserId(callback: (Result<String>) -> Unit) {
+        callback(Result.success(SDKSettings.getPublisherUserId()))
+    }
+
+    override fun setUserIds(userIds: List<HostAPIUserId>, callback: (Result<Unit>) -> Unit) {
+        val uIds = ArrayList<ANUserId>()
+        userIds.forEach {
+            uIds.add(ANUserId(it.source.toANUserIdSource(), it.userId))
+        }
+        SDKSettings.setUserIds(uIds)
+        callback(Result.success(Unit))
+    }
+
+    override fun getUserIds(callback: (Result<List<HostAPIUserId>>) -> Unit) {
+        var userIds = SDKSettings.getUserIds()
+        val uIds = ArrayList<HostAPIUserId>()
+        userIds.forEach {
+            uIds.add(it.toHostUserId())
+        }
+        callback(Result.success(uIds))
     }
 }
