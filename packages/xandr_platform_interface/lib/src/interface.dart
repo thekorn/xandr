@@ -66,8 +66,9 @@ abstract class XandrPlatform extends PlatformInterface {
 
   /// Sets the publisher user ID.
   ///
-  /// This method is used to set the publisher user ID for the Xandr platform interface.
-  /// The publisher user ID is a unique identifier for the publisher's user.
+  /// This method is used to set the publisher user ID for the Xandr platform
+  /// interface. The publisher user ID is a unique identifier for the
+  /// publisher's user.
   ///
   /// Parameters:
   /// - `publisherUserId`: The publisher user ID to be set.
@@ -87,8 +88,8 @@ abstract class XandrPlatform extends PlatformInterface {
 
   /// Sets the user IDs for the current user.
   ///
-  /// The [userIds] parameter is a list of [UserId] objects representing the user IDs
-  /// to be set.
+  /// The [userIds] parameter is a list of [UserId] objects representing
+  /// the user IDs to be set.
   ///
   /// Example usage:
   /// ```dart
