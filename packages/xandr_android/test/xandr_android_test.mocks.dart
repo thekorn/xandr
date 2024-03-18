@@ -6,6 +6,7 @@
 import 'dart:async' as _i3;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i4;
 import 'package:xandr_android/src/messages.g.dart' as _i2;
 
 // ignore_for_file: type=lint
@@ -35,4 +36,106 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
         returnValue: _i3.Future<bool>.value(false),
         returnValueForMissingStub: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<bool> loadAd({required int? widgetId}) => (super.noSuchMethod(
+        Invocation.method(
+          #loadAd,
+          [],
+          {#widgetId: widgetId},
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+        returnValueForMissingStub: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<bool> loadInterstitialAd({
+    required int? widgetId,
+    String? placementID,
+    String? inventoryCode,
+    Map<String?, String?>? customKeywords,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #loadInterstitialAd,
+          [],
+          {
+            #widgetId: widgetId,
+            #placementID: placementID,
+            #inventoryCode: inventoryCode,
+            #customKeywords: customKeywords,
+          },
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+        returnValueForMissingStub: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<bool> showInterstitialAd({int? autoDismissDelay}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showInterstitialAd,
+          [],
+          {#autoDismissDelay: autoDismissDelay},
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+        returnValueForMissingStub: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<void> setPublisherUserId(String? publisherUserId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setPublisherUserId,
+          [publisherUserId],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<String> getPublisherUserId() => (super.noSuchMethod(
+        Invocation.method(
+          #getPublisherUserId,
+          [],
+        ),
+        returnValue: _i3.Future<String>.value(_i4.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getPublisherUserId,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i3.Future<String>.value(_i4.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getPublisherUserId,
+            [],
+          ),
+        )),
+      ) as _i3.Future<String>);
+
+  @override
+  _i3.Future<void> setUserIds(List<_i2.HostAPIUserId?>? userIds) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setUserIds,
+          [userIds],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<List<_i2.HostAPIUserId?>> getUserIds() => (super.noSuchMethod(
+        Invocation.method(
+          #getUserIds,
+          [],
+        ),
+        returnValue:
+            _i3.Future<List<_i2.HostAPIUserId?>>.value(<_i2.HostAPIUserId?>[]),
+        returnValueForMissingStub:
+            _i3.Future<List<_i2.HostAPIUserId?>>.value(<_i2.HostAPIUserId?>[]),
+      ) as _i3.Future<List<_i2.HostAPIUserId?>>);
 }
