@@ -114,6 +114,9 @@ interface XandrHostApi {
   fun getPublisherUserId(callback: (Result<String>) -> Unit)
   fun setUserIds(userIds: List<HostAPIUserId>, callback: (Result<Unit>) -> Unit)
   fun getUserIds(callback: (Result<List<HostAPIUserId>>) -> Unit)
+  fun initMultiAdRequest(callback: (Result<String>) -> Unit)
+  fun disposeMultiAdRequest(multiAdRequestID: String, callback: (Result<Unit>) -> Unit)
+  fun loadAdsForMultiAdRequest(multiAdRequestID: String, callback: (Result<Boolean>) -> Unit)
 
   companion object {
     /** The codec used by XandrHostApi. */
@@ -267,6 +270,63 @@ interface XandrHostApi {
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             api.getUserIds() { result: Result<List<HostAPIUserId>> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.xandr_android.XandrHostApi.initMultiAdRequest", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            api.initMultiAdRequest() { result: Result<String> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.xandr_android.XandrHostApi.disposeMultiAdRequest", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val multiAdRequestIDArg = args[0] as String
+            api.disposeMultiAdRequest(multiAdRequestIDArg) { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.xandr_android.XandrHostApi.loadAdsForMultiAdRequest", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val multiAdRequestIDArg = args[0] as String
+            api.loadAdsForMultiAdRequest(multiAdRequestIDArg) { result: Result<Boolean> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))

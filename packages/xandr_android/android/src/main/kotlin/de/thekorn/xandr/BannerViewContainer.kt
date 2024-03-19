@@ -39,16 +39,23 @@ class BannerViewContainer(
             "Return view, xandr-initialized=${state.isInitialized.isCompleted}"
         )
 
-        state.isInitialized.invokeOnCompletion {
-            Log.d(
-                "Xandr.BannerView",
-                "load add, xandr-initialized=${state.isInitialized.getCompleted()}"
-            )
-            bannerViewOptions?.loadWhenCreated?.let { loadWhenCreated ->
-                if (loadWhenCreated) {
-                    loadAd()
+        if (bannerViewOptions?.multiAdRequestId == null) {
+            state.isInitialized.invokeOnCompletion {
+                Log.d(
+                    "Xandr.BannerView",
+                    "load add, xandr-initialized=${state.isInitialized.getCompleted()}"
+                )
+                bannerViewOptions?.loadWhenCreated?.let { loadWhenCreated ->
+                    if (loadWhenCreated) {
+                        loadAd()
+                    }
                 }
             }
+        } else {
+            Log.d(
+                "Xandr.BannerView",
+                "banner is not loaded because its part of a multi ad request"
+            )
         }
         return this.banner
     }

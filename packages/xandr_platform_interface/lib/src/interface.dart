@@ -110,4 +110,20 @@ abstract class XandrPlatform extends PlatformInterface {
   Future<List<UserId>> getUserIds() {
     throw UnimplementedError('getUserIds() has not been implemented.');
   }
+
+  Future<String> initMultiAdRequest() {
+    throw UnimplementedError('initMultiAdRequest() has not been implemented.');
+  }
+
+  Future<void> disposeMultiAdRequest(String multiAdRequestID) {
+    throw UnimplementedError(
+      'disposeMultiAdRequest() has not been implemented.',
+    );
+  }
+
+  Future<bool> loadAdsForMultiAdRequest(String multiAdRequestID) {
+    throw UnimplementedError(
+      'loadAdsForMultiAdRequest() has not been implemented.',
+    );
+  }
 }

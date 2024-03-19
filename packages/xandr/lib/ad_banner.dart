@@ -30,6 +30,7 @@ class AdBanner extends StatefulWidget {
     this.loadsInBackground,
     this.shouldServePSAs,
     this.enableLazyLoad,
+    this.multiAdRequestController,
     LoadMode? loadMode,
     double? width,
     double? height,
@@ -100,6 +101,8 @@ class AdBanner extends StatefulWidget {
 
   /// The load mode for the ad banner, determines when the ad is loaded.
   final LoadMode loadMode;
+
+  final MultiAdRequestController? multiAdRequestController;
 
   @override
   State<AdBanner> createState() => _AdBannerState();
@@ -196,6 +199,7 @@ class _AdBannerState extends State<AdBanner> {
         onDoneLoading: onDoneLoading,
         widgetId: _widgetId,
         enableLazyLoad: widget.enableLazyLoad,
+        multiAdRequestId: widget.multiAdRequestController?.requestId,
         delegate: BannerAdEventDelegate(
           onBannerAdLoaded: (event) {
             debugPrint('>>>> onBannerAdLoaded: $event');
@@ -249,6 +253,7 @@ class _HostAdBannerView extends StatelessWidget {
     required LoadMode loadMode,
     required _DoneLoadingCallback onDoneLoading,
     required this.widgetId,
+    required String? multiAdRequestId,
     ClickThroughAction? clickThroughAction,
     bool? loadsInBackground,
     bool? shouldServePSAs,
@@ -279,6 +284,9 @@ class _HostAdBannerView extends StatelessWidget {
     }
     if (enableLazyLoad != null) {
       creationParams['enableLazyLoad'] = enableLazyLoad;
+    }
+    if (multiAdRequestId != null) {
+      creationParams['multiAdRequestId'] = multiAdRequestId;
     }
   }
 

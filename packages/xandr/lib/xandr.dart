@@ -83,3 +83,25 @@ class XandrController {
         .listen(callback);
   }
 }
+
+class MultiAdRequestController {
+  String? _multiAdRequestID;
+
+  String? get requestId => _multiAdRequestID;
+
+  Future<bool> init() async {
+    _multiAdRequestID = await _platform.initMultiAdRequest();
+    return _multiAdRequestID != null;
+  }
+
+  Future<void> dispose() async {
+    if (_multiAdRequestID != null) {
+      await _platform.disposeMultiAdRequest(_multiAdRequestID!);
+    }
+  }
+
+  Future<bool> loadAds() async {
+    assert(_multiAdRequestID != null, 'multiAdRequestID must be initialized');
+    return _platform.loadAdsForMultiAdRequest(_multiAdRequestID!);
+  }
+}

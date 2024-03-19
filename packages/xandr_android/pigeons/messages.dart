@@ -65,6 +65,15 @@ abstract class XandrHostApi {
 
   @async
   List<HostAPIUserId> getUserIds();
+
+  @async
+  String initMultiAdRequest();
+
+  @async
+  void disposeMultiAdRequest(String multiAdRequestID);
+
+  @async
+  bool loadAdsForMultiAdRequest(String multiAdRequestID);
 }
 
 @FlutterApi()
