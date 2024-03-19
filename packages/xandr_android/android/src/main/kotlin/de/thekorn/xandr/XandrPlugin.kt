@@ -3,6 +3,7 @@ package de.thekorn.xandr
 import HostAPIUserId
 import XandrHostApi
 import android.app.Activity
+import com.appnexus.opensdk.ANGDPRSettings
 import com.appnexus.opensdk.ANMultiAdRequest
 import com.appnexus.opensdk.ANUserId
 import com.appnexus.opensdk.ResultCode
@@ -212,5 +213,23 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         callback: (Result<Boolean>) -> Unit
     ) {
         callback(Result.success(MultiAdRequestRegistry.load(multiAdRequestID)))
+    }
+
+    override fun setGDPRConsentRequired(
+        isConsentRequired: Boolean,
+        callback: (Result<Unit>) -> Unit
+    ) {
+        ANGDPRSettings.setConsentRequired(activity, isConsentRequired)
+        callback(Result.success(Unit))
+    }
+
+    override fun setGDPRConsentString(consentString: String, callback: (Result<Unit>) -> Unit) {
+        ANGDPRSettings.setConsentString(activity, consentString)
+        callback(Result.success(Unit))
+    }
+
+    override fun setGDPRPurposeConsents(purposeConsents: String, callback: (Result<Unit>) -> Unit) {
+        ANGDPRSettings.setPurposeConsents(activity, purposeConsents)
+        callback(Result.success(Unit))
     }
 }

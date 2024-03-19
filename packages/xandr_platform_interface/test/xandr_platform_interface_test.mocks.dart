@@ -168,4 +168,82 @@ class MockMethodChannelXandr extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
+
+  @override
+  _i4.Future<String> initMultiAdRequest() => (super.noSuchMethod(
+        Invocation.method(
+          #initMultiAdRequest,
+          [],
+        ),
+        returnValue: _i4.Future<String>.value(_i5.dummyValue<String>(
+          this,
+          Invocation.method(
+            #initMultiAdRequest,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<String>.value(_i5.dummyValue<String>(
+          this,
+          Invocation.method(
+            #initMultiAdRequest,
+            [],
+          ),
+        )),
+      ) as _i4.Future<String>);
+
+  @override
+  _i4.Future<void> disposeMultiAdRequest(String? multiAdRequestID) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #disposeMultiAdRequest,
+          [multiAdRequestID],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<bool> loadAdsForMultiAdRequest(String? multiAdRequestID) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #loadAdsForMultiAdRequest,
+          [multiAdRequestID],
+        ),
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
+
+  @override
+  _i4.Future<void> setGDPRConsentRequired(bool? isConsentRequired) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setGDPRConsentRequired,
+          [isConsentRequired],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> setGDPRConsentString(String? consentString) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setGDPRConsentString,
+          [consentString],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> setGDPRPurposeConsents(String? purposeConsents) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setGDPRPurposeConsents,
+          [purposeConsents],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
