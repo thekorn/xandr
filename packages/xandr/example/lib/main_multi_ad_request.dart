@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:xandr/ad_banner.dart';
 import 'package:xandr/ad_size.dart';
+import 'package:xandr/multiadrequest_builder.dart';
 import 'package:xandr/xandr.dart';
 import 'package:xandr/xandr_builder.dart';
 
@@ -76,8 +77,8 @@ class _XandrExampleState extends State<XandrExample> {
               debugPrint(
                 'Xandr SDK initialized, success=${xandrSnapshot.data}',
               );
-              return FutureBuilder<bool>(
-                future: _multiAdRequestController.init(),
+              return MultiAdRequestBuilder(
+                controller: _multiAdRequestController,
                 builder: (_, multiAdRequestSnapshot) {
                   if (multiAdRequestSnapshot.hasData) {
                     debugPrint(
