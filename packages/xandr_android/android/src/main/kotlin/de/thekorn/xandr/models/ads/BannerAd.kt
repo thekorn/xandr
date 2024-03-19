@@ -8,6 +8,7 @@ import com.appnexus.opensdk.BannerAdView
 import de.thekorn.xandr.listeners.XandrBannerAdListener
 import de.thekorn.xandr.models.BannerViewOptions
 import de.thekorn.xandr.models.FlutterState
+import de.thekorn.xandr.models.MultiAdRequestRegistry
 import io.flutter.Log
 
 @SuppressLint("ViewConstructor")
@@ -62,6 +63,9 @@ class BannerAd(
                 if (enableLazyLoad) {
                     this.enableLazyLoad()
                 }
+            }
+            it.multiAdRequestId?.let {multiAdRequestId ->
+                MultiAdRequestRegistry.addAdUnit(multiAdRequestId, this)
             }
         }
 

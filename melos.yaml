@@ -87,3 +87,11 @@ scripts:
       concurrency: 1
     packageFilters:
         scope: 'xandr_example'
+
+  run:example:multiadrequest:
+    run: fvm flutter run -t lib/main_multi_ad_request.dart
+    description: Run the example app loading ads in a multi ad request.
+    exec:
+      concurrency: 1
+    packageFilters:
+        scope: 'xandr_example'

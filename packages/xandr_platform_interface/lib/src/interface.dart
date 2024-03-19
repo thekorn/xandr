@@ -110,4 +110,37 @@ abstract class XandrPlatform extends PlatformInterface {
   Future<List<UserId>> getUserIds() {
     throw UnimplementedError('getUserIds() has not been implemented.');
   }
+
+  /// Initializes a multi ad request.
+  ///
+  /// Returns a [Future] that completes with a [String] representing the result
+  /// of the initialization.
+  Future<String> initMultiAdRequest() {
+    throw UnimplementedError('initMultiAdRequest() has not been implemented.');
+  }
+
+  /// Disposes a multi ad request with the specified [multiAdRequestID].
+  ///
+  /// This method is used to clean up and release resources associated with
+  /// a multi ad request.
+  ///
+  /// Parameters:
+  ///   - [multiAdRequestID]: The ID of the multi ad request to dispose.
+  ///
+  /// Returns:
+  ///   - A [Future] that completes when the multi ad request is disposed.
+  Future<void> disposeMultiAdRequest(String multiAdRequestID) {
+    throw UnimplementedError(
+      'disposeMultiAdRequest() has not been implemented.',
+    );
+  }
+
+  /// Loads ads for a multi ad request with the specified [multiAdRequestID].
+  /// Returns a [Future] that completes with a [bool] indicating whether the ads
+  /// were successfully loaded.
+  Future<bool> loadAdsForMultiAdRequest(String multiAdRequestID) {
+    throw UnimplementedError(
+      'loadAdsForMultiAdRequest() has not been implemented.',
+    );
+  }
 }

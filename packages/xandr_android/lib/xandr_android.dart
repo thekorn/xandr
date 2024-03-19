@@ -124,6 +124,21 @@ class XandrAndroid extends XandrPlatform {
     final userIds = await _api.getUserIds();
     return userIds.whereNotNull().map((uId) => uId.toUserId()).toList();
   }
+
+  @override
+  Future<String> initMultiAdRequest() {
+    return _api.initMultiAdRequest();
+  }
+
+  @override
+  Future<void> disposeMultiAdRequest(String multiAdRequestID) {
+    return _api.disposeMultiAdRequest(multiAdRequestID);
+  }
+
+  @override
+  Future<bool> loadAdsForMultiAdRequest(String multiAdRequestID) {
+    return _api.loadAdsForMultiAdRequest(multiAdRequestID);
+  }
 }
 
 /// A class that implements the XandrFlutterApi interface for handling Xandr
