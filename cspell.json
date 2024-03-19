@@ -32,6 +32,7 @@
     "xandr",
     "appnexus",
     "criteo",
-    "liveramp"
+    "liveramp",
+    "multiadrequest"
   ]
 }
