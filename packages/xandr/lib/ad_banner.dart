@@ -102,6 +102,7 @@ class AdBanner extends StatefulWidget {
   /// The load mode for the ad banner, determines when the ad is loaded.
   final LoadMode loadMode;
 
+  /// The controller for managing multi ad requests.
   final MultiAdRequestController? multiAdRequestController;
 
   @override
