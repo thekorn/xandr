@@ -139,6 +139,21 @@ class XandrAndroid extends XandrPlatform {
   Future<bool> loadAdsForMultiAdRequest(String multiAdRequestID) {
     return _api.loadAdsForMultiAdRequest(multiAdRequestID);
   }
+
+  @override
+  Future<void> setGDPRConsentRequired(bool isConsentRequired) {
+    return _api.setGDPRConsentRequired(isConsentRequired);
+  }
+
+  @override
+  Future<void> setGDPRConsentString(String consentString) {
+    return _api.setGDPRConsentString(consentString);
+  }
+
+  @override
+  Future<void> setGDPRPurposeConsents(String purposeConsents) {
+    return _api.setGDPRPurposeConsents(purposeConsents);
+  }
 }
 
 /// A class that implements the XandrFlutterApi interface for handling Xandr

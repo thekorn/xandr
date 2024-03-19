@@ -117,6 +117,9 @@ interface XandrHostApi {
   fun initMultiAdRequest(callback: (Result<String>) -> Unit)
   fun disposeMultiAdRequest(multiAdRequestID: String, callback: (Result<Unit>) -> Unit)
   fun loadAdsForMultiAdRequest(multiAdRequestID: String, callback: (Result<Boolean>) -> Unit)
+  fun setGDPRConsentRequired(isConsentRequired: Boolean, callback: (Result<Unit>) -> Unit)
+  fun setGDPRConsentString(consentString: String, callback: (Result<Unit>) -> Unit)
+  fun setGDPRPurposeConsents(purposeConsents: String, callback: (Result<Unit>) -> Unit)
 
   companion object {
     /** The codec used by XandrHostApi. */
@@ -333,6 +336,63 @@ interface XandrHostApi {
               } else {
                 val data = result.getOrNull()
                 reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.xandr_android.XandrHostApi.setGDPRConsentRequired", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val isConsentRequiredArg = args[0] as Boolean
+            api.setGDPRConsentRequired(isConsentRequiredArg) { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.xandr_android.XandrHostApi.setGDPRConsentString", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val consentStringArg = args[0] as String
+            api.setGDPRConsentString(consentStringArg) { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.xandr_android.XandrHostApi.setGDPRPurposeConsents", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val purposeConsentsArg = args[0] as String
+            api.setGDPRPurposeConsents(purposeConsentsArg) { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
               }
             }
           }

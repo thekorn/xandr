@@ -74,6 +74,16 @@ abstract class XandrHostApi {
 
   @async
   bool loadAdsForMultiAdRequest(String multiAdRequestID);
+
+  @async
+  // ignore: avoid_positional_boolean_parameters
+  void setGDPRConsentRequired(bool isConsentRequired);
+
+  @async
+  void setGDPRConsentString(String consentString);
+
+  @async
+  void setGDPRPurposeConsents(String purposeConsents);
 }
 
 @FlutterApi()

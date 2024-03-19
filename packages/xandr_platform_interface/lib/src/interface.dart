@@ -143,4 +143,45 @@ abstract class XandrPlatform extends PlatformInterface {
       'loadAdsForMultiAdRequest() has not been implemented.',
     );
   }
+
+  /// Sets whether GDPR consent is required.
+  ///
+  /// This method is used to set whether GDPR consent is required for the app.
+  /// If `isConsentRequired` is `true`, it means that GDPR consent is required.
+  /// If `isConsentRequired` is `false`, it means that GDPR consent is not
+  /// required.
+  ///
+  // ignore: avoid_positional_boolean_parameters
+  Future<void> setGDPRConsentRequired(bool isConsentRequired) {
+    throw UnimplementedError(
+      'setGDPRConsentRequired() has not been implemented.',
+    );
+  }
+
+  /// Sets the GDPR consent string.
+  ///
+  /// The [consentString] parameter is a string representing the user's consent
+  /// for GDPR.
+  /// This method is used to set the GDPR consent string for the application.
+  /// It returns a [Future] that completes when the consent string is set.
+  Future<void> setGDPRConsentString(String consentString) {
+    throw UnimplementedError(
+      'setGDPRConsentString() has not been implemented.',
+    );
+  }
+
+  /// Sets the GDPR purpose consents.
+  ///
+  /// The [purposeConsents] parameter is a string representing the purpose
+  /// consents for GDPR compliance. A valid Binary String: The '0' or '1' at
+  /// position n – where n's indexing begins at 0 – indicates the consent status
+  /// for purpose ID n+1; false and true respectively. eg. '1' at index 0 is
+  /// consent true for purpose ID 1
+  ///
+  /// Returns a [Future] that completes when the purpose consents are set.
+  Future<void> setGDPRPurposeConsents(String purposeConsents) {
+    throw UnimplementedError(
+      'setGDPRPurposeConsents() has not been implemented.',
+    );
+  }
 }

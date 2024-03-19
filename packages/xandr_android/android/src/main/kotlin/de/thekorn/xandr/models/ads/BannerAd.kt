@@ -64,7 +64,7 @@ class BannerAd(
                     this.enableLazyLoad()
                 }
             }
-            it.multiAdRequestId?.let {multiAdRequestId ->
+            it.multiAdRequestId?.let { multiAdRequestId ->
                 MultiAdRequestRegistry.addAdUnit(multiAdRequestId, this)
             }
         }
