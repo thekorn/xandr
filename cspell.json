@@ -33,6 +33,7 @@
     "appnexus",
     "criteo",
     "liveramp",
-    "multiadrequest"
+    "multiadrequest",
+    "adserver"
   ]
 }
