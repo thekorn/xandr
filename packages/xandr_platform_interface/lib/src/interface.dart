@@ -45,6 +45,11 @@ abstract class XandrPlatform extends PlatformInterface {
     throw UnimplementedError('init() has not been implemented.');
   }
 
+  /// loads an ad.
+  Future<bool> loadAd(int widgetId) async {
+    throw UnimplementedError('loadAd() has not been implemented.');
+  }
+
   /// loads an interstitial ad.
   Future<bool> loadInterstitialAd(
     String? placementID,
@@ -57,5 +62,126 @@ abstract class XandrPlatform extends PlatformInterface {
   /// Return the current platform name.
   Future<bool> showInterstitialAd(Duration? autoDismissDelay) {
     throw UnimplementedError('showInterstitialAd() has not been implemented.');
+  }
+
+  /// Sets the publisher user ID.
+  ///
+  /// This method is used to set the publisher user ID for the Xandr platform
+  /// interface. The publisher user ID is a unique identifier for the
+  /// publisher's user.
+  ///
+  /// Parameters:
+  /// - `publisherUserId`: The publisher user ID to be set.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// setPublisherUserId('123456789');
+  /// ```
+  Future<void> setPublisherUserId(String publisherUserId) {
+    throw UnimplementedError('setPublisherUserId() has not been implemented.');
+  }
+
+  /// Returns the publisher user ID.
+  Future<String> getPublisherUserId() {
+    throw UnimplementedError('getPublisherUserId() has not been implemented.');
+  }
+
+  /// Sets the user IDs for the current user.
+  ///
+  /// The [userIds] parameter is a list of [UserId] objects representing
+  /// the user IDs to be set.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// List<UserId> userIds = [
+  ///   UserId.netId(id: '123'),
+  ///   UserId.criteo(id: '456'),
+  /// ];
+  /// setUserIds(userIds);
+  /// ```
+  Future<void> setUserIds(List<UserId> userIds) {
+    throw UnimplementedError('setUserIds() has not been implemented.');
+  }
+
+  /// Returns a list of [UserId] objects.
+  ///
+  /// This method retrieves the user IDs from the platform interface.
+  /// The returned list contains instances of the [UserId] class.
+  Future<List<UserId>> getUserIds() {
+    throw UnimplementedError('getUserIds() has not been implemented.');
+  }
+
+  /// Initializes a multi ad request.
+  ///
+  /// Returns a [Future] that completes with a [String] representing the result
+  /// of the initialization.
+  Future<String> initMultiAdRequest() {
+    throw UnimplementedError('initMultiAdRequest() has not been implemented.');
+  }
+
+  /// Disposes a multi ad request with the specified [multiAdRequestID].
+  ///
+  /// This method is used to clean up and release resources associated with
+  /// a multi ad request.
+  ///
+  /// Parameters:
+  ///   - [multiAdRequestID]: The ID of the multi ad request to dispose.
+  ///
+  /// Returns:
+  ///   - A [Future] that completes when the multi ad request is disposed.
+  Future<void> disposeMultiAdRequest(String multiAdRequestID) {
+    throw UnimplementedError(
+      'disposeMultiAdRequest() has not been implemented.',
+    );
+  }
+
+  /// Loads ads for a multi ad request with the specified [multiAdRequestID].
+  /// Returns a [Future] that completes with a [bool] indicating whether the ads
+  /// were successfully loaded.
+  Future<bool> loadAdsForMultiAdRequest(String multiAdRequestID) {
+    throw UnimplementedError(
+      'loadAdsForMultiAdRequest() has not been implemented.',
+    );
+  }
+
+  /// Sets whether GDPR consent is required.
+  ///
+  /// This method is used to set whether GDPR consent is required for the app.
+  /// If `isConsentRequired` is `true`, it means that GDPR consent is required.
+  /// If `isConsentRequired` is `false`, it means that GDPR consent is not
+  /// required.
+  ///
+  // ignore: avoid_positional_boolean_parameters
+  Future<void> setGDPRConsentRequired(bool isConsentRequired) {
+    throw UnimplementedError(
+      'setGDPRConsentRequired() has not been implemented.',
+    );
+  }
+
+  /// Sets the GDPR consent string.
+  ///
+  /// The [consentString] parameter is a string representing the user's consent
+  /// for GDPR.
+  /// This method is used to set the GDPR consent string for the application.
+  /// It returns a [Future] that completes when the consent string is set.
+  Future<void> setGDPRConsentString(String consentString) {
+    throw UnimplementedError(
+      'setGDPRConsentString() has not been implemented.',
+    );
+  }
+
+  /// Sets the GDPR purpose consents.
+  ///
+  /// The [purposeConsents] parameter is a string representing the purpose
+  /// consents for GDPR compliance. A valid Binary String: The '0' or '1' at
+  /// position n – where n's indexing begins at 0 – indicates the consent status
+  /// for purpose ID n+1; false and true respectively. eg. '1' at index 0 is
+  /// consent true for purpose ID 1
+  ///
+  /// Returns a [Future] that completes when the purpose consents are set.
+  Future<void> setGDPRPurposeConsents(String purposeConsents) {
+    throw UnimplementedError(
+      'setGDPRPurposeConsents() has not been implemented.',
+    );
   }
 }

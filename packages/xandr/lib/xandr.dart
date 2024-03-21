@@ -36,6 +36,12 @@ class XandrController {
     return _platform.init(memberId);
   }
 
+  /// loads an ad.
+  Future<bool> loadAd(int widgetId) async {
+    debugPrint('loadAd');
+    return _platform.loadAd(widgetId);
+  }
+
   /// loads an interstitial ad.
   Future<bool> loadInterstitialAd({
     String? placementID,
@@ -75,5 +81,42 @@ class XandrController {
     return _eventStreamController.stream
         .where((event) => event.viewId == widgetId)
         .listen(callback);
+  }
+}
+
+/// The controller for handling multi ad requests.
+class MultiAdRequestController {
+  String? _multiAdRequestID;
+
+  /// Returns the request ID associated with the multi-ad request.
+  /// If no request ID is available, it returns `null`.
+  String? get requestId => _multiAdRequestID;
+
+  /// Initializes the Xandr library.
+  ///
+  /// Returns a [Future] that completes with a [bool] value indicating whether
+  /// the initialization was successful.
+  Future<bool> init() async {
+    _multiAdRequestID = await _platform.initMultiAdRequest();
+    return _multiAdRequestID != null;
+  }
+
+  /// Disposes the resources used by this object.
+  ///
+  /// This method should be called when the object is no longer needed to
+  /// release any resources it holds.
+  Future<void> dispose() async {
+    if (_multiAdRequestID != null) {
+      await _platform.disposeMultiAdRequest(_multiAdRequestID!);
+    }
+  }
+
+  /// Loads ads asynchronously.
+  ///
+  /// Returns a [Future] that completes with a [bool] value indicating whether
+  /// the ads were successfully loaded.
+  Future<bool> loadAds() async {
+    assert(_multiAdRequestID != null, 'multiAdRequestID must be initialized');
+    return _platform.loadAdsForMultiAdRequest(_multiAdRequestID!);
   }
 }

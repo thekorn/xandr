@@ -1,11 +1,16 @@
-package de.thekorn.xandr
+package de.thekorn.xandr.listeners
 
 import XandrFlutterApi
 import com.appnexus.opensdk.AdListener
 import com.appnexus.opensdk.AdView
 import com.appnexus.opensdk.NativeAdResponse
 import com.appnexus.opensdk.ResultCode
+import de.thekorn.xandr.models.ads.BannerAd
+import de.thekorn.xandr.models.ads.InterstitialAd
 import io.flutter.Log
+
+// / FIXME: create explicit XandrBannerAdListener
+// /  means: XandrAdListener as base plus an interstitial and banner implementation
 
 open class XandrAdListener(
     private var widgetId: Int,
@@ -18,13 +23,15 @@ open class XandrAdListener(
                 " h=${view?.creativeHeight}"
         )
 
+        // FIXME: implement resizeWhenLoaded
+
         if (view != null) {
             val adResponse = view.adResponseInfo
             flutterApi.onAdLoaded(
                 widgetId.toLong(),
-                view.creativeWidth.toLong(), view.creativeHeight.toLong(), adResponse.creativeId,
-                adResponse.adType.toString(), adResponse.tagId, adResponse.auctionId,
-                adResponse.cpm, adResponse.buyMemberId.toLong()
+                view.creativeWidth.toLong(), view.creativeHeight.toLong(),
+                adResponse.creativeId, adResponse.adType.toString(), adResponse.tagId,
+                adResponse.auctionId, adResponse.cpm, adResponse.buyMemberId.toLong()
             ) { }
         } else {
             flutterApi.onAdLoadedError(
@@ -90,10 +97,10 @@ open class XandrAdListener(
         )
     }
 
-    override fun onLazyAdLoaded(p0: AdView?) {
+    override fun onLazyAdLoaded(adView: AdView?) {
         Log.d(
             "Xandr.BannerView",
-            ">>> Ad lazy loaded, AdView:p0=$p0"
+            ">>> Ad lazy loaded, AdView:p0=$adView"
         )
     }
 
@@ -113,12 +120,28 @@ class XandrInterstitialAdListener(
     override fun onAdLoaded(view: AdView?) {
         super.onAdLoaded(view)
         interstitialAd.isLoaded.complete(true)
-        Log.d("Xandr.Interstitial", "onAdLoaded")
+        Log.d("Xandr.InterstitialView", "onAdLoaded")
     }
 
     override fun onAdCollapsed(p0: AdView?) {
         super.onAdCollapsed(p0)
         interstitialAd.isClosed.complete(true)
-        Log.d("Xandr.Interstitial", "onAdCollapsed")
+        Log.d("Xandr.InterstitialView", "onAdCollapsed")
+    }
+}
+
+class XandrBannerAdListener(
+    widgetId: Long,
+    flutterApi: XandrFlutterApi,
+    private var banner: BannerAd
+) : XandrAdListener(widgetId.toInt(), flutterApi) {
+
+    override fun onLazyAdLoaded(adView: AdView?) {
+        Log.d(
+            "Xandr.BannerView",
+            ">>> Ad lazy loaded, AdView:p0=$adView"
+        )
+        this.banner.loadLazyAd()
+        return super.onLazyAdLoaded(adView)
     }
 }

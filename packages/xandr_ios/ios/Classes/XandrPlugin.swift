@@ -7,7 +7,7 @@ extension FlutterError: Swift.Error {}
 public class FlutterState {
   private var isInitialized: Completer<Bool> = .init()
   private var flutterAPI: XandrFlutterApi?
-    
+
   private var binaryMessenger: FlutterBinaryMessenger
 
   init(binaryMessenger: FlutterBinaryMessenger) {

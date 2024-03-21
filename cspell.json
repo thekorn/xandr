@@ -29,6 +29,11 @@
     "thekorn",
     "webdesktop",
     "webphone",
-    "xandr"
+    "xandr",
+    "appnexus",
+    "criteo",
+    "liveramp",
+    "multiadrequest",
+    "adserver"
   ]
 }
