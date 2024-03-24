@@ -26,11 +26,46 @@ import 'package:xandr_ios/src/messages.g.dart' as _i2;
 /// See the documentation for Mockito's code generation for more information.
 class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
   @override
-  _i3.Future<bool> init({required int? memberId}) => (super.noSuchMethod(
+  _i3.Future<bool> initXandrSdk({required int? memberId}) =>
+      (super.noSuchMethod(
         Invocation.method(
-          #init,
+          #initXandrSdk,
           [],
           {#memberId: memberId},
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+        returnValueForMissingStub: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<bool> loadInterstitialAd({
+    required int? widgetId,
+    String? placementID,
+    String? inventoryCode,
+    Map<String?, String?>? customKeywords,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #loadInterstitialAd,
+          [],
+          {
+            #widgetId: widgetId,
+            #placementID: placementID,
+            #inventoryCode: inventoryCode,
+            #customKeywords: customKeywords,
+          },
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+        returnValueForMissingStub: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<bool> showInterstitialAd({int? autoDismissDelay}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showInterstitialAd,
+          [],
+          {#autoDismissDelay: autoDismissDelay},
         ),
         returnValue: _i3.Future<bool>.value(false),
         returnValueForMissingStub: _i3.Future<bool>.value(false),
