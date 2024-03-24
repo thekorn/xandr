@@ -7,6 +7,7 @@ extension FlutterError: Swift.Error {}
 public class FlutterState {
   private var isInitialized: Completer<Bool> = .init()
   private var flutterAPI: XandrFlutterApi?
+  public var memberId: Int!
 
   private var binaryMessenger: FlutterBinaryMessenger
 
@@ -25,6 +26,10 @@ public class FlutterState {
 
   public func setIsInitialized(success: Bool) {
     isInitialized.complete(result: success)
+  }
+
+  public func setIsInitializedCompletionHandler(handler: @escaping (Bool) -> Void) {
+    isInitialized.setCompletionHandler(handler: handler)
   }
 }
 
@@ -59,10 +64,12 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
           success in
             if success {
               print("#### initialized Xandr SDK")
+              flutterState?.memberId = Int(memberId)
               flutterState?.setIsInitialized(success: true)
               completion(.success(true))
             } else {
               print("#### failed to initialize Xandr SDK")
+              flutterState?.memberId = Int(memberId)
               flutterState?.setIsInitialized(success: false)
               completion(.failure(NSError(
                 domain: "XandrAd.sharedInstance().initWithMemberID",
@@ -91,9 +98,9 @@ class XandrBannerFactory: NSObject, FlutterPlatformViewFactory {
   private var state: FlutterState
 
   init(messenger: FlutterBinaryMessenger, state: FlutterState) {
-    super.init()
     self.messenger = messenger
     self.state = state
+    super.init()
   }
 
   func create(withFrame frame: CGRect,
@@ -140,7 +147,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
       )))
     }
 
-    state.whenInitialized { [weak self] in
+    state.setIsInitializedCompletionHandler { [self] result in
       // Make a banner ad view.
       banner = ANBannerAdView(
         frame: frame,
@@ -153,7 +160,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
       }
 
       banner?.adSizes = adSizes
-      self?.banner?.loadAd()
+      banner?.loadAd()
     }
   }
 
