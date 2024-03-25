@@ -14,7 +14,7 @@ import io.flutter.Log
 
 open class XandrAdListener(
     private var widgetId: Int,
-    private var flutterApi: XandrFlutterApi,
+    private var flutterApi: XandrFlutterApi
 ) : AdListener {
     override fun onAdLoaded(view: AdView?) {
         Log.d(
@@ -130,13 +130,11 @@ class XandrInterstitialAdListener(
     }
 }
 
-
 class XandrBannerAdListener(
     widgetId: Long,
     flutterApi: XandrFlutterApi,
     private var banner: BannerAd
 ) : XandrAdListener(widgetId.toInt(), flutterApi) {
-
 
     override fun onLazyAdLoaded(adView: AdView?) {
         Log.d(

@@ -7,8 +7,9 @@ import 'dart:async' as _i4;
 
 import 'package:flutter/services.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i5;
 import 'package:xandr_platform_interface/src/method_channel.dart' as _i3;
-import 'package:xandr_platform_interface/xandr_platform_interface.dart' as _i5;
+import 'package:xandr_platform_interface/xandr_platform_interface.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -62,6 +63,16 @@ class MockMethodChannelXandr extends _i1.Mock
       ) as _i4.Future<bool>);
 
   @override
+  _i4.Future<bool> loadAd(int? widgetId) => (super.noSuchMethod(
+        Invocation.method(
+          #loadAd,
+          [widgetId],
+        ),
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
+
+  @override
   _i4.Future<bool> loadInterstitialAd(
     String? placementID,
     String? inventoryCode,
@@ -92,8 +103,63 @@ class MockMethodChannelXandr extends _i1.Mock
       ) as _i4.Future<bool>);
 
   @override
+  _i4.Future<void> setPublisherUserId(String? publisherUserId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setPublisherUserId,
+          [publisherUserId],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<String> getPublisherUserId() => (super.noSuchMethod(
+        Invocation.method(
+          #getPublisherUserId,
+          [],
+        ),
+        returnValue: _i4.Future<String>.value(_i5.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getPublisherUserId,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<String>.value(_i5.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getPublisherUserId,
+            [],
+          ),
+        )),
+      ) as _i4.Future<String>);
+
+  @override
+  _i4.Future<void> setUserIds(List<_i6.UserId>? userIds) => (super.noSuchMethod(
+        Invocation.method(
+          #setUserIds,
+          [userIds],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<List<_i6.UserId>> getUserIds() => (super.noSuchMethod(
+        Invocation.method(
+          #getUserIds,
+          [],
+        ),
+        returnValue: _i4.Future<List<_i6.UserId>>.value(<_i6.UserId>[]),
+        returnValueForMissingStub:
+            _i4.Future<List<_i6.UserId>>.value(<_i6.UserId>[]),
+      ) as _i4.Future<List<_i6.UserId>>);
+
+  @override
   void registerEventStream(
-          {required _i4.StreamController<_i5.BannerAdEvent>? controller}) =>
+          {required _i4.StreamController<_i6.BannerAdEvent>? controller}) =>
       super.noSuchMethod(
         Invocation.method(
           #registerEventStream,
@@ -102,4 +168,82 @@ class MockMethodChannelXandr extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
+
+  @override
+  _i4.Future<String> initMultiAdRequest() => (super.noSuchMethod(
+        Invocation.method(
+          #initMultiAdRequest,
+          [],
+        ),
+        returnValue: _i4.Future<String>.value(_i5.dummyValue<String>(
+          this,
+          Invocation.method(
+            #initMultiAdRequest,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<String>.value(_i5.dummyValue<String>(
+          this,
+          Invocation.method(
+            #initMultiAdRequest,
+            [],
+          ),
+        )),
+      ) as _i4.Future<String>);
+
+  @override
+  _i4.Future<void> disposeMultiAdRequest(String? multiAdRequestID) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #disposeMultiAdRequest,
+          [multiAdRequestID],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<bool> loadAdsForMultiAdRequest(String? multiAdRequestID) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #loadAdsForMultiAdRequest,
+          [multiAdRequestID],
+        ),
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
+
+  @override
+  _i4.Future<void> setGDPRConsentRequired(bool? isConsentRequired) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setGDPRConsentRequired,
+          [isConsentRequired],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> setGDPRConsentString(String? consentString) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setGDPRConsentString,
+          [consentString],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> setGDPRPurposeConsents(String? purposeConsents) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setGDPRPurposeConsents,
+          [purposeConsents],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }

@@ -30,6 +30,10 @@
     "webdesktop",
     "webphone",
     "xandr",
-    "appnexus"
+    "appnexus",
+    "criteo",
+    "liveramp",
+    "multiadrequest",
+    "adserver"
   ]
 }

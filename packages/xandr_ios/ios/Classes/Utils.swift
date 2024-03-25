@@ -9,7 +9,7 @@ class Completer<T> {
     }
   }
 
-  func setCompletionHandler(_ handler: @escaping CompletionHandler) {
+  func setCompletionHandler(handler: @escaping CompletionHandler) {
     completionHandler = handler
   }
 }

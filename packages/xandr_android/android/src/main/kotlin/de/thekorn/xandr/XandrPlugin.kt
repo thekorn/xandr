@@ -1,11 +1,19 @@
 package de.thekorn.xandr
 
+import HostAPIUserId
 import XandrHostApi
 import android.app.Activity
+import com.appnexus.opensdk.ANGDPRSettings
+import com.appnexus.opensdk.ANMultiAdRequest
+import com.appnexus.opensdk.ANUserId
+import com.appnexus.opensdk.ResultCode
+import com.appnexus.opensdk.SDKSettings
 import com.appnexus.opensdk.XandrAd
+import com.appnexus.opensdk.mar.MultiAdRequestListener
 import de.thekorn.xandr.listeners.AdInitListener
 import de.thekorn.xandr.listeners.XandrInterstitialAdListener
 import de.thekorn.xandr.models.FlutterState
+import de.thekorn.xandr.models.MultiAdRequestRegistry
 import de.thekorn.xandr.models.ads.InterstitialAd
 import io.flutter.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -96,6 +104,7 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun loadInterstitialAd(
         widgetId: Long,
         placementID: String?,
@@ -130,6 +139,7 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun showInterstitialAd(autoDismissDelay: Long?, callback: (Result<Boolean>) -> Unit) {
         if (interstitialAd.isClosed.isCompleted) {
             callback(Result.success(false))
@@ -147,5 +157,79 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         interstitialAd.isClosed.invokeOnCompletion {
             callback(Result.success(interstitialAd.isClosed.getCompleted()))
         }
+    }
+
+    override fun setPublisherUserId(publisherUserId: String, callback: (Result<Unit>) -> Unit) {
+        SDKSettings.setPublisherUserId(publisherUserId)
+        callback(Result.success(Unit))
+    }
+
+    override fun getPublisherUserId(callback: (Result<String>) -> Unit) {
+        callback(Result.success(SDKSettings.getPublisherUserId()))
+    }
+
+    override fun setUserIds(userIds: List<HostAPIUserId>, callback: (Result<Unit>) -> Unit) {
+        val uIds = ArrayList<ANUserId>()
+        userIds.forEach {
+            uIds.add(ANUserId(it.source.toANUserIdSource(), it.userId))
+        }
+        SDKSettings.setUserIds(uIds)
+        callback(Result.success(Unit))
+    }
+
+    override fun getUserIds(callback: (Result<List<HostAPIUserId>>) -> Unit) {
+        val userIds = SDKSettings.getUserIds()
+        val uIds = ArrayList<HostAPIUserId>()
+        userIds.forEach {
+            uIds.add(it.toHostUserId())
+        }
+        callback(Result.success(uIds))
+    }
+
+    override fun initMultiAdRequest(callback: (Result<String>) -> Unit) {
+        val mar = ANMultiAdRequest(
+            activity,
+            this.flutterState.memberId,
+            object : MultiAdRequestListener {
+                override fun onMultiAdRequestCompleted() {
+                    Log.d("Xandr.MultiAdRequest", "completed")
+                }
+
+                override fun onMultiAdRequestFailed(code: ResultCode) {
+                    Log.d("Xandr.MultiAdRequest", "failed")
+                }
+            }
+        )
+        val id = MultiAdRequestRegistry.initNewRequest(mar)
+        callback(Result.success(id))
+    }
+
+    override fun disposeMultiAdRequest(multiAdRequestID: String, callback: (Result<Unit>) -> Unit) {
+        MultiAdRequestRegistry.removeRequestWithId(multiAdRequestID)
+    }
+
+    override fun loadAdsForMultiAdRequest(
+        multiAdRequestID: String,
+        callback: (Result<Boolean>) -> Unit
+    ) {
+        callback(Result.success(MultiAdRequestRegistry.load(multiAdRequestID)))
+    }
+
+    override fun setGDPRConsentRequired(
+        isConsentRequired: Boolean,
+        callback: (Result<Unit>) -> Unit
+    ) {
+        ANGDPRSettings.setConsentRequired(activity, isConsentRequired)
+        callback(Result.success(Unit))
+    }
+
+    override fun setGDPRConsentString(consentString: String, callback: (Result<Unit>) -> Unit) {
+        ANGDPRSettings.setConsentString(activity, consentString)
+        callback(Result.success(Unit))
+    }
+
+    override fun setGDPRPurposeConsents(purposeConsents: String, callback: (Result<Unit>) -> Unit) {
+        ANGDPRSettings.setPurposeConsents(activity, purposeConsents)
+        callback(Result.success(Unit))
     }
 }

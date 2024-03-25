@@ -19,7 +19,8 @@ data class BannerViewOptions(
     val clickThroughAction: String? = null,
     val autoRefreshInterval: Int? = null,
     val resizeWhenLoaded: Boolean? = null,
-    val enableLazyLoad: Boolean? = null
+    val enableLazyLoad: Boolean? = null,
+    val multiAdRequestId: String? = null
 )
 
 fun Map<*, *>.toBannerAdViewOptions(): BannerViewOptions {
@@ -60,6 +61,7 @@ fun Map<*, *>.toBannerAdViewOptions(): BannerViewOptions {
         resizeWhenLoaded = this["resizeWhenLoaded"] as Boolean?,
         allowNativeDemand = this["allowNativeDemand"] as Boolean?,
         loadWhenCreated = this["loadWhenCreated"] as Boolean?,
-        enableLazyLoad = this["enableLazyLoad"] as Boolean?
+        enableLazyLoad = this["enableLazyLoad"] as Boolean?,
+        multiAdRequestId = this["multiAdRequestId"] as String?
     )
 }

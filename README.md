@@ -124,3 +124,79 @@ XandrInterstitialBuilder(
 ![](./docs/images/android_interstitial.gif)
 
 To run the interstitial example app, run `melos run run:example:interstitial -- -d sdk` (android only atm).
+
+Banner Ads can also be loaded using a multi ad request: ads are just initialized, and loaded with the single request to the adserver:
+
+  1. create a multi ad controller and use a future builder to get the multi ad request initialized - this requires an already initialized xandr controller as well
+
+```dart
+...
+_multiAdRequestController = MultiAdRequestController();
+...
+FutureBuilder<bool>(
+  future: _multiAdRequestController.init(),
+  builder: (_, multiAdRequestSnapshot) {
+    if (multiAdRequestSnapshot.hasData) {
+      debugPrint(
+        'MultiAdRequestController initialized, '
+        'success=${multiAdRequestSnapshot.data}',
+      );
+
+      return SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
+          children: [
+            TextButton(
+              onPressed: () {
+                _multiAdRequestController.loadAds();
+              },
+              child: const Text('load ads'),
+            ),
+            AdBanner(
+              controller: _controller,
+              //placementID: '17058950',
+              inventoryCode:
+                  'bunte_webdesktop_home_homepage_hor_1',
+              adSizes: const [
+                AdSize(728, 90),
+              ], //[AdSize(300, 250)],
+              customKeywords: useDemoAds,
+              resizeAdToFitContainer: true,
+              multiAdRequestController: _multiAdRequestController,
+            ),
+            AdBanner(
+              controller: _controller,
+              //placementID: '17058950',
+              inventoryCode:
+                  'bunte_webdesktop_home_homepage_hor_1',
+              adSizes: const [
+                AdSize(728, 90),
+              ], //[AdSize(300, 250)],
+              customKeywords: useDemoAds,
+              resizeAdToFitContainer: true,
+              multiAdRequestController: _multiAdRequestController,
+            ),
+          ],
+        ),
+      );
+    } else if (multiAdRequestSnapshot.hasError) {
+      debugPrint(
+        'Error initializing MultiAdRequestController: '
+        '${multiAdRequestSnapshot.error}',
+      );
+      return const Text('Error initializing multi ad request');
+    } else {
+      debugPrint('Initializing MultiAdRequestController...');
+      return const Text('Initializing multi ad request...');
+    }
+  },
+)
+```
+
+clicking on the `load ads` button will load the ads in a single request. 
+
+***Result:***
+
+![](./docs/images/android_multi_ad_request.gif)
+
+To run the multi ad request example app, run `melos run run:example:multiadrequest -- -d sdk` (android only atm).
