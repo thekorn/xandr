@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -228,7 +227,6 @@ class _AdBannerState extends State<AdBanner> {
             return const Text('Error initializing Xandr, error: false');
           }
         } else if (snapshot.hasError) {
-          debugPrint(">> ERROR ${snapshot.error}");
           return const Text('unknown Error initializing Xandr');
         } else {
           return SizedBox(
