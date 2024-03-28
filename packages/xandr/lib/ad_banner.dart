@@ -178,36 +178,57 @@ class _AdBannerState extends State<AdBanner> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: _width, //adSizes.first.width.toDouble(),
-      height: _height, //adSizes.first.height.toDouble(),
-      child: _HostAdBannerView(
-        placementID: widget.placementID,
-        inventoryCode: widget.inventoryCode,
-        adSizes: widget.adSizes,
-        customKeywords: widget.customKeywords ?? {},
-        allowNativeDemand: widget.allowNativeDemand,
-        autoRefreshInterval: widget.autoRefreshInterval,
-        resizeWhenLoaded: widget.resizeWhenLoaded,
-        controller: widget.controller,
-        layoutHeight: _height.toInt(),
-        layoutWidth: _width.toInt(),
-        clickThroughAction: widget.clickThroughAction,
-        resizeAdToFitContainer: widget.resizeAdToFitContainer,
-        loadsInBackground: widget.loadsInBackground,
-        shouldServePSAs: widget.shouldServePSAs,
-        loadMode: widget.loadMode,
-        onDoneLoading: onDoneLoading,
-        widgetId: _widgetId,
-        enableLazyLoad: widget.enableLazyLoad,
-        multiAdRequestId: widget.multiAdRequestController?.requestId,
-        delegate: BannerAdEventDelegate(
-          onBannerAdLoaded: (event) {
-            debugPrint('>>>> onBannerAdLoaded: $event');
-            changeSize(event.width.toDouble(), event.height.toDouble());
-          },
-        ),
-      ),
+    return FutureBuilder(
+      future: widget.controller.isInitialized.future,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data!) {
+            return SizedBox(
+              width: _width, //adSizes.first.width.toDouble(),
+              height: _height, //adSizes.first.height.toDouble(),
+              child: _HostAdBannerView(
+                placementID: widget.placementID,
+                inventoryCode: widget.inventoryCode,
+                adSizes: widget.adSizes,
+                customKeywords: widget.customKeywords ?? {},
+                allowNativeDemand: widget.allowNativeDemand,
+                autoRefreshInterval: widget.autoRefreshInterval,
+                resizeWhenLoaded: widget.resizeWhenLoaded,
+                controller: widget.controller,
+                layoutHeight: _height.toInt(),
+                layoutWidth: _width.toInt(),
+                clickThroughAction: widget.clickThroughAction,
+                resizeAdToFitContainer: widget.resizeAdToFitContainer,
+                loadsInBackground: widget.loadsInBackground,
+                shouldServePSAs: widget.shouldServePSAs,
+                loadMode: widget.loadMode,
+                onDoneLoading: onDoneLoading,
+                widgetId: _widgetId,
+                enableLazyLoad: widget.enableLazyLoad,
+                multiAdRequestId: widget.multiAdRequestController?.requestId,
+                delegate: BannerAdEventDelegate(
+                  onBannerAdLoaded: (event) {
+                    debugPrint('>>>> onBannerAdLoaded: $event');
+                    changeSize(event.width.toDouble(), event.height.toDouble());
+                  },
+                ),
+              ),
+            );
+          } else {
+            return const Text('Error initializing Xandr, error: false');
+          }
+        } else if (snapshot.hasError) {
+          return const Text('unknown Error initializing Xandr');
+        } else {
+          return SizedBox(
+            width: _width, //adSizes.first.width.toDouble(),
+            height: _height, //adSizes.first.height.toDouble(),
+            child: const Center(
+              child: Text('loading xandr...'),
+            ),
+          );
+        }
+      },
     );
   }
 }

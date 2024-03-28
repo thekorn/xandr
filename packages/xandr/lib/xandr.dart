@@ -25,6 +25,9 @@ class XandrController {
     _platform.registerEventStream(controller: _eventStreamController);
   }
 
+  /// A completer that indicates whether the initialization is complete or not.
+  final Completer<bool> isInitialized = Completer();
+
   final StreamController<BannerAdEvent> _eventStreamController =
       StreamController.broadcast();
 
@@ -33,7 +36,13 @@ class XandrController {
   /// [memberId] is the Xandr member ID.
   Future<bool> init(int memberId) async {
     debugPrint('init xandr with memberId=$memberId');
-    return _platform.init(memberId);
+    if (isInitialized.isCompleted) {
+      return isInitialized.future;
+    }
+    await Future.delayed(const Duration(seconds: 10));
+    final result = await _platform.init(memberId);
+    isInitialized.complete(result);
+    return result;
   }
 
   /// loads an ad.
