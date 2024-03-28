@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -176,10 +177,19 @@ class _AdBannerState extends State<AdBanner> {
     });
   }
 
+  Future<bool> waitIsInitialized() async {
+    final xandrIsInitialized = await widget.controller.isInitialized.future;
+    if (!xandrIsInitialized) return false;
+    if (widget.multiAdRequestController == null) return xandrIsInitialized;
+    final multiAdrequestInitialized =
+        await widget.multiAdRequestController!.isInitialized.future;
+    return multiAdrequestInitialized;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: widget.controller.isInitialized.future,
+    return FutureBuilder<bool>(
+      future: waitIsInitialized(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!) {
@@ -218,6 +228,7 @@ class _AdBannerState extends State<AdBanner> {
             return const Text('Error initializing Xandr, error: false');
           }
         } else if (snapshot.hasError) {
+          debugPrint(">> ERROR ${snapshot.error}");
           return const Text('unknown Error initializing Xandr');
         } else {
           return SizedBox(
