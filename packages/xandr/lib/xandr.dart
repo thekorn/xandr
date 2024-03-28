@@ -13,17 +13,12 @@ class XandrController {
   /// This class is responsible for controlling the Xandr functionality.
   /// It initializes the necessary components and provides methods for
   /// interacting with Xandr.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// XandrController controller = XandrController();
-  /// controller.initialize();
-  /// controller.start();
-  /// ```
   XandrController() {
     _platform.registerEventStream(controller: _eventStreamController);
   }
+
+  /// A completer that indicates whether the initialization is complete or not.
+  final Completer<bool> isInitialized = Completer();
 
   final StreamController<BannerAdEvent> _eventStreamController =
       StreamController.broadcast();
@@ -33,7 +28,12 @@ class XandrController {
   /// [memberId] is the Xandr member ID.
   Future<bool> init(int memberId) async {
     debugPrint('init xandr with memberId=$memberId');
-    return _platform.init(memberId);
+    if (isInitialized.isCompleted) {
+      return isInitialized.future;
+    }
+    final result = await _platform.init(memberId);
+    isInitialized.complete(result);
+    return result;
   }
 
   /// loads an ad.
@@ -86,19 +86,47 @@ class XandrController {
 
 /// The controller for handling multi ad requests.
 class MultiAdRequestController {
+  /// Controller for handling multi ad requests.
+  ///
+  /// This controller is responsible for managing multiple ad requests
+  /// and coordinating with the XandrController.
+  MultiAdRequestController({required XandrController controller})
+      : _controller = controller;
+
   String? _multiAdRequestID;
+  final XandrController _controller;
 
   /// Returns the request ID associated with the multi-ad request.
   /// If no request ID is available, it returns `null`.
   String? get requestId => _multiAdRequestID;
+
+  /// A completer that indicates whether the initialization is complete or not.
+  final Completer<bool> isInitialized = Completer();
+
+  /// Initializes the application when Xandr is ready.
+  ///
+  /// Returns a [Future] that completes with a boolean value indicating whether
+  /// the initialization was successful.
+  Future<bool> initWhenXandrIsReady() async {
+    if (_controller.isInitialized.isCompleted) {
+      return _controller.isInitialized.future;
+    }
+    await _controller.isInitialized.future;
+    return init();
+  }
 
   /// Initializes the Xandr library.
   ///
   /// Returns a [Future] that completes with a [bool] value indicating whether
   /// the initialization was successful.
   Future<bool> init() async {
+    if (isInitialized.isCompleted) {
+      return isInitialized.future;
+    }
     _multiAdRequestID = await _platform.initMultiAdRequest();
-    return _multiAdRequestID != null;
+    final result = _multiAdRequestID != null;
+    isInitialized.complete(result);
+    return result;
   }
 
   /// Disposes the resources used by this object.
