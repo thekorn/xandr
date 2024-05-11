@@ -3,6 +3,7 @@
 ## requirements
 
 Packages:
+
 - dart
 - flutter
 - swiftformat
@@ -33,6 +34,9 @@ melos run test
 # run sample app
 melos run run:example -- -d sdk     # android
 #melos run run:example -- -d IPhone  # ios /* not implemented yet */
+
+# setup a clean local environment
+./setup_environment.sh
 ```
 
 ## resources
