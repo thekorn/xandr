@@ -34,6 +34,8 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         this.flutterState = FlutterState(binding.applicationContext, binding.binaryMessenger)
         this.flutterState.startListening(this)
+        // TODO(mkorn): refactor, we don't need this flutterPluginBinding
+        //   if needed, but it in the state
         this.flutterPluginBinding = binding
     }
 
