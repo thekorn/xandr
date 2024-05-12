@@ -62,7 +62,7 @@ class XandrAndroid extends XandrPlatform {
   void registerEventStream({
     required StreamController<BannerAdEvent> controller,
   }) {
-    messages.XandrFlutterApi.setup(
+    messages.XandrFlutterApi.setUp(
       XandrEventHandler(controller: controller),
     );
   }
