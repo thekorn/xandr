@@ -1,10 +1,41 @@
 import AppNexusSDK
 import Flutter
+import os.log
 import UIKit
 
-// TODO(mkorn): add some proper logging
-
 extension FlutterError: Swift.Error {}
+
+public class Logger {
+  private static let subsystem = Bundle.main.bundleIdentifier ?? "unknown"
+  private var category: String = "unknown"
+
+  private static func log(logType: OSLogType, category: String, message: String) {
+    os_log(
+      "%{public}@",
+      log: OSLog(subsystem: Logger.subsystem, category: category),
+      type: logType,
+      message
+    )
+  }
+
+  init(category: String) {
+    self.category = category
+  }
+
+  public func debug(message: String) {
+    Logger.log(logType: OSLogType.debug, category: category, message: message)
+  }
+
+  public func error(message: String) {
+    Logger.log(logType: OSLogType.error, category: category, message: message)
+  }
+
+  public func info(message: String) {
+    Logger.log(logType: OSLogType.info, category: category, message: message)
+  }
+}
+
+var logger = Logger(category: "XandrPlugin")
 
 public class FlutterState {
   private var isInitialized: Completer<Bool> = .init()
@@ -43,14 +74,14 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     // init the plugin and call onRegister
-    print("xandrPlugin: register plugin instance")
+    logger.debug(message: "register plugin instance")
     instance = XandrPlugin()
     instance?.onRegister(registrar: registrar)
   }
 
   public func onRegister(registrar: FlutterPluginRegistrar) {
     // setup the state, start listening on the host api instance and register the banner factory
-    print("xandrPlugin: onRegister plugin instance")
+    logger.debug(message: "onRegister plugin instance")
 
     flutterState = FlutterState(binaryMessenger: registrar.messenger())
     flutterState?.startListening(api: self)
@@ -65,18 +96,18 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   func initXandrSdk(memberId: Int64, completion: @escaping (Result<Bool, Error>) -> Void) {
     // init thge xandr sdk and store the memberId in the state on success
     // return true on success
-    print("xandrPlugin: initXnadrSdk")
+    logger.debug(message: "initXnadrSdk")
     DispatchQueue.main.async {
       XandrAd.sharedInstance()
         .initWithMemberID(Int(memberId), preCacheRequestObjects: true) { [self]
           success in
             if success {
-              print("xandrPlugin: initXnadrSdk was successfull")
+              logger.debug(message: "initXnadrSdk was successfull")
               flutterState?.memberId = Int(memberId)
               flutterState?.setIsInitialized(success: true)
               completion(.success(true))
             } else {
-              print("xandrPlugin: initXnadrSdk failed")
+              logger.debug(message: "initXnadrSdk failed")
               flutterState?.memberId = Int(memberId)
               flutterState?.setIsInitialized(success: false)
               completion(.failure(NSError(
@@ -92,12 +123,12 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   func loadInterstitialAd(widgetId: Int64, placementID: String?, inventoryCode: String?,
                           customKeywords: [String: String]?,
                           completion: @escaping (Result<Bool, Error>) -> Void) {
-    print("xandrPlugin: loadInterstitialAd()")
+    logger.error(message: "loadInterstitialAd() not implemented")
   }
 
   func showInterstitialAd(autoDismissDelay: Int64?,
                           completion: @escaping (Result<Bool, Error>) -> Void) {
-    print("xandrPlugin: showInterstitialAd()")
+    logger.error(message: "showInterstitialAd() not implemented")
   }
 }
 
@@ -173,8 +204,8 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
   }
 
   func view() -> UIView {
-    guard let temp = banner as? ANBannerAdView else {
-      print("xandrPlugin: banner is not initialized")
+    guard let temp = banner else {
+      logger.error(message: "banner is not initialized")
       return UIView()
     }
     return temp
