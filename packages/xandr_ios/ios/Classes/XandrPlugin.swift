@@ -2,6 +2,8 @@ import AppNexusSDK
 import Flutter
 import UIKit
 
+// TODO(mkorn): add some proper logging
+
 extension FlutterError: Swift.Error {}
 
 public class FlutterState {
@@ -40,35 +42,41 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   public var flutterState: FlutterState?
 
   public static func register(with registrar: FlutterPluginRegistrar) {
+    // init the plugin and call onRegister
+    print("xandrPlugin: register plugin instance")
     instance = XandrPlugin()
-    instance?.onRegister(registrar)
+    instance?.onRegister(registrar: registrar)
+  }
 
-    instance?.flutterState = FlutterState(binaryMessenger: registrar.messenger())
+  public func onRegister(registrar: FlutterPluginRegistrar) {
+    // setup the state, start listening on the host api instance and register the banner factory
+    print("xandrPlugin: onRegister plugin instance")
+
+    flutterState = FlutterState(binaryMessenger: registrar.messenger())
+    flutterState?.startListening(api: self)
 
     let factory = XandrBannerFactory(
       messenger: registrar.messenger(),
-      state: instance!.flutterState!
+      state: flutterState!
     )
     registrar.register(factory, withId: "de.thekorn.xandr/ad_banner")
   }
 
-  public func onRegister(_ registrar: FlutterPluginRegistrar) {
-    let messenger: FlutterBinaryMessenger = registrar.messenger()
-    flutterState?.startListening(api: self)
-  }
-
   func initXandrSdk(memberId: Int64, completion: @escaping (Result<Bool, Error>) -> Void) {
+    // init thge xandr sdk and store the memberId in the state on success
+    // return true on success
+    print("xandrPlugin: initXnadrSdk")
     DispatchQueue.main.async {
       XandrAd.sharedInstance()
         .initWithMemberID(Int(memberId), preCacheRequestObjects: true) { [self]
           success in
             if success {
-              print("#### initialized Xandr SDK")
+              print("xandrPlugin: initXnadrSdk was successfull")
               flutterState?.memberId = Int(memberId)
               flutterState?.setIsInitialized(success: true)
               completion(.success(true))
             } else {
-              print("#### failed to initialize Xandr SDK")
+              print("xandrPlugin: initXnadrSdk failed")
               flutterState?.memberId = Int(memberId)
               flutterState?.setIsInitialized(success: false)
               completion(.failure(NSError(
@@ -84,12 +92,12 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   func loadInterstitialAd(widgetId: Int64, placementID: String?, inventoryCode: String?,
                           customKeywords: [String: String]?,
                           completion: @escaping (Result<Bool, Error>) -> Void) {
-    print("#### loadInterstitialAd()")
+    print("xandrPlugin: loadInterstitialAd()")
   }
 
   func showInterstitialAd(autoDismissDelay: Int64?,
                           completion: @escaping (Result<Bool, Error>) -> Void) {
-    print("#### showInterstitialAd()")
+    print("xandrPlugin: showInterstitialAd()")
   }
 }
 
@@ -165,6 +173,10 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
   }
 
   func view() -> UIView {
-    banner!
+    guard let temp = banner as? ANBannerAdView else {
+      print("xandrPlugin: banner is not initialized")
+      return UIView()
+    }
+    return temp
   }
 }
