@@ -4,34 +4,7 @@ import UIKit
 
 extension FlutterError: Swift.Error {}
 
-public class FlutterState {
-  private var isInitialized: Completer<Bool> = .init()
-  private var flutterAPI: XandrFlutterApi?
-  public var memberId: Int!
-
-  private var binaryMessenger: FlutterBinaryMessenger
-
-  init(binaryMessenger: FlutterBinaryMessenger) {
-    self.binaryMessenger = binaryMessenger
-  }
-
-  func startListening(api: XandrHostApi) {
-    XandrHostApiSetup.setUp(binaryMessenger: binaryMessenger, api: api)
-    flutterAPI = XandrFlutterApi(binaryMessenger: binaryMessenger)
-  }
-
-  func stopListening() {
-    XandrHostApiSetup.setUp(binaryMessenger: binaryMessenger, api: nil)
-  }
-
-  public func setIsInitialized(success: Bool) {
-    isInitialized.complete(result: success)
-  }
-
-  public func setIsInitializedCompletionHandler(handler: @escaping (Bool) -> Void) {
-    isInitialized.setCompletionHandler(handler: handler)
-  }
-}
+var logger = Logger(category: "XandrPlugin")
 
 public class XandrPlugin: UIViewController, FlutterPlugin,
   XandrHostApi {
@@ -40,35 +13,41 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   public var flutterState: FlutterState?
 
   public static func register(with registrar: FlutterPluginRegistrar) {
+    // init the plugin and call onRegister
+    logger.debug(message: "register plugin instance")
     instance = XandrPlugin()
-    instance?.onRegister(registrar)
+    instance?.onRegister(registrar: registrar)
+  }
 
-    instance?.flutterState = FlutterState(binaryMessenger: registrar.messenger())
+  public func onRegister(registrar: FlutterPluginRegistrar) {
+    // setup the state, start listening on the host api instance and register the banner factory
+    logger.debug(message: "onRegister plugin instance")
+
+    flutterState = FlutterState(binaryMessenger: registrar.messenger())
+    flutterState?.startListening(api: self)
 
     let factory = XandrBannerFactory(
       messenger: registrar.messenger(),
-      state: instance!.flutterState!
+      state: flutterState!
     )
     registrar.register(factory, withId: "de.thekorn.xandr/ad_banner")
   }
 
-  public func onRegister(_ registrar: FlutterPluginRegistrar) {
-    let messenger: FlutterBinaryMessenger = registrar.messenger()
-    flutterState?.startListening(api: self)
-  }
-
   func initXandrSdk(memberId: Int64, completion: @escaping (Result<Bool, Error>) -> Void) {
+    // init thge xandr sdk and store the memberId in the state on success
+    // return true on success
+    logger.debug(message: "initXnadrSdk")
     DispatchQueue.main.async {
       XandrAd.sharedInstance()
         .initWithMemberID(Int(memberId), preCacheRequestObjects: true) { [self]
           success in
             if success {
-              print("#### initialized Xandr SDK")
+              logger.debug(message: "initXnadrSdk was successfull")
               flutterState?.memberId = Int(memberId)
               flutterState?.setIsInitialized(success: true)
               completion(.success(true))
             } else {
-              print("#### failed to initialize Xandr SDK")
+              logger.debug(message: "initXnadrSdk failed")
               flutterState?.memberId = Int(memberId)
               flutterState?.setIsInitialized(success: false)
               completion(.failure(NSError(
@@ -84,12 +63,12 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   func loadInterstitialAd(widgetId: Int64, placementID: String?, inventoryCode: String?,
                           customKeywords: [String: String]?,
                           completion: @escaping (Result<Bool, Error>) -> Void) {
-    print("#### loadInterstitialAd()")
+    logger.error(message: "loadInterstitialAd() not implemented")
   }
 
   func showInterstitialAd(autoDismissDelay: Int64?,
                           completion: @escaping (Result<Bool, Error>) -> Void) {
-    print("#### showInterstitialAd()")
+    logger.error(message: "showInterstitialAd() not implemented")
   }
 }
 
@@ -165,6 +144,10 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
   }
 
   func view() -> UIView {
-    banner!
+    guard let temp = banner else {
+      logger.error(message: "banner is not initialized")
+      return UIView()
+    }
+    return temp
   }
 }

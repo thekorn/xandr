@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -176,38 +177,68 @@ class _AdBannerState extends State<AdBanner> {
     });
   }
 
+  Future<bool> waitIsInitialized() async {
+    final xandrIsInitialized = await widget.controller.isInitialized.future;
+    if (!xandrIsInitialized) return false;
+    if (widget.multiAdRequestController == null) return xandrIsInitialized;
+    final multiAdrequestInitialized =
+        await widget.multiAdRequestController!.isInitialized.future;
+    return multiAdrequestInitialized;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: _width, //adSizes.first.width.toDouble(),
-      height: _height, //adSizes.first.height.toDouble(),
-      child: _HostAdBannerView(
-        placementID: widget.placementID,
-        inventoryCode: widget.inventoryCode,
-        adSizes: widget.adSizes,
-        customKeywords: widget.customKeywords ?? {},
-        allowNativeDemand: widget.allowNativeDemand,
-        autoRefreshInterval: widget.autoRefreshInterval,
-        resizeWhenLoaded: widget.resizeWhenLoaded,
-        controller: widget.controller,
-        layoutHeight: _height.toInt(),
-        layoutWidth: _width.toInt(),
-        clickThroughAction: widget.clickThroughAction,
-        resizeAdToFitContainer: widget.resizeAdToFitContainer,
-        loadsInBackground: widget.loadsInBackground,
-        shouldServePSAs: widget.shouldServePSAs,
-        loadMode: widget.loadMode,
-        onDoneLoading: onDoneLoading,
-        widgetId: _widgetId,
-        enableLazyLoad: widget.enableLazyLoad,
-        multiAdRequestId: widget.multiAdRequestController?.requestId,
-        delegate: BannerAdEventDelegate(
-          onBannerAdLoaded: (event) {
-            debugPrint('>>>> onBannerAdLoaded: $event');
-            changeSize(event.width.toDouble(), event.height.toDouble());
-          },
-        ),
-      ),
+    return FutureBuilder<bool>(
+      future: waitIsInitialized(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data!) {
+            return SizedBox(
+              width: _width, //adSizes.first.width.toDouble(),
+              height: _height, //adSizes.first.height.toDouble(),
+              child: _HostAdBannerView(
+                placementID: widget.placementID,
+                inventoryCode: widget.inventoryCode,
+                adSizes: widget.adSizes,
+                customKeywords: widget.customKeywords ?? {},
+                allowNativeDemand: widget.allowNativeDemand,
+                autoRefreshInterval: widget.autoRefreshInterval,
+                resizeWhenLoaded: widget.resizeWhenLoaded,
+                controller: widget.controller,
+                layoutHeight: _height.toInt(),
+                layoutWidth: _width.toInt(),
+                clickThroughAction: widget.clickThroughAction,
+                resizeAdToFitContainer: widget.resizeAdToFitContainer,
+                loadsInBackground: widget.loadsInBackground,
+                shouldServePSAs: widget.shouldServePSAs,
+                loadMode: widget.loadMode,
+                onDoneLoading: onDoneLoading,
+                widgetId: _widgetId,
+                enableLazyLoad: widget.enableLazyLoad,
+                multiAdRequestId: widget.multiAdRequestController?.requestId,
+                delegate: BannerAdEventDelegate(
+                  onBannerAdLoaded: (event) {
+                    debugPrint('>>>> onBannerAdLoaded: $event');
+                    changeSize(event.width.toDouble(), event.height.toDouble());
+                  },
+                ),
+              ),
+            );
+          } else {
+            return const Text('Error initializing Xandr, error: false');
+          }
+        } else if (snapshot.hasError) {
+          return const Text('unknown Error initializing Xandr');
+        } else {
+          return SizedBox(
+            width: _width, //adSizes.first.width.toDouble(),
+            height: _height, //adSizes.first.height.toDouble(),
+            child: const Center(
+              child: Text('loading xandr...'),
+            ),
+          );
+        }
+      },
     );
   }
 }
@@ -298,36 +329,56 @@ class _HostAdBannerView extends StatelessWidget {
   final _DoneLoadingCallback _onDoneLoading;
   final Completer<int> widgetId;
 
+  static const viewType = 'de.thekorn.xandr/ad_banner';
+
   @override
   Widget build(BuildContext context) {
-    // FIXME(thekorn): use proper host platform implementation
-    return AndroidView(
-      viewType: 'de.thekorn.xandr/ad_banner',
-      onPlatformViewCreated: (id) {
-        debugPrint('Created banner view: $id');
-
-        if (!widgetId.isCompleted) {
-          widgetId.complete(id);
-        }
-        controller.listen(id, (event) {
-          if (event is BannerAdLoadedEvent) {
-            _onDoneLoading(success: true);
-            delegate?.onBannerAdLoaded?.call(event);
-          } else if (event is BannerAdLoadedErrorEvent) {
-            _onDoneLoading(success: false);
-            delegate?.onBannerAdLoadedError?.call(event);
-          } else if (event is NativeBannerAdLoadedEvent) {
-            _onDoneLoading(success: true);
-            delegate?.onNativeBannerAdLoaded?.call(event);
-          } else if (event is NativeBannerAdLoadedErrorEvent) {
-            _onDoneLoading(success: false);
-            delegate?.onNativeBannerAdLoadedError?.call(event);
-          }
-        });
-      },
-      creationParams: creationParams,
-      creationParamsCodec: _decoder,
+    assert(
+      defaultTargetPlatform != TargetPlatform.android ||
+          defaultTargetPlatform != TargetPlatform.iOS,
+      'The AdBanner widget is not supported on $defaultTargetPlatform',
     );
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      return AndroidView(
+        viewType: viewType,
+        onPlatformViewCreated: onPlatformViewCreated,
+        creationParams: creationParams,
+        creationParamsCodec: _decoder,
+      );
+    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+      return UiKitView(
+        viewType: viewType,
+        onPlatformViewCreated: onPlatformViewCreated,
+        creationParams: creationParams,
+        creationParamsCodec: _decoder,
+      );
+    } else {
+      throw UnsupportedError(
+        'The AdBanner widget is not supported on $defaultTargetPlatform',
+      );
+    }
+  }
+
+  void onPlatformViewCreated(int id) {
+    debugPrint('Created banner view: $id');
+    if (!widgetId.isCompleted) {
+      widgetId.complete(id);
+    }
+    controller.listen(id, (event) {
+      if (event is BannerAdLoadedEvent) {
+        _onDoneLoading(success: true);
+        delegate?.onBannerAdLoaded?.call(event);
+      } else if (event is BannerAdLoadedErrorEvent) {
+        _onDoneLoading(success: false);
+        delegate?.onBannerAdLoadedError?.call(event);
+      } else if (event is NativeBannerAdLoadedEvent) {
+        _onDoneLoading(success: true);
+        delegate?.onNativeBannerAdLoaded?.call(event);
+      } else if (event is NativeBannerAdLoadedErrorEvent) {
+        _onDoneLoading(success: false);
+        delegate?.onNativeBannerAdLoadedError?.call(event);
+      }
+    });
   }
 }
 
