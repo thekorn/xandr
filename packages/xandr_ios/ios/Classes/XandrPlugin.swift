@@ -1,70 +1,10 @@
 import AppNexusSDK
 import Flutter
-import os.log
 import UIKit
 
 extension FlutterError: Swift.Error {}
 
-public class Logger {
-  private static let subsystem = Bundle.main.bundleIdentifier ?? "unknown"
-  private var category: String = "unknown"
-
-  private static func log(logType: OSLogType, category: String, message: String) {
-    os_log(
-      "%{public}@",
-      log: OSLog(subsystem: Logger.subsystem, category: category),
-      type: logType,
-      message
-    )
-  }
-
-  init(category: String) {
-    self.category = category
-  }
-
-  public func debug(message: String) {
-    Logger.log(logType: OSLogType.debug, category: category, message: message)
-  }
-
-  public func error(message: String) {
-    Logger.log(logType: OSLogType.error, category: category, message: message)
-  }
-
-  public func info(message: String) {
-    Logger.log(logType: OSLogType.info, category: category, message: message)
-  }
-}
-
 var logger = Logger(category: "XandrPlugin")
-
-public class FlutterState {
-  private var isInitialized: Completer<Bool> = .init()
-  private var flutterAPI: XandrFlutterApi?
-  public var memberId: Int!
-
-  private var binaryMessenger: FlutterBinaryMessenger
-
-  init(binaryMessenger: FlutterBinaryMessenger) {
-    self.binaryMessenger = binaryMessenger
-  }
-
-  func startListening(api: XandrHostApi) {
-    XandrHostApiSetup.setUp(binaryMessenger: binaryMessenger, api: api)
-    flutterAPI = XandrFlutterApi(binaryMessenger: binaryMessenger)
-  }
-
-  func stopListening() {
-    XandrHostApiSetup.setUp(binaryMessenger: binaryMessenger, api: nil)
-  }
-
-  public func setIsInitialized(success: Bool) {
-    isInitialized.complete(result: success)
-  }
-
-  public func setIsInitializedCompletionHandler(handler: @escaping (Bool) -> Void) {
-    isInitialized.setCompletionHandler(handler: handler)
-  }
-}
 
 public class XandrPlugin: UIViewController, FlutterPlugin,
   XandrHostApi {
