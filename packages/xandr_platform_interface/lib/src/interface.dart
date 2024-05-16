@@ -42,7 +42,7 @@ abstract class XandrPlatform extends PlatformInterface {
 
   /// Return the current platform name.
   Future<bool> init(int memberId) {
-    throw UnimplementedError('init() has not been implemented.');
+    return _instance.init(memberId);
   }
 
   /// loads an ad.
@@ -56,12 +56,16 @@ abstract class XandrPlatform extends PlatformInterface {
     String? inventoryCode,
     CustomKeywords? customKeywords,
   ) async {
-    throw UnimplementedError('loadInterstitialAd() has not been implemented.');
+    return _instance.loadInterstitialAd(
+      placementID,
+      inventoryCode,
+      customKeywords,
+    );
   }
 
   /// Return the current platform name.
   Future<bool> showInterstitialAd(Duration? autoDismissDelay) {
-    throw UnimplementedError('showInterstitialAd() has not been implemented.');
+    return _instance.showInterstitialAd(autoDismissDelay);
   }
 
   /// Sets the publisher user ID.

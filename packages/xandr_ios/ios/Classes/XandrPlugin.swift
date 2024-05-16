@@ -72,6 +72,20 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
     customKeywords?.forEach { keyword in
       interstitialAd?.addCustomKeyword(withKey: keyword.key, value: keyword.value)
     }
+    
+    flutterState?.setIsInitializedCompletionHandler(handler: { _ in
+      if (self.flutterState?.memberId != nil) {
+        self.interstitialAd?.setInventoryCode(inventoryCode, memberId: self.flutterState!.memberId)
+                  } else if(placementID != nil) {
+                    self.interstitialAd?.placementId = placementID
+                  }
+      self.interstitialAd?.load()
+      logger.debug(message: "Xandr.Interstitial Loading DONE")
+                  
+      self.interstitialAd?.isLoaded.invokeOnCompletion {_ in
+        completion(Result.success(self.interstitialAd!.isLoaded.getCompleted()!))
+      }
+    })
   }
 
   func showInterstitialAd(autoDismissDelay: Int64?,
