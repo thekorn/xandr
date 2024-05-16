@@ -11,6 +11,8 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   public static var instance: XandrPlugin?
 
   public var flutterState: FlutterState?
+    
+  private var interstitialAd : InterstitialAd?
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     // init the plugin and call onRegister
@@ -63,14 +65,53 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   func loadInterstitialAd(widgetId: Int64, placementID: String?, inventoryCode: String?,
                           customKeywords: [String: String]?,
                           completion: @escaping (Result<Bool, Error>) -> Void) {
-    logger.error(message: "loadInterstitialAd() not implemented")
+
+    interstitialAd = InterstitialAd.init()
+    interstitialAd!.delegate = self
+    
+    customKeywords?.forEach { keyword in
+      interstitialAd?.addCustomKeyword(withKey: keyword.key, value: keyword.value)
+    }
   }
 
   func showInterstitialAd(autoDismissDelay: Int64?,
                           completion: @escaping (Result<Bool, Error>) -> Void) {
-    logger.error(message: "showInterstitialAd() not implemented")
+    
+    if (interstitialAd?.isClosed.isCompleted ?? false) {
+      completion(Result.success(false))
+      return
+    }
+    
+    if (!(interstitialAd?.isReady ?? false)) {
+      completion(Result.success(false))
+      return
+    }
+
+    interstitialAd?.isLoaded.invokeOnCompletion({ _ in
+      if (autoDismissDelay == nil) {
+        self.interstitialAd?.display(from: self)
+      } else {
+        self.interstitialAd?.display(from: self,autoDismissDelay: Double(autoDismissDelay!))
+      }
+    })
+    
+    interstitialAd?.isClosed.invokeOnCompletion ({ _ in
+      completion(Result.success(self.interstitialAd!.isClosed.getCompleted()!))
+    })
   }
 }
+
+// ANInterstitialAdDelegate
+  extension XandrPlugin: ANInterstitialAdDelegate {
+    
+    public func adDidReceiveAd(_ ad: Any) {
+      interstitialAd?.isLoaded.complete(true);
+    }
+    
+    public func adDidClose(_ ad: Any) {
+      interstitialAd?.isClosed.complete(true);
+    }
+  }
 
 class XandrBannerFactory: NSObject, FlutterPlatformViewFactory {
   private weak var messenger: FlutterBinaryMessenger?

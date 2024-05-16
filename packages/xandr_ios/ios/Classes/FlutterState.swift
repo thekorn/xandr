@@ -29,10 +29,10 @@ public class FlutterState {
   }
 
   public func setIsInitialized(success: Bool) {
-    isInitialized.complete(result: success)
+    isInitialized.complete(success)
   }
 
   public func setIsInitializedCompletionHandler(handler: @escaping (Bool) -> Void) {
-    isInitialized.setCompletionHandler(handler: handler)
+    isInitialized.invokeOnCompletion(handler)
   }
 }
