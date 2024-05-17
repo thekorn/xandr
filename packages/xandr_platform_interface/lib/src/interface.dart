@@ -47,7 +47,7 @@ abstract class XandrPlatform extends PlatformInterface {
 
   /// loads an ad.
   Future<bool> loadAd(int widgetId) async {
-    throw UnimplementedError('loadAd() has not been implemented.');
+    return _instance.loadAd(widgetId);
   }
 
   /// loads an interstitial ad.
@@ -82,12 +82,12 @@ abstract class XandrPlatform extends PlatformInterface {
   /// setPublisherUserId('123456789');
   /// ```
   Future<void> setPublisherUserId(String publisherUserId) {
-    throw UnimplementedError('setPublisherUserId() has not been implemented.');
+    return _instance.setPublisherUserId(publisherUserId);
   }
 
   /// Returns the publisher user ID.
   Future<String> getPublisherUserId() {
-    throw UnimplementedError('getPublisherUserId() has not been implemented.');
+    return _instance.getPublisherUserId();
   }
 
   /// Sets the user IDs for the current user.

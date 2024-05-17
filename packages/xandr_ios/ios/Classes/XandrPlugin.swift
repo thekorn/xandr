@@ -113,6 +113,16 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
       completion(Result.success(self.interstitialAd!.isClosed.getCompleted()!))
     })
   }
+  
+  func setPublisherUserId(publisherUserId: String,
+                          completion: @escaping (Result<Bool, Error>) -> Void) {
+    ANSDKSettings.sharedInstance().publisherUserId = publisherUserId
+    completion(Result.success(true))
+  }
+  
+  func getPublisherUserId(completion: @escaping (Result<String, Error>) -> Void) {
+    completion(Result.success(ANSDKSettings.sharedInstance().publisherUserId ?? ""))
+  }
 }
 
 // ANInterstitialAdDelegate

@@ -2,6 +2,20 @@
 
 import 'package:pigeon/pigeon.dart';
 
+enum HostAPIUserIdSource {
+  criteo,
+  theTradeDesk,
+  netId,
+  liveramp,
+  uid2,
+}
+
+class HostAPIUserId {
+  HostAPIUserId({required this.userId, required this.source});
+  HostAPIUserIdSource source;
+  String userId;
+}
+
 @ConfigurePigeon(
   PigeonOptions(
     dartOut: 'lib/src/messages.g.dart',
@@ -34,6 +48,12 @@ abstract class XandrHostApi {
 
   @async
   bool showInterstitialAd({int? autoDismissDelay});
+
+  @async
+  bool setPublisherUserId({String publisherUserId});
+
+  @async
+  String getPublisherUserId();
 }
 
 @FlutterApi()
