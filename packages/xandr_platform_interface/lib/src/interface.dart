@@ -104,7 +104,7 @@ abstract class XandrPlatform extends PlatformInterface {
   /// setUserIds(userIds);
   /// ```
   Future<void> setUserIds(List<UserId> userIds) {
-    throw UnimplementedError('setUserIds() has not been implemented.');
+    return _instance.setUserIds(userIds);
   }
 
   /// Returns a list of [UserId] objects.

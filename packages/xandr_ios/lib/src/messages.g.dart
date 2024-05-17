@@ -34,6 +34,55 @@ enum HostAPIUserIdSource {
   uid2,
 }
 
+class HostAPIUserId {
+  HostAPIUserId({
+    required this.source,
+    required this.userId,
+  });
+
+  HostAPIUserIdSource source;
+
+  String userId;
+
+  Object encode() {
+    return <Object?>[
+      source.index,
+      userId,
+    ];
+  }
+
+  static HostAPIUserId decode(Object result) {
+    result as List<Object?>;
+    return HostAPIUserId(
+      source: HostAPIUserIdSource.values[result[0]! as int],
+      userId: result[1]! as String,
+    );
+  }
+}
+
+class _XandrHostApiCodec extends StandardMessageCodec {
+  const _XandrHostApiCodec();
+  @override
+  void writeValue(WriteBuffer buffer, Object? value) {
+    if (value is HostAPIUserId) {
+      buffer.putUint8(128);
+      writeValue(buffer, value.encode());
+    } else {
+      super.writeValue(buffer, value);
+    }
+  }
+
+  @override
+  Object? readValueOfType(int type, ReadBuffer buffer) {
+    switch (type) {
+      case 128:
+        return HostAPIUserId.decode(readValue(buffer)!);
+      default:
+        return super.readValueOfType(type, buffer);
+    }
+  }
+}
+
 class XandrHostApi {
   /// Constructor for [XandrHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
@@ -45,8 +94,7 @@ class XandrHostApi {
             messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
   final BinaryMessenger? __pigeon_binaryMessenger;
 
-  static const MessageCodec<Object?> pigeonChannelCodec =
-      StandardMessageCodec();
+  static const MessageCodec<Object?> pigeonChannelCodec = _XandrHostApiCodec();
 
   final String __pigeon_messageChannelSuffix;
 
@@ -198,6 +246,64 @@ class XandrHostApi {
       );
     } else {
       return (__pigeon_replyList[0] as String?)!;
+    }
+  }
+
+  Future<bool> setUserIds(List<HostAPIUserId?> userIds) async {
+    final String __pigeon_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.setUserIds$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel =
+        BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[userIds]) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (__pigeon_replyList[0] as bool?)!;
+    }
+  }
+
+  Future<List<HostAPIUserId?>> getUserIds() async {
+    final String __pigeon_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.getUserIds$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel =
+        BasicMessageChannel<Object?>(
+      __pigeon_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: __pigeon_binaryMessenger,
+    );
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(null) as List<Object?>?;
+    if (__pigeon_replyList == null) {
+      throw _createConnectionError(__pigeon_channelName);
+    } else if (__pigeon_replyList.length > 1) {
+      throw PlatformException(
+        code: __pigeon_replyList[0]! as String,
+        message: __pigeon_replyList[1] as String?,
+        details: __pigeon_replyList[2],
+      );
+    } else if (__pigeon_replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<HostAPIUserId?>();
     }
   }
 }

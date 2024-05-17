@@ -123,6 +123,36 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   func getPublisherUserId(completion: @escaping (Result<String, Error>) -> Void) {
     completion(Result.success(ANSDKSettings.sharedInstance().publisherUserId ?? ""))
   }
+  
+  func setUserIds(userIds: [HostAPIUserId],
+                          completion: @escaping (Result<Bool, Error>) -> Void) {
+    var uIds: [ANUserId] = []
+    userIds.forEach{it in
+      var newId = ANUserId(anUserIdSource: it.source.toANUserIdSource(), userId: it.userId)
+      if(newId != nil){
+        uIds.append(newId!)
+      }
+    }
+    ANSDKSettings.sharedInstance().userIdArray = uIds
+    completion(Result.success(true))
+  }
+
+}
+
+extension HostAPIUserIdSource {
+  func toANUserIdSource() ->  ANUserIdSource{
+    return switch self {
+    case .criteo: ANUserIdSource.criteo
+    case .theTradeDesk:
+      ANUserIdSource.theTradeDesk
+    case .netId:
+      ANUserIdSource.netId
+    case .liveramp:
+      ANUserIdSource.liveRamp
+    case .uid2:
+      ANUserIdSource.UID2
+    }
+  }
 }
 
 // ANInterstitialAdDelegate

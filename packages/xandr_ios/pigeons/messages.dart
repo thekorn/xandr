@@ -54,6 +54,9 @@ abstract class XandrHostApi {
 
   @async
   String getPublisherUserId();
+
+  @async
+  bool setUserIds(List<HostAPIUserId> userIds);
 }
 
 @FlutterApi()
