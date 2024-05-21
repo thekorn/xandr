@@ -112,7 +112,7 @@ abstract class XandrPlatform extends PlatformInterface {
   /// This method retrieves the user IDs from the platform interface.
   /// The returned list contains instances of the [UserId] class.
   Future<List<UserId>> getUserIds() {
-    throw UnimplementedError('getUserIds() has not been implemented.');
+    return _instance.getUserIds();
   }
 
   /// Initializes a multi ad request.

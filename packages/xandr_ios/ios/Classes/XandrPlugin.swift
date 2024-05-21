@@ -136,7 +136,25 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
     ANSDKSettings.sharedInstance().userIdArray = uIds
     completion(Result.success(true))
   }
+  
+  func getUserIds(completion: @escaping (Result<[HostAPIUserId], Error>) -> Void) {
+    var userIds: [HostAPIUserId] = []
+    ANSDKSettings.sharedInstance().userIdArray?.forEach{it in
+      do{
+        var newUserIds = try HostAPIUserId(source: it.source.toHostAPIUserIdSource(), userId: it.userId)
+        userIds.append(newUserIds)
+        }
+      catch {
+        logger.debug(message: "no valid user source")
+      }
+    }
+    completion(Result.success(userIds))
+  }
 
+}
+
+enum UserIdSourceError: Error {
+    case notValidSource
 }
 
 extension HostAPIUserIdSource {
@@ -151,6 +169,25 @@ extension HostAPIUserIdSource {
       ANUserIdSource.liveRamp
     case .uid2:
       ANUserIdSource.UID2
+    }
+  }
+}
+
+extension String {
+  func toHostAPIUserIdSource() throws ->  HostAPIUserIdSource {
+    return  switch self{
+    case "criteo.com":
+      HostAPIUserIdSource.criteo
+    case "uidapi.com":
+      HostAPIUserIdSource.uid2
+    case "netid.de":
+      HostAPIUserIdSource.netId
+    case "liveramp.com":
+      HostAPIUserIdSource.liveramp
+    case "adserver.org":
+      HostAPIUserIdSource.liveramp
+    default:
+      throw UserIdSourceError.notValidSource;
     }
   }
 }

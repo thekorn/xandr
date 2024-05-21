@@ -12,7 +12,7 @@ import Foundation
 #endif
 
 private func wrapResult(_ result: Any?) -> [Any?] {
-  [result]
+  return [result]
 }
 
 private func wrapError(_ error: Any) -> [Any?] {
@@ -31,15 +31,11 @@ private func wrapError(_ error: Any) -> [Any?] {
 }
 
 private func createConnectionError(withChannelName channelName: String) -> FlutterError {
-  FlutterError(
-    code: "channel-error",
-    message: "Unable to establish connection on channel: '\(channelName)'.",
-    details: ""
-  )
+  return FlutterError(code: "channel-error", message: "Unable to establish connection on channel: '\(channelName)'.", details: "")
 }
 
 private func isNullish(_ value: Any?) -> Bool {
-  value is NSNull || value == nil
+  return value is NSNull || value == nil
 }
 
 private func nilOrValue<T>(_ value: Any?) -> T? {
@@ -47,36 +43,101 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
   return value as! T?
 }
 
+enum HostAPIUserIdSource: Int {
+  case criteo = 0
+  case theTradeDesk = 1
+  case netId = 2
+  case liveramp = 3
+  case uid2 = 4
+}
+
+/// Generated class from Pigeon that represents data sent in messages.
+struct HostAPIUserId {
+  var source: HostAPIUserIdSource
+  var userId: String
+
+  // swift-format-ignore: AlwaysUseLowerCamelCase
+  static func fromList(_ __pigeon_list: [Any?]) -> HostAPIUserId? {
+    let source = HostAPIUserIdSource(rawValue: __pigeon_list[0] as! Int)!
+    let userId = __pigeon_list[1] as! String
+
+    return HostAPIUserId(
+      source: source,
+      userId: userId
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      source.rawValue,
+      userId,
+    ]
+  }
+}
+
+private class XandrHostApiCodecReader: FlutterStandardReader {
+  override func readValue(ofType type: UInt8) -> Any? {
+    switch type {
+    case 128:
+      return HostAPIUserId.fromList(self.readValue() as! [Any?])
+    default:
+      return super.readValue(ofType: type)
+    }
+  }
+}
+
+private class XandrHostApiCodecWriter: FlutterStandardWriter {
+  override func writeValue(_ value: Any) {
+    if let value = value as? HostAPIUserId {
+      super.writeByte(128)
+      super.writeValue(value.toList())
+    } else {
+      super.writeValue(value)
+    }
+  }
+}
+
+private class XandrHostApiCodecReaderWriter: FlutterStandardReaderWriter {
+  override func reader(with data: Data) -> FlutterStandardReader {
+    return XandrHostApiCodecReader(data: data)
+  }
+
+  override func writer(with data: NSMutableData) -> FlutterStandardWriter {
+    return XandrHostApiCodecWriter(data: data)
+  }
+}
+
+class XandrHostApiCodec: FlutterStandardMessageCodec {
+  static let shared = XandrHostApiCodec(readerWriter: XandrHostApiCodecReaderWriter())
+}
+
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol XandrHostApi {
   func initXandrSdk(memberId: Int64, completion: @escaping (Result<Bool, Error>) -> Void)
-  func loadInterstitialAd(widgetId: Int64, placementID: String?, inventoryCode: String?,
-                          customKeywords: [String: String]?,
-                          completion: @escaping (Result<Bool, Error>) -> Void)
-  func showInterstitialAd(autoDismissDelay: Int64?,
-                          completion: @escaping (Result<Bool, Error>) -> Void)
+  func loadInterstitialAd(widgetId: Int64, placementID: String?, inventoryCode: String?, customKeywords: [String: String]?, completion: @escaping (Result<Bool, Error>) -> Void)
+  func showInterstitialAd(autoDismissDelay: Int64?, completion: @escaping (Result<Bool, Error>) -> Void)
+  func setPublisherUserId(publisherUserId: String, completion: @escaping (Result<Bool, Error>) -> Void)
+  func getPublisherUserId(completion: @escaping (Result<String, Error>) -> Void)
+  func setUserIds(userIds: [HostAPIUserId], completion: @escaping (Result<Bool, Error>) -> Void)
+  func getUserIds(completion: @escaping (Result<[HostAPIUserId], Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
 class XandrHostApiSetup {
   /// The codec used by XandrHostApi.
+  static var codec: FlutterStandardMessageCodec { XandrHostApiCodec.shared }
   /// Sets up an instance of `XandrHostApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: XandrHostApi?,
-                    messageChannelSuffix: String = "") {
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: XandrHostApi?, messageChannelSuffix: String = "") {
     let channelSuffix = messageChannelSuffix.count > 0 ? ".\(messageChannelSuffix)" : ""
-    let initXandrSdkChannel = FlutterBasicMessageChannel(
-      name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.initXandrSdk\(channelSuffix)",
-      binaryMessenger: binaryMessenger
-    )
-    if let api {
+    let initXandrSdkChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.initXandrSdk\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
       initXandrSdkChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let memberIdArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
         api.initXandrSdk(memberId: memberIdArg) { result in
           switch result {
-          case let .success(res):
+          case .success(let res):
             reply(wrapResult(res))
-          case let .failure(error):
+          case .failure(let error):
             reply(wrapError(error))
           }
         }
@@ -84,27 +145,19 @@ class XandrHostApiSetup {
     } else {
       initXandrSdkChannel.setMessageHandler(nil)
     }
-    let loadInterstitialAdChannel = FlutterBasicMessageChannel(
-      name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.loadInterstitialAd\(channelSuffix)",
-      binaryMessenger: binaryMessenger
-    )
-    if let api {
+    let loadInterstitialAdChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.loadInterstitialAd\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
       loadInterstitialAdChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let widgetIdArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
         let placementIDArg: String? = nilOrValue(args[1])
         let inventoryCodeArg: String? = nilOrValue(args[2])
         let customKeywordsArg: [String: String]? = nilOrValue(args[3])
-        api.loadInterstitialAd(
-          widgetId: widgetIdArg,
-          placementID: placementIDArg,
-          inventoryCode: inventoryCodeArg,
-          customKeywords: customKeywordsArg
-        ) { result in
+        api.loadInterstitialAd(widgetId: widgetIdArg, placementID: placementIDArg, inventoryCode: inventoryCodeArg, customKeywords: customKeywordsArg) { result in
           switch result {
-          case let .success(res):
+          case .success(let res):
             reply(wrapResult(res))
-          case let .failure(error):
+          case .failure(let error):
             reply(wrapError(error))
           }
         }
@@ -112,20 +165,16 @@ class XandrHostApiSetup {
     } else {
       loadInterstitialAdChannel.setMessageHandler(nil)
     }
-    let showInterstitialAdChannel = FlutterBasicMessageChannel(
-      name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.showInterstitialAd\(channelSuffix)",
-      binaryMessenger: binaryMessenger
-    )
-    if let api {
+    let showInterstitialAdChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.showInterstitialAd\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
       showInterstitialAdChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let autoDismissDelayArg: Int64? = isNullish(args[0]) ? nil :
-          (args[0] is Int64? ? args[0] as! Int64? : Int64(args[0] as! Int32))
+        let autoDismissDelayArg: Int64? = isNullish(args[0]) ? nil : (args[0] is Int64? ? args[0] as! Int64? : Int64(args[0] as! Int32))
         api.showInterstitialAd(autoDismissDelay: autoDismissDelayArg) { result in
           switch result {
-          case let .success(res):
+          case .success(let res):
             reply(wrapResult(res))
-          case let .failure(error):
+          case .failure(let error):
             reply(wrapError(error))
           }
         }
@@ -133,25 +182,79 @@ class XandrHostApiSetup {
     } else {
       showInterstitialAdChannel.setMessageHandler(nil)
     }
+    let setPublisherUserIdChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.setPublisherUserId\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      setPublisherUserIdChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let publisherUserIdArg = args[0] as! String
+        api.setPublisherUserId(publisherUserId: publisherUserIdArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      setPublisherUserIdChannel.setMessageHandler(nil)
+    }
+    let getPublisherUserIdChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.getPublisherUserId\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getPublisherUserIdChannel.setMessageHandler { _, reply in
+        api.getPublisherUserId { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      getPublisherUserIdChannel.setMessageHandler(nil)
+    }
+    let setUserIdsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.setUserIds\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      setUserIdsChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let userIdsArg = args[0] as! [HostAPIUserId]
+        api.setUserIds(userIds: userIdsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      setUserIdsChannel.setMessageHandler(nil)
+    }
+    let getUserIdsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.getUserIds\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getUserIdsChannel.setMessageHandler { _, reply in
+        api.getUserIds { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      getUserIdsChannel.setMessageHandler(nil)
+    }
   }
 }
-
 /// Generated protocol from Pigeon that represents Flutter messages that can be called from Swift.
 protocol XandrFlutterApiProtocol {
-  func onAdLoaded(viewId viewIdArg: Int64, width widthArg: Int64, height heightArg: Int64,
-                  creativeId creativeIdArg: String, adType adTypeArg: String,
-                  tagId tagIdArg: String, auctionId auctionIdArg: String, cpm cpmArg: Double,
-                  memberId memberIdArg: Int64,
-                  completion: @escaping (Result<Void, FlutterError>) -> Void)
-  func onAdLoadedError(viewId viewIdArg: Int64, reason reasonArg: String,
-                       completion: @escaping (Result<Void, FlutterError>) -> Void)
-  func onNativeAdLoaded(viewId viewIdArg: Int64, title titleArg: String,
-                        description descriptionArg: String, imageUrl imageUrlArg: String,
-                        completion: @escaping (Result<Void, FlutterError>) -> Void)
-  func onNativeAdLoadedError(viewId viewIdArg: Int64, reason reasonArg: String,
-                             completion: @escaping (Result<Void, FlutterError>) -> Void)
+  func onAdLoaded(viewId viewIdArg: Int64, width widthArg: Int64, height heightArg: Int64, creativeId creativeIdArg: String, adType adTypeArg: String, tagId tagIdArg: String, auctionId auctionIdArg: String, cpm cpmArg: Double, memberId memberIdArg: Int64, completion: @escaping (Result<Void, FlutterError>) -> Void)
+  func onAdLoadedError(viewId viewIdArg: Int64, reason reasonArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void)
+  func onNativeAdLoaded(viewId viewIdArg: Int64, title titleArg: String, description descriptionArg: String, imageUrl imageUrlArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void)
+  func onNativeAdLoadedError(viewId viewIdArg: Int64, reason reasonArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void)
 }
-
 class XandrFlutterApi: XandrFlutterApiProtocol {
   private let binaryMessenger: FlutterBinaryMessenger
   private let messageChannelSuffix: String
@@ -159,26 +262,10 @@ class XandrFlutterApi: XandrFlutterApiProtocol {
     self.binaryMessenger = binaryMessenger
     self.messageChannelSuffix = messageChannelSuffix.count > 0 ? ".\(messageChannelSuffix)" : ""
   }
-
-  func onAdLoaded(viewId viewIdArg: Int64, width widthArg: Int64, height heightArg: Int64,
-                  creativeId creativeIdArg: String, adType adTypeArg: String,
-                  tagId tagIdArg: String, auctionId auctionIdArg: String, cpm cpmArg: Double,
-                  memberId memberIdArg: Int64,
-                  completion: @escaping (Result<Void, FlutterError>) -> Void) {
-    let channelName =
-      "dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded\(messageChannelSuffix)"
+  func onAdLoaded(viewId viewIdArg: Int64, width widthArg: Int64, height heightArg: Int64, creativeId creativeIdArg: String, adType adTypeArg: String, tagId tagIdArg: String, auctionId auctionIdArg: String, cpm cpmArg: Double, memberId memberIdArg: Int64, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channelName: String = "dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded\(messageChannelSuffix)"
     let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger)
-    channel.sendMessage([
-      viewIdArg,
-      widthArg,
-      heightArg,
-      creativeIdArg,
-      adTypeArg,
-      tagIdArg,
-      auctionIdArg,
-      cpmArg,
-      memberIdArg,
-    ] as [Any?]) { response in
+    channel.sendMessage([viewIdArg, widthArg, heightArg, creativeIdArg, adTypeArg, tagIdArg, auctionIdArg, cpmArg, memberIdArg] as [Any?]) { response in
       guard let listResponse = response as? [Any?] else {
         completion(.failure(createConnectionError(withChannelName: channelName)))
         return
@@ -189,15 +276,12 @@ class XandrFlutterApi: XandrFlutterApiProtocol {
         let details: String? = nilOrValue(listResponse[2])
         completion(.failure(FlutterError(code: code, message: message, details: details)))
       } else {
-        completion(.success(()))
+        completion(.success(Void()))
       }
     }
   }
-
-  func onAdLoadedError(viewId viewIdArg: Int64, reason reasonArg: String,
-                       completion: @escaping (Result<Void, FlutterError>) -> Void) {
-    let channelName =
-      "dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoadedError\(messageChannelSuffix)"
+  func onAdLoadedError(viewId viewIdArg: Int64, reason reasonArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channelName: String = "dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoadedError\(messageChannelSuffix)"
     let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger)
     channel.sendMessage([viewIdArg, reasonArg] as [Any?]) { response in
       guard let listResponse = response as? [Any?] else {
@@ -210,16 +294,12 @@ class XandrFlutterApi: XandrFlutterApiProtocol {
         let details: String? = nilOrValue(listResponse[2])
         completion(.failure(FlutterError(code: code, message: message, details: details)))
       } else {
-        completion(.success(()))
+        completion(.success(Void()))
       }
     }
   }
-
-  func onNativeAdLoaded(viewId viewIdArg: Int64, title titleArg: String,
-                        description descriptionArg: String, imageUrl imageUrlArg: String,
-                        completion: @escaping (Result<Void, FlutterError>) -> Void) {
-    let channelName =
-      "dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded\(messageChannelSuffix)"
+  func onNativeAdLoaded(viewId viewIdArg: Int64, title titleArg: String, description descriptionArg: String, imageUrl imageUrlArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channelName: String = "dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded\(messageChannelSuffix)"
     let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger)
     channel.sendMessage([viewIdArg, titleArg, descriptionArg, imageUrlArg] as [Any?]) { response in
       guard let listResponse = response as? [Any?] else {
@@ -232,15 +312,12 @@ class XandrFlutterApi: XandrFlutterApiProtocol {
         let details: String? = nilOrValue(listResponse[2])
         completion(.failure(FlutterError(code: code, message: message, details: details)))
       } else {
-        completion(.success(()))
+        completion(.success(Void()))
       }
     }
   }
-
-  func onNativeAdLoadedError(viewId viewIdArg: Int64, reason reasonArg: String,
-                             completion: @escaping (Result<Void, FlutterError>) -> Void) {
-    let channelName =
-      "dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoadedError\(messageChannelSuffix)"
+  func onNativeAdLoadedError(viewId viewIdArg: Int64, reason reasonArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channelName: String = "dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoadedError\(messageChannelSuffix)"
     let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger)
     channel.sendMessage([viewIdArg, reasonArg] as [Any?]) { response in
       guard let listResponse = response as? [Any?] else {
@@ -253,7 +330,7 @@ class XandrFlutterApi: XandrFlutterApiProtocol {
         let details: String? = nilOrValue(listResponse[2])
         completion(.failure(FlutterError(code: code, message: message, details: details)))
       } else {
-        completion(.success(()))
+        completion(.success(Void()))
       }
     }
   }
