@@ -119,6 +119,9 @@ protocol XandrHostApi {
   func getPublisherUserId(completion: @escaping (Result<String, Error>) -> Void)
   func setUserIds(userIds: [HostAPIUserId], completion: @escaping (Result<Bool, Error>) -> Void)
   func getUserIds(completion: @escaping (Result<[HostAPIUserId], Error>) -> Void)
+  func setGDPRConsentRequired(isConsentRequired: Bool, completion: @escaping (Result<Bool, Error>) -> Void)
+  func setGDPRConsentString(consentString: String, completion: @escaping (Result<Bool, Error>) -> Void)
+  func setGDPRPurposeConsents(purposeConsents: String, completion: @escaping (Result<Bool, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -245,6 +248,57 @@ class XandrHostApiSetup {
       }
     } else {
       getUserIdsChannel.setMessageHandler(nil)
+    }
+    let setGDPRConsentRequiredChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.setGDPRConsentRequired\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      setGDPRConsentRequiredChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let isConsentRequiredArg = args[0] as! Bool
+        api.setGDPRConsentRequired(isConsentRequired: isConsentRequiredArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      setGDPRConsentRequiredChannel.setMessageHandler(nil)
+    }
+    let setGDPRConsentStringChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.setGDPRConsentString\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      setGDPRConsentStringChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let consentStringArg = args[0] as! String
+        api.setGDPRConsentString(consentString: consentStringArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      setGDPRConsentStringChannel.setMessageHandler(nil)
+    }
+    let setGDPRPurposeConsentsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.setGDPRPurposeConsents\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      setGDPRPurposeConsentsChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let purposeConsentsArg = args[0] as! String
+        api.setGDPRPurposeConsents(purposeConsents: purposeConsentsArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      setGDPRPurposeConsentsChannel.setMessageHandler(nil)
     }
   }
 }

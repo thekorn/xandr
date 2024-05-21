@@ -28,9 +28,7 @@ abstract class XandrPlatform extends PlatformInterface {
   void registerEventStream({
     required StreamController<BannerAdEvent> controller,
   }) {
-    throw UnimplementedError(
-      'registerEventStream() has not been implemented.',
-    );
+    _instance.registerEventStream(controller: controller);
   }
 
   /// Platform-specific plugins should set this with their own platform-specific
@@ -157,9 +155,7 @@ abstract class XandrPlatform extends PlatformInterface {
   ///
   // ignore: avoid_positional_boolean_parameters
   Future<void> setGDPRConsentRequired(bool isConsentRequired) {
-    throw UnimplementedError(
-      'setGDPRConsentRequired() has not been implemented.',
-    );
+    return _instance.setGDPRConsentRequired(isConsentRequired);
   }
 
   /// Sets the GDPR consent string.
@@ -169,9 +165,7 @@ abstract class XandrPlatform extends PlatformInterface {
   /// This method is used to set the GDPR consent string for the application.
   /// It returns a [Future] that completes when the consent string is set.
   Future<void> setGDPRConsentString(String consentString) {
-    throw UnimplementedError(
-      'setGDPRConsentString() has not been implemented.',
-    );
+    return _instance.setGDPRConsentString(consentString);
   }
 
   /// Sets the GDPR purpose consents.
@@ -184,8 +178,6 @@ abstract class XandrPlatform extends PlatformInterface {
   ///
   /// Returns a [Future] that completes when the purpose consents are set.
   Future<void> setGDPRPurposeConsents(String purposeConsents) {
-    throw UnimplementedError(
-      'setGDPRPurposeConsents() has not been implemented.',
-    );
+    return _instance.setGDPRPurposeConsents(purposeConsents);
   }
 }

@@ -60,6 +60,15 @@ abstract class XandrHostApi {
 
   @async
   List<HostAPIUserId> getUserIds();
+
+  @async
+  bool setGDPRConsentRequired({bool isConsentRequired});
+
+  @async
+  bool setGDPRConsentString({String consentString});
+
+  @async
+  bool setGDPRPurposeConsents({String purposeConsents});
 }
 
 @FlutterApi()

@@ -150,7 +150,21 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
     }
     completion(Result.success(userIds))
   }
+  
+  func setGDPRConsentRequired(isConsentRequired: Bool, completion: @escaping (Result<Bool, Error>) -> Void) {
+    ANGDPRSettings.setConsentRequired(isConsentRequired ? 1 : 0)
+    completion(Result.success(true))
+  }
 
+  func setGDPRConsentString(consentString: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+    ANGDPRSettings.setConsentString(consentString)
+    completion(Result.success(true))
+  }
+  
+  func setGDPRPurposeConsents(purposeConsents: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+    ANGDPRSettings.setPurposeConsents(purposeConsents)
+    completion(Result.success(true))
+  }
 }
 
 enum UserIdSourceError: Error {
