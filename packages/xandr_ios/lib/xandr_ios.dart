@@ -97,7 +97,7 @@ class XandrIOS extends XandrPlatform {
 
   @override
   Future<void> setPublisherUserId(String publisherUserId) {
-    return _api.setPublisherUserId(publisherUserId: publisherUserId);
+    return _api.setPublisherUserId(publisherUserId);
   }
 
   @override
@@ -135,17 +135,17 @@ class XandrIOS extends XandrPlatform {
 
   @override
   Future<void> setGDPRConsentRequired(bool isConsentRequired) {
-    return _api.setGDPRConsentRequired(isConsentRequired: isConsentRequired);
+    return _api.setGDPRConsentRequired(isConsentRequired);
   }
 
   @override
   Future<void> setGDPRConsentString(String consentString) {
-    return _api.setGDPRConsentString(consentString: consentString);
+    return _api.setGDPRConsentString(consentString);
   }
 
   @override
   Future<void> setGDPRPurposeConsents(String purposeConsents) {
-    return _api.setGDPRPurposeConsents(purposeConsents: purposeConsents);
+    return _api.setGDPRPurposeConsents(purposeConsents);
   }
 }
 

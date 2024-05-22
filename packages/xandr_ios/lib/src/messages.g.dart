@@ -191,7 +191,7 @@ class XandrHostApi {
     }
   }
 
-  Future<bool> setPublisherUserId({String publisherUserId}) async {
+  Future<bool> setPublisherUserId(String publisherUserId) async {
     final String __pigeon_channelName =
         'dev.flutter.pigeon.xandr_ios.XandrHostApi.setPublisherUserId$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel =
@@ -394,7 +394,7 @@ class XandrHostApi {
     }
   }
 
-  Future<bool> setGDPRConsentRequired({bool isConsentRequired}) async {
+  Future<bool> setGDPRConsentRequired(bool isConsentRequired) async {
     final String __pigeon_channelName =
         'dev.flutter.pigeon.xandr_ios.XandrHostApi.setGDPRConsentRequired$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel =
@@ -423,7 +423,7 @@ class XandrHostApi {
     }
   }
 
-  Future<bool> setGDPRConsentString({String consentString}) async {
+  Future<bool> setGDPRConsentString(String consentString) async {
     final String __pigeon_channelName =
         'dev.flutter.pigeon.xandr_ios.XandrHostApi.setGDPRConsentString$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel =
@@ -452,7 +452,7 @@ class XandrHostApi {
     }
   }
 
-  Future<bool> setGDPRPurposeConsents({String purposeConsents}) async {
+  Future<bool> setGDPRPurposeConsents(String purposeConsents) async {
     final String __pigeon_channelName =
         'dev.flutter.pigeon.xandr_ios.XandrHostApi.setGDPRPurposeConsents$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel =

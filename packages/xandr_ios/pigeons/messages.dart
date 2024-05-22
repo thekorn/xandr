@@ -50,7 +50,7 @@ abstract class XandrHostApi {
   bool showInterstitialAd({int? autoDismissDelay});
 
   @async
-  bool setPublisherUserId({String publisherUserId});
+  bool setPublisherUserId(String publisherUserId);
 
   @async
   String initMultiAdRequest();
@@ -71,13 +71,13 @@ abstract class XandrHostApi {
   List<HostAPIUserId> getUserIds();
 
   @async
-  bool setGDPRConsentRequired({bool isConsentRequired});
+  bool setGDPRConsentRequired(bool isConsentRequired);
 
   @async
-  bool setGDPRConsentString({String consentString});
+  bool setGDPRConsentString(String consentString);
 
   @async
-  bool setGDPRPurposeConsents({String purposeConsents});
+  bool setGDPRPurposeConsents(String purposeConsents);
 }
 
 @FlutterApi()
