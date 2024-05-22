@@ -53,6 +53,15 @@ abstract class XandrHostApi {
   bool setPublisherUserId({String publisherUserId});
 
   @async
+  String initMultiAdRequest();
+
+  @async
+  bool disposeMultiAdRequest(String multiAdRequestID);
+
+  @async
+  bool loadAdsForMultiAdRequest(String multiAdRequestID);
+
+  @async
   String getPublisherUserId();
 
   @async

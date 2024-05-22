@@ -118,7 +118,7 @@ abstract class XandrPlatform extends PlatformInterface {
   /// Returns a [Future] that completes with a [String] representing the result
   /// of the initialization.
   Future<String> initMultiAdRequest() {
-    throw UnimplementedError('initMultiAdRequest() has not been implemented.');
+    return _instance.initMultiAdRequest();
   }
 
   /// Disposes a multi ad request with the specified [multiAdRequestID].
@@ -132,18 +132,14 @@ abstract class XandrPlatform extends PlatformInterface {
   /// Returns:
   ///   - A [Future] that completes when the multi ad request is disposed.
   Future<void> disposeMultiAdRequest(String multiAdRequestID) {
-    throw UnimplementedError(
-      'disposeMultiAdRequest() has not been implemented.',
-    );
+    return _instance.disposeMultiAdRequest(multiAdRequestID);
   }
 
   /// Loads ads for a multi ad request with the specified [multiAdRequestID].
   /// Returns a [Future] that completes with a [bool] indicating whether the ads
   /// were successfully loaded.
   Future<bool> loadAdsForMultiAdRequest(String multiAdRequestID) {
-    throw UnimplementedError(
-      'loadAdsForMultiAdRequest() has not been implemented.',
-    );
+    return _instance.loadAdsForMultiAdRequest(multiAdRequestID);
   }
 
   /// Sets whether GDPR consent is required.

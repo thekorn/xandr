@@ -6,6 +6,11 @@ extension FlutterError: Swift.Error {}
 
 var logger = Logger(category: "XandrPlugin")
 
+enum XandrPluginError: Error {
+    case notValidSource
+    case noMemberId
+}
+
 public class XandrPlugin: UIViewController, FlutterPlugin,
   XandrHostApi {
   public static var instance: XandrPlugin?
@@ -13,6 +18,8 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   public var flutterState: FlutterState?
     
   private var interstitialAd : InterstitialAd?
+  
+  private var marRegistry : MultiAdRequestRegistry = MultiAdRequestRegistry()
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     // init the plugin and call onRegister
@@ -114,6 +121,31 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
     })
   }
   
+  func initMultiAdRequest(completion: @escaping (Result<String, Error>) -> Void) {
+    guard let memberId = flutterState?.memberId else {
+      completion(Result.failure(XandrPluginError.noMemberId))
+      return
+    }
+    
+    let mar = ANMultiAdRequest(memberId: memberId, andDelegate: self)
+    if(mar == nil){
+      completion(Result.failure(XandrPluginError.noMemberId))
+      return
+    }
+    let id = marRegistry.initNewRequest(mar!)
+    completion(Result.success(id))
+  }
+  
+  func disposeMultiAdRequest(multiAdRequestID: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+    let result = marRegistry.removeRequestWithId(multiAdRequestID)
+    completion(Result.success(result))
+  }
+
+  func loadAdsForMultiAdRequest(multiAdRequestID: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+    let result = marRegistry.load(multiAdRequestID)
+    completion(Result.success(result))
+  }
+  
   func setPublisherUserId(publisherUserId: String,
                           completion: @escaping (Result<Bool, Error>) -> Void) {
     ANSDKSettings.sharedInstance().publisherUserId = publisherUserId
@@ -167,10 +199,6 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   }
 }
 
-enum UserIdSourceError: Error {
-    case notValidSource
-}
-
 extension HostAPIUserIdSource {
   func toANUserIdSource() ->  ANUserIdSource{
     return switch self {
@@ -201,7 +229,7 @@ extension String {
     case "adserver.org":
       HostAPIUserIdSource.liveramp
     default:
-      throw UserIdSourceError.notValidSource;
+      throw XandrPluginError.notValidSource;
     }
   }
 }
@@ -217,6 +245,18 @@ extension String {
       interstitialAd?.isClosed.complete(true);
     }
   }
+
+// ANMultiAdRequestDelegate
+extension XandrPlugin: ANMultiAdRequestDelegate {
+  
+  public func multiAdRequestDidComplete(_ mar:ANMultiAdRequest) {
+    logger.debug(message: "Xandr.MultiAdRequest completed")
+  }
+  
+  public func multiAdRequestDidFailWithError(_ error:NSError) {
+    logger.debug(message: "Xandr.MultiAdRequest failed")
+  }
+}
 
 class XandrBannerFactory: NSObject, FlutterPlatformViewFactory {
   private weak var messenger: FlutterBinaryMessenger?
