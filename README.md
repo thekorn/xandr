@@ -32,7 +32,7 @@ However there are three main concepts:
 
 ### sample code:
 
-For a running examples please check the sample app at [example/lib/main.dart](packages/xandr/example/lib/main.dart) - the sample app can be run using `melos run run:example -- -d sdk` (android only atm).
+For a running examples please check the sample app at [example/lib/main.dart](packages/xandr/example/lib/main.dart) - the sample app can be run using `melos run run:example -- -d sdk` (android) or `melos run run:example -- -d IPhone` (iOS).
 
 In order to initialize the xandr sdk, and show a banner ad run:
 
@@ -62,7 +62,7 @@ XandrBuilder(
 
 **Result:**
 
-![](./docs/images/android_sample1.gif)
+![](./docs/images/android_sample1.gif) ![](./docs/images/ios_sample1.gif)
 
 Also, results of the `AdResponse` are propagated to the flutter side:
 

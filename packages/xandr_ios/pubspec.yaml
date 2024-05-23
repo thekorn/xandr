@@ -17,6 +17,7 @@ flutter:
         dartPluginClass: XandrIOS
 
 dependencies:
+  collection: ^1.18.0
   flutter:
     sdk: flutter
   xandr_platform_interface: ^0.1.0+1

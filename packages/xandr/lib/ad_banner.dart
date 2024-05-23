@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -328,36 +329,56 @@ class _HostAdBannerView extends StatelessWidget {
   final _DoneLoadingCallback _onDoneLoading;
   final Completer<int> widgetId;
 
+  static const viewType = 'de.thekorn.xandr/ad_banner';
+
   @override
   Widget build(BuildContext context) {
-    // FIXME(thekorn): use proper host platform implementation
-    return AndroidView(
-      viewType: 'de.thekorn.xandr/ad_banner',
-      onPlatformViewCreated: (id) {
-        debugPrint('Created banner view: $id');
-
-        if (!widgetId.isCompleted) {
-          widgetId.complete(id);
-        }
-        controller.listen(id, (event) {
-          if (event is BannerAdLoadedEvent) {
-            _onDoneLoading(success: true);
-            delegate?.onBannerAdLoaded?.call(event);
-          } else if (event is BannerAdLoadedErrorEvent) {
-            _onDoneLoading(success: false);
-            delegate?.onBannerAdLoadedError?.call(event);
-          } else if (event is NativeBannerAdLoadedEvent) {
-            _onDoneLoading(success: true);
-            delegate?.onNativeBannerAdLoaded?.call(event);
-          } else if (event is NativeBannerAdLoadedErrorEvent) {
-            _onDoneLoading(success: false);
-            delegate?.onNativeBannerAdLoadedError?.call(event);
-          }
-        });
-      },
-      creationParams: creationParams,
-      creationParamsCodec: _decoder,
+    assert(
+      defaultTargetPlatform != TargetPlatform.android ||
+          defaultTargetPlatform != TargetPlatform.iOS,
+      'The AdBanner widget is not supported on $defaultTargetPlatform',
     );
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      return AndroidView(
+        viewType: viewType,
+        onPlatformViewCreated: onPlatformViewCreated,
+        creationParams: creationParams,
+        creationParamsCodec: _decoder,
+      );
+    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+      return UiKitView(
+        viewType: viewType,
+        onPlatformViewCreated: onPlatformViewCreated,
+        creationParams: creationParams,
+        creationParamsCodec: _decoder,
+      );
+    } else {
+      throw UnsupportedError(
+        'The AdBanner widget is not supported on $defaultTargetPlatform',
+      );
+    }
+  }
+
+  void onPlatformViewCreated(int id) {
+    debugPrint('Created banner view: $id');
+    if (!widgetId.isCompleted) {
+      widgetId.complete(id);
+    }
+    controller.listen(id, (event) {
+      if (event is BannerAdLoadedEvent) {
+        _onDoneLoading(success: true);
+        delegate?.onBannerAdLoaded?.call(event);
+      } else if (event is BannerAdLoadedErrorEvent) {
+        _onDoneLoading(success: false);
+        delegate?.onBannerAdLoadedError?.call(event);
+      } else if (event is NativeBannerAdLoadedEvent) {
+        _onDoneLoading(success: true);
+        delegate?.onNativeBannerAdLoaded?.call(event);
+      } else if (event is NativeBannerAdLoadedErrorEvent) {
+        _onDoneLoading(success: false);
+        delegate?.onNativeBannerAdLoadedError?.call(event);
+      }
+    });
   }
 }
 

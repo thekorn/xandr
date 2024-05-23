@@ -2,6 +2,20 @@
 
 import 'package:pigeon/pigeon.dart';
 
+enum HostAPIUserIdSource {
+  criteo,
+  theTradeDesk,
+  netId,
+  liveramp,
+  uid2,
+}
+
+class HostAPIUserId {
+  HostAPIUserId({required this.userId, required this.source});
+  HostAPIUserIdSource source;
+  String userId;
+}
+
 @ConfigurePigeon(
   PigeonOptions(
     dartOut: 'lib/src/messages.g.dart',
@@ -20,7 +34,72 @@ import 'package:pigeon/pigeon.dart';
 @HostApi()
 abstract class XandrHostApi {
   @async
-  bool init({
+  bool initXandrSdk({
     required int memberId,
   });
+
+  @async
+  bool loadInterstitialAd({
+    required int widgetId,
+    String? placementID,
+    String? inventoryCode,
+    Map<String, String>? customKeywords,
+  });
+
+  @async
+  bool showInterstitialAd({int? autoDismissDelay});
+
+  @async
+  bool setPublisherUserId(String publisherUserId);
+
+  @async
+  String initMultiAdRequest();
+
+  @async
+  bool disposeMultiAdRequest(String multiAdRequestID);
+
+  @async
+  bool loadAdsForMultiAdRequest(String multiAdRequestID);
+
+  @async
+  String getPublisherUserId();
+
+  @async
+  bool setUserIds(List<HostAPIUserId> userIds);
+
+  @async
+  List<HostAPIUserId> getUserIds();
+
+  @async
+  // ignore: avoid_positional_boolean_parameters
+  bool setGDPRConsentRequired(bool isConsentRequired);
+
+  @async
+  bool setGDPRConsentString(String consentString);
+
+  @async
+  bool setGDPRPurposeConsents(String purposeConsents);
+}
+
+@FlutterApi()
+abstract class XandrFlutterApi {
+  void onAdLoaded(
+    int viewId,
+    int width,
+    int height,
+    String creativeId,
+    String adType,
+    String tagId,
+    String auctionId,
+    double cpm,
+    int memberId,
+  ) {}
+  void onAdLoadedError(int viewId, String reason) {}
+  void onNativeAdLoaded(
+    int viewId,
+    String title,
+    String description,
+    String imageUrl,
+  ) {}
+  void onNativeAdLoadedError(int viewId, String reason) {}
 }
