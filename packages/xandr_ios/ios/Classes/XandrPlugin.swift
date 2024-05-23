@@ -32,6 +32,8 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
     // setup the state, start listening on the host api instance and register the banner factory
     logger.debug(message: "onRegister plugin instance")
 
+    ANSDKSettings.sharedInstance().enableTestMode = true
+
     flutterState = FlutterState(binaryMessenger: registrar.messenger())
     flutterState?.startListening(api: self)
 
@@ -45,18 +47,18 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   func initXandrSdk(memberId: Int64, completion: @escaping (Result<Bool, Error>) -> Void) {
     // init thge xandr sdk and store the memberId in the state on success
     // return true on success
-    logger.debug(message: "initXnadrSdk")
+    logger.debug(message: "initXandrSdk")
     DispatchQueue.main.async {
       XandrAd.sharedInstance()
         .initWithMemberID(Int(memberId), preCacheRequestObjects: true) { [self]
           success in
             if success {
-              logger.debug(message: "initXnadrSdk was successfull")
+              logger.debug(message: "initXandrSdk was successfull")
               flutterState?.memberId = Int(memberId)
               flutterState?.setIsInitialized(success: true)
               completion(.success(true))
             } else {
-              logger.debug(message: "initXnadrSdk failed")
+              logger.debug(message: "initXandrSdk failed")
               flutterState?.memberId = Int(memberId)
               flutterState?.setIsInitialized(success: false)
               completion(.failure(NSError(
@@ -274,7 +276,8 @@ class XandrBannerFactory: NSObject, FlutterPlatformViewFactory {
   func create(withFrame frame: CGRect,
               viewIdentifier viewId: Int64,
               arguments args: Any?) -> FlutterPlatformView {
-    XandrBanner(
+    logger.debug(message: "create banner")
+    return XandrBanner(
       state: state,
       frame: frame,
       viewIdentifier: viewId,
@@ -298,6 +301,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
     super.init()
     // Do any additional setup after loading the view.
     ANSDKSettings.sharedInstance().enableOMIDOptimization = true
+    logger.debug(message: "init banner")
 
     guard let arguments = args as? [String: Any] else {
       return
@@ -314,6 +318,8 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
         height: size["height"]! as Int
       )))
     }
+    logger
+      .debug(message: "init banner, setting comp handler: \(state.isInitialized.getCompleted())")
 
     state.setIsInitializedCompletionHandler { [self] result in
       // Make a banner ad view.
@@ -328,6 +334,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
       }
 
       banner?.adSizes = adSizes
+      logger.debug(message: "init banner, load ad... \(arguments)")
       banner?.loadAd()
     }
   }

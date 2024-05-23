@@ -9,7 +9,7 @@ import Flutter
 import Foundation
 
 public class FlutterState {
-  private var isInitialized: Completer<Bool> = .init()
+  public var isInitialized: Completer<Bool> = .init()
   private var flutterAPI: XandrFlutterApi?
   public var memberId: Int!
 

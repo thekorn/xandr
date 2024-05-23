@@ -17,6 +17,9 @@ public class Completer<T> {
   }
 
   func invokeOnCompletion(_ handler: @escaping CompletionHandler) {
+    if _isCompleted {
+      return handler(_completedValue!)
+    }
     completionHandler = handler
   }
 
