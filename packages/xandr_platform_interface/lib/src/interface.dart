@@ -28,9 +28,7 @@ abstract class XandrPlatform extends PlatformInterface {
   void registerEventStream({
     required StreamController<BannerAdEvent> controller,
   }) {
-    throw UnimplementedError(
-      'registerEventStream() has not been implemented.',
-    );
+    _instance.registerEventStream(controller: controller);
   }
 
   /// Platform-specific plugins should set this with their own platform-specific
@@ -42,12 +40,12 @@ abstract class XandrPlatform extends PlatformInterface {
 
   /// Return the current platform name.
   Future<bool> init(int memberId) {
-    throw UnimplementedError('init() has not been implemented.');
+    return _instance.init(memberId);
   }
 
   /// loads an ad.
   Future<bool> loadAd(int widgetId) async {
-    throw UnimplementedError('loadAd() has not been implemented.');
+    return _instance.loadAd(widgetId);
   }
 
   /// loads an interstitial ad.
@@ -56,12 +54,16 @@ abstract class XandrPlatform extends PlatformInterface {
     String? inventoryCode,
     CustomKeywords? customKeywords,
   ) async {
-    throw UnimplementedError('loadInterstitialAd() has not been implemented.');
+    return _instance.loadInterstitialAd(
+      placementID,
+      inventoryCode,
+      customKeywords,
+    );
   }
 
   /// Return the current platform name.
   Future<bool> showInterstitialAd(Duration? autoDismissDelay) {
-    throw UnimplementedError('showInterstitialAd() has not been implemented.');
+    return _instance.showInterstitialAd(autoDismissDelay);
   }
 
   /// Sets the publisher user ID.
@@ -78,12 +80,12 @@ abstract class XandrPlatform extends PlatformInterface {
   /// setPublisherUserId('123456789');
   /// ```
   Future<void> setPublisherUserId(String publisherUserId) {
-    throw UnimplementedError('setPublisherUserId() has not been implemented.');
+    return _instance.setPublisherUserId(publisherUserId);
   }
 
   /// Returns the publisher user ID.
   Future<String> getPublisherUserId() {
-    throw UnimplementedError('getPublisherUserId() has not been implemented.');
+    return _instance.getPublisherUserId();
   }
 
   /// Sets the user IDs for the current user.
@@ -100,7 +102,7 @@ abstract class XandrPlatform extends PlatformInterface {
   /// setUserIds(userIds);
   /// ```
   Future<void> setUserIds(List<UserId> userIds) {
-    throw UnimplementedError('setUserIds() has not been implemented.');
+    return _instance.setUserIds(userIds);
   }
 
   /// Returns a list of [UserId] objects.
@@ -108,7 +110,7 @@ abstract class XandrPlatform extends PlatformInterface {
   /// This method retrieves the user IDs from the platform interface.
   /// The returned list contains instances of the [UserId] class.
   Future<List<UserId>> getUserIds() {
-    throw UnimplementedError('getUserIds() has not been implemented.');
+    return _instance.getUserIds();
   }
 
   /// Initializes a multi ad request.
@@ -116,7 +118,7 @@ abstract class XandrPlatform extends PlatformInterface {
   /// Returns a [Future] that completes with a [String] representing the result
   /// of the initialization.
   Future<String> initMultiAdRequest() {
-    throw UnimplementedError('initMultiAdRequest() has not been implemented.');
+    return _instance.initMultiAdRequest();
   }
 
   /// Disposes a multi ad request with the specified [multiAdRequestID].
@@ -130,18 +132,14 @@ abstract class XandrPlatform extends PlatformInterface {
   /// Returns:
   ///   - A [Future] that completes when the multi ad request is disposed.
   Future<void> disposeMultiAdRequest(String multiAdRequestID) {
-    throw UnimplementedError(
-      'disposeMultiAdRequest() has not been implemented.',
-    );
+    return _instance.disposeMultiAdRequest(multiAdRequestID);
   }
 
   /// Loads ads for a multi ad request with the specified [multiAdRequestID].
   /// Returns a [Future] that completes with a [bool] indicating whether the ads
   /// were successfully loaded.
   Future<bool> loadAdsForMultiAdRequest(String multiAdRequestID) {
-    throw UnimplementedError(
-      'loadAdsForMultiAdRequest() has not been implemented.',
-    );
+    return _instance.loadAdsForMultiAdRequest(multiAdRequestID);
   }
 
   /// Sets whether GDPR consent is required.
@@ -153,9 +151,7 @@ abstract class XandrPlatform extends PlatformInterface {
   ///
   // ignore: avoid_positional_boolean_parameters
   Future<void> setGDPRConsentRequired(bool isConsentRequired) {
-    throw UnimplementedError(
-      'setGDPRConsentRequired() has not been implemented.',
-    );
+    return _instance.setGDPRConsentRequired(isConsentRequired);
   }
 
   /// Sets the GDPR consent string.
@@ -165,9 +161,7 @@ abstract class XandrPlatform extends PlatformInterface {
   /// This method is used to set the GDPR consent string for the application.
   /// It returns a [Future] that completes when the consent string is set.
   Future<void> setGDPRConsentString(String consentString) {
-    throw UnimplementedError(
-      'setGDPRConsentString() has not been implemented.',
-    );
+    return _instance.setGDPRConsentString(consentString);
   }
 
   /// Sets the GDPR purpose consents.
@@ -180,8 +174,6 @@ abstract class XandrPlatform extends PlatformInterface {
   ///
   /// Returns a [Future] that completes when the purpose consents are set.
   Future<void> setGDPRPurposeConsents(String purposeConsents) {
-    throw UnimplementedError(
-      'setGDPRPurposeConsents() has not been implemented.',
-    );
+    return _instance.setGDPRPurposeConsents(purposeConsents);
   }
 }
