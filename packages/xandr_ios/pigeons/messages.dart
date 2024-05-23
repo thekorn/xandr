@@ -71,6 +71,7 @@ abstract class XandrHostApi {
   List<HostAPIUserId> getUserIds();
 
   @async
+  // ignore: avoid_positional_boolean_parameters
   bool setGDPRConsentRequired(bool isConsentRequired);
 
   @async

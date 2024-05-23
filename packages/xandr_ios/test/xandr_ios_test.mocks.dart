@@ -6,6 +6,7 @@
 import 'dart:async' as _i3;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i4;
 import 'package:xandr_ios/src/messages.g.dart' as _i2;
 
 // ignore_for_file: type=lint
@@ -66,6 +67,141 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
           #showInterstitialAd,
           [],
           {#autoDismissDelay: autoDismissDelay},
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+        returnValueForMissingStub: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<bool> setPublisherUserId(String? publisherUserId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setPublisherUserId,
+          [publisherUserId],
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+        returnValueForMissingStub: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<String> initMultiAdRequest() => (super.noSuchMethod(
+        Invocation.method(
+          #initMultiAdRequest,
+          [],
+        ),
+        returnValue: _i3.Future<String>.value(_i4.dummyValue<String>(
+          this,
+          Invocation.method(
+            #initMultiAdRequest,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i3.Future<String>.value(_i4.dummyValue<String>(
+          this,
+          Invocation.method(
+            #initMultiAdRequest,
+            [],
+          ),
+        )),
+      ) as _i3.Future<String>);
+
+  @override
+  _i3.Future<bool> disposeMultiAdRequest(String? multiAdRequestID) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #disposeMultiAdRequest,
+          [multiAdRequestID],
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+        returnValueForMissingStub: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<bool> loadAdsForMultiAdRequest(String? multiAdRequestID) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #loadAdsForMultiAdRequest,
+          [multiAdRequestID],
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+        returnValueForMissingStub: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<String> getPublisherUserId() => (super.noSuchMethod(
+        Invocation.method(
+          #getPublisherUserId,
+          [],
+        ),
+        returnValue: _i3.Future<String>.value(_i4.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getPublisherUserId,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i3.Future<String>.value(_i4.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getPublisherUserId,
+            [],
+          ),
+        )),
+      ) as _i3.Future<String>);
+
+  @override
+  _i3.Future<bool> setUserIds(List<_i2.HostAPIUserId?>? userIds) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setUserIds,
+          [userIds],
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+        returnValueForMissingStub: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<List<_i2.HostAPIUserId?>> getUserIds() => (super.noSuchMethod(
+        Invocation.method(
+          #getUserIds,
+          [],
+        ),
+        returnValue:
+            _i3.Future<List<_i2.HostAPIUserId?>>.value(<_i2.HostAPIUserId?>[]),
+        returnValueForMissingStub:
+            _i3.Future<List<_i2.HostAPIUserId?>>.value(<_i2.HostAPIUserId?>[]),
+      ) as _i3.Future<List<_i2.HostAPIUserId?>>);
+
+  @override
+  _i3.Future<bool> setGDPRConsentRequired(bool? isConsentRequired) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setGDPRConsentRequired,
+          [isConsentRequired],
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+        returnValueForMissingStub: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<bool> setGDPRConsentString(String? consentString) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setGDPRConsentString,
+          [consentString],
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+        returnValueForMissingStub: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<bool> setGDPRPurposeConsents(String? purposeConsents) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setGDPRPurposeConsents,
+          [purposeConsents],
         ),
         returnValue: _i3.Future<bool>.value(false),
         returnValueForMissingStub: _i3.Future<bool>.value(false),

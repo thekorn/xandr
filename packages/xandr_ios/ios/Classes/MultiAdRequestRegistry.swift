@@ -1,15 +1,15 @@
-import Foundation
 import AppNexusSDK
+import Foundation
 
 public class MultiAdRequestRegistry {
   private var multiAdRequests: [String: ANMultiAdRequest] = [:]
-  
+
   private func generateRandomStringId() -> String {
     let length = 16
     let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    return String((0..<length).map{ _ in letters.randomElement()! })
+    return String((0 ..< length).map { _ in letters.randomElement()! })
   }
-  
+
   public func initNewRequest(_ mar: ANMultiAdRequest) -> String {
     let id = generateRandomStringId()
     multiAdRequests[id] = mar

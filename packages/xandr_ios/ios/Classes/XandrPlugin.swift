@@ -7,8 +7,8 @@ extension FlutterError: Swift.Error {}
 var logger = Logger(category: "XandrPlugin")
 
 enum XandrPluginError: Error {
-    case notValidSource
-    case noMemberId
+  case notValidSource
+  case noMemberId
 }
 
 public class XandrPlugin: UIViewController, FlutterPlugin,
@@ -16,10 +16,10 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   public static var instance: XandrPlugin?
 
   public var flutterState: FlutterState?
-    
-  private var interstitialAd : InterstitialAd?
-  
-  private var marRegistry : MultiAdRequestRegistry = MultiAdRequestRegistry()
+
+  private var interstitialAd: InterstitialAd?
+
+  private var marRegistry: MultiAdRequestRegistry = .init()
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     // init the plugin and call onRegister
@@ -72,24 +72,23 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   func loadInterstitialAd(widgetId: Int64, placementID: String?, inventoryCode: String?,
                           customKeywords: [String: String]?,
                           completion: @escaping (Result<Bool, Error>) -> Void) {
-
-    interstitialAd = InterstitialAd.init()
+    interstitialAd = InterstitialAd()
     interstitialAd!.delegate = self
-    
+
     customKeywords?.forEach { keyword in
       interstitialAd?.addCustomKeyword(withKey: keyword.key, value: keyword.value)
     }
-    
+
     flutterState?.setIsInitializedCompletionHandler(handler: { _ in
-      if (self.flutterState?.memberId != nil) {
+      if self.flutterState?.memberId != nil {
         self.interstitialAd?.setInventoryCode(inventoryCode, memberId: self.flutterState!.memberId)
-                  } else if(placementID != nil) {
-                    self.interstitialAd?.placementId = placementID
-                  }
+      } else if placementID != nil {
+        self.interstitialAd?.placementId = placementID
+      }
       self.interstitialAd?.load()
       logger.debug(message: "Xandr.Interstitial Loading DONE")
-                  
-      self.interstitialAd?.isLoaded.invokeOnCompletion {_ in
+
+      self.interstitialAd?.isLoaded.invokeOnCompletion { _ in
         completion(Result.success(self.interstitialAd!.isLoaded.getCompleted()!))
       }
     })
@@ -97,111 +96,117 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
 
   func showInterstitialAd(autoDismissDelay: Int64?,
                           completion: @escaping (Result<Bool, Error>) -> Void) {
-    
-    if (interstitialAd?.isClosed.isCompleted ?? false) {
-      completion(Result.success(false))
-      return
-    }
-    
-    if (!(interstitialAd?.isReady ?? false)) {
+    if interstitialAd?.isClosed.isCompleted ?? false {
       completion(Result.success(false))
       return
     }
 
-    interstitialAd?.isLoaded.invokeOnCompletion({ _ in
-      if (autoDismissDelay == nil) {
+    if !(interstitialAd?.isReady ?? false) {
+      completion(Result.success(false))
+      return
+    }
+
+    interstitialAd?.isLoaded.invokeOnCompletion { _ in
+      if autoDismissDelay == nil {
         self.interstitialAd?.display(from: self)
       } else {
-        self.interstitialAd?.display(from: self,autoDismissDelay: Double(autoDismissDelay!))
+        self.interstitialAd?.display(from: self, autoDismissDelay: Double(autoDismissDelay!))
       }
-    })
-    
-    interstitialAd?.isClosed.invokeOnCompletion ({ _ in
+    }
+
+    interstitialAd?.isClosed.invokeOnCompletion { _ in
       completion(Result.success(self.interstitialAd!.isClosed.getCompleted()!))
-    })
+    }
   }
-  
+
   func initMultiAdRequest(completion: @escaping (Result<String, Error>) -> Void) {
     guard let memberId = flutterState?.memberId else {
       completion(Result.failure(XandrPluginError.noMemberId))
       return
     }
-    
+
     let mar = ANMultiAdRequest(memberId: memberId, andDelegate: self)
-    if(mar == nil){
+    if mar == nil {
       completion(Result.failure(XandrPluginError.noMemberId))
       return
     }
     let id = marRegistry.initNewRequest(mar!)
     completion(Result.success(id))
   }
-  
-  func disposeMultiAdRequest(multiAdRequestID: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+
+  func disposeMultiAdRequest(multiAdRequestID: String,
+                             completion: @escaping (Result<Bool, Error>) -> Void) {
     let result = marRegistry.removeRequestWithId(multiAdRequestID)
     completion(Result.success(result))
   }
 
-  func loadAdsForMultiAdRequest(multiAdRequestID: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+  func loadAdsForMultiAdRequest(multiAdRequestID: String,
+                                completion: @escaping (Result<Bool, Error>) -> Void) {
     let result = marRegistry.load(multiAdRequestID)
     completion(Result.success(result))
   }
-  
+
   func setPublisherUserId(publisherUserId: String,
                           completion: @escaping (Result<Bool, Error>) -> Void) {
     ANSDKSettings.sharedInstance().publisherUserId = publisherUserId
     completion(Result.success(true))
   }
-  
+
   func getPublisherUserId(completion: @escaping (Result<String, Error>) -> Void) {
     completion(Result.success(ANSDKSettings.sharedInstance().publisherUserId ?? ""))
   }
-  
+
   func setUserIds(userIds: [HostAPIUserId],
-                          completion: @escaping (Result<Bool, Error>) -> Void) {
+                  completion: @escaping (Result<Bool, Error>) -> Void) {
     var uIds: [ANUserId] = []
-    userIds.forEach{it in
+    for it in userIds {
       var newId = ANUserId(anUserIdSource: it.source.toANUserIdSource(), userId: it.userId)
-      if(newId != nil){
+      if newId != nil {
         uIds.append(newId!)
       }
     }
     ANSDKSettings.sharedInstance().userIdArray = uIds
     completion(Result.success(true))
   }
-  
+
   func getUserIds(completion: @escaping (Result<[HostAPIUserId], Error>) -> Void) {
     var userIds: [HostAPIUserId] = []
-    ANSDKSettings.sharedInstance().userIdArray?.forEach{it in
-      do{
-        var newUserIds = try HostAPIUserId(source: it.source.toHostAPIUserIdSource(), userId: it.userId)
+    ANSDKSettings.sharedInstance().userIdArray?.forEach { it in
+      do {
+        var newUserIds = try HostAPIUserId(
+          source: it.source.toHostAPIUserIdSource(),
+          userId: it.userId
+        )
         userIds.append(newUserIds)
-        }
-      catch {
+      } catch {
         logger.debug(message: "no valid user source")
       }
     }
     completion(Result.success(userIds))
   }
-  
-  func setGDPRConsentRequired(isConsentRequired: Bool, completion: @escaping (Result<Bool, Error>) -> Void) {
+
+  func setGDPRConsentRequired(isConsentRequired: Bool,
+                              completion: @escaping (Result<Bool, Error>) -> Void) {
     ANGDPRSettings.setConsentRequired(isConsentRequired ? 1 : 0)
     completion(Result.success(true))
   }
 
-  func setGDPRConsentString(consentString: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+  func setGDPRConsentString(consentString: String,
+                            completion: @escaping (Result<Bool, Error>) -> Void) {
     ANGDPRSettings.setConsentString(consentString)
     completion(Result.success(true))
   }
-  
-  func setGDPRPurposeConsents(purposeConsents: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+
+  func setGDPRPurposeConsents(purposeConsents: String,
+                              completion: @escaping (Result<Bool, Error>) -> Void) {
     ANGDPRSettings.setPurposeConsents(purposeConsents)
     completion(Result.success(true))
   }
 }
 
 extension HostAPIUserIdSource {
-  func toANUserIdSource() ->  ANUserIdSource{
-    return switch self {
+  func toANUserIdSource() -> ANUserIdSource {
+    switch self {
     case .criteo: ANUserIdSource.criteo
     case .theTradeDesk:
       ANUserIdSource.theTradeDesk
@@ -216,8 +221,8 @@ extension HostAPIUserIdSource {
 }
 
 extension String {
-  func toHostAPIUserIdSource() throws ->  HostAPIUserIdSource {
-    return  switch self{
+  func toHostAPIUserIdSource() throws -> HostAPIUserIdSource {
+    switch self {
     case "criteo.com":
       HostAPIUserIdSource.criteo
     case "uidapi.com":
@@ -229,31 +234,29 @@ extension String {
     case "adserver.org":
       HostAPIUserIdSource.liveramp
     default:
-      throw XandrPluginError.notValidSource;
+      throw XandrPluginError.notValidSource
     }
   }
 }
 
 // ANInterstitialAdDelegate
-  extension XandrPlugin: ANInterstitialAdDelegate {
-    
-    public func adDidReceiveAd(_ ad: Any) {
-      interstitialAd?.isLoaded.complete(true);
-    }
-    
-    public func adDidClose(_ ad: Any) {
-      interstitialAd?.isClosed.complete(true);
-    }
+extension XandrPlugin: ANInterstitialAdDelegate {
+  public func adDidReceiveAd(_ ad: Any) {
+    interstitialAd?.isLoaded.complete(true)
   }
+
+  public func adDidClose(_ ad: Any) {
+    interstitialAd?.isClosed.complete(true)
+  }
+}
 
 // ANMultiAdRequestDelegate
 extension XandrPlugin: ANMultiAdRequestDelegate {
-  
-  public func multiAdRequestDidComplete(_ mar:ANMultiAdRequest) {
+  public func multiAdRequestDidComplete(_ mar: ANMultiAdRequest) {
     logger.debug(message: "Xandr.MultiAdRequest completed")
   }
-  
-  public func multiAdRequestDidFailWithError(_ error:NSError) {
+
+  public func multiAdRequestDidFailWithError(_ error: NSError) {
     logger.debug(message: "Xandr.MultiAdRequest failed")
   }
 }

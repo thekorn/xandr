@@ -90,7 +90,7 @@ class _XandrExampleState extends State<XandrExample> {
                 //placementID: '17058950',
                 inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
                 adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
-                //customKeywords: useDemoAds,
+                customKeywords: useDemoAds,
                 resizeAdToFitContainer: true,
                 enableLazyLoad: true,
               ),
@@ -172,6 +172,7 @@ class _XandrExampleState extends State<XandrExample> {
                 width: 90,
                 height: 90,
                 loadsInBackground: true,
+                customKeywords: useDemoAds,
               ),
               const Text('Lorem Ipsum is simply dummy text of the printing and '
                   'typesetting industry. Lorem Ipsum has been the boo '
@@ -201,6 +202,7 @@ class _XandrExampleState extends State<XandrExample> {
                   AdSize(728, 90),
                   AdSize(1, 1),
                 ],
+                customKeywords: useDemoAds,
                 resizeAdToFitContainer: true,
                 loadMode: LoadMode.whenInViewport(
                   _checkIfAdIsInViewport.stream,
