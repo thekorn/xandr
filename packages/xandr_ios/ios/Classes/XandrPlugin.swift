@@ -308,7 +308,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
     }
 
     let inventoryCode = arguments["inventoryCode"] as? String
-    let customKeywords = arguments["customKeywords"] as? [String]
+    let customKeywords = arguments["customKeywords"] as? [String: String]
     let adSizesArgs = arguments["adSizes"] as? [[String: Int]]
 
     var adSizes: [NSValue] = []
@@ -318,8 +318,6 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
         height: size["height"]! as Int
       )))
     }
-    logger
-      .debug(message: "init banner, setting comp handler: \(state.isInitialized.getCompleted())")
 
     state.setIsInitializedCompletionHandler { [self] result in
       // Make a banner ad view.
@@ -329,12 +327,12 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
         inventoryCode: inventoryCode!
       )
       banner?.delegate = self
-      customKeywords?.forEach { keyword in
-        banner?.addCustomKeyword(withKey: "kw", value: keyword)
+      customKeywords?.forEach { item in
+        banner?.addCustomKeyword(withKey: item.key, value: item.value)
       }
 
       banner?.adSizes = adSizes
-      logger.debug(message: "init banner, load ad... \(arguments)")
+      logger.debug(message: "init banner, load ad...")
       banner?.loadAd()
     }
   }
