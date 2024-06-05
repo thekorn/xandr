@@ -1,3 +1,7 @@
+## 0.1.1+1
+
+ - Bump "xandr_ios" to `0.1.1+1`.
+
 ## 0.1.1
 
  - Initial Beta Release

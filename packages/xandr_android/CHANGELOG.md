@@ -1,3 +1,7 @@
+## 0.1.1+1
+
+ - Bump "xandr_android" to `0.1.1+1`.
+
 ## 0.1.1
 
  - Initial Beta Release
