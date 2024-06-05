@@ -4,6 +4,8 @@
 
 This is the flutter integration for xandr.
 
+**Please Note: This is a work in progress and the api is likely to change.**
+
 ## Contributing to the project
 
 Please the [CONTRIBUTING.md](CONTRIBUTING.md) for details.
