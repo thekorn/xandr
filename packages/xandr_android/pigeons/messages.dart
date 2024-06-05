@@ -28,7 +28,7 @@ class HostAPIUserId {
       ],
     ),
     kotlinOut: 'android/src/main/kotlin/de/thekorn/xandr/Xandr.g.kt',
-    kotlinOptions: KotlinOptions(),
+    kotlinOptions: KotlinOptions(errorClassName: 'XandrFlutterError'),
   ),
 )
 @HostApi()
