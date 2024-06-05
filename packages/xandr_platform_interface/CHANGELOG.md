@@ -1,3 +1,7 @@
+## 0.1.1+2
+
+ - Bump "xandr_platform_interface" to `0.1.1+2`.
+
 ## 0.1.1+1
 
  - Bump "xandr_platform_interface" to `0.1.1+1`.

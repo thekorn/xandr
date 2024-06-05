@@ -1,3 +1,7 @@
+## 0.1.1+2
+
+ - pigeon: use a custom name for the generated flutter error class to not risk re-definition of the error class
+
 ## 0.1.1+1
 
  - Bump "xandr_android" to `0.1.1+1`.

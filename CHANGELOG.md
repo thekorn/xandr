@@ -15,6 +15,42 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`xandr` - `v0.1.1+2`](#xandr---v0112)
+ - [`xandr_android` - `v0.1.1+2`](#xandr_android---v0112)
+ - [`xandr_ios` - `v0.1.1+2`](#xandr_ios---v0112)
+ - [`xandr_platform_interface` - `v0.1.1+2`](#xandr_platform_interface---v0112)
+
+---
+
+#### `xandr` - `v0.1.1+2`
+
+ - Bump "xandr" to `0.1.1+2`.
+
+#### `xandr_android` - `v0.1.1+2`
+
+ - pigeon: use a custom name for the generated flutter error class to not risk re-definition of the error class
+
+#### `xandr_ios` - `v0.1.1+2`
+
+ - Bump "xandr_ios" to `0.1.1+2`.
+
+#### `xandr_platform_interface` - `v0.1.1+2`
+
+ - Bump "xandr_platform_interface" to `0.1.1+2`.
+
+
+## 2024-06-05
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`xandr` - `v0.1.1+1`](#xandr---v0111)
  - [`xandr_android` - `v0.1.1+1`](#xandr_android---v0111)
  - [`xandr_ios` - `v0.1.1+1`](#xandr_ios---v0111)
