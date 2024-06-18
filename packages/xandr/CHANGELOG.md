@@ -1,3 +1,5 @@
+## 0.1.3+1
+
 ## 0.1.3
 
  - Note: this is introducing a breaking change, customKeyword values are now a list of strings

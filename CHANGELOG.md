@@ -15,6 +15,41 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`xandr` - `v0.1.3+1`](#xandr---v0131)
+ - [`xandr_android` - `v0.1.3+1`](#xandr_android---v0131)
+ - [`xandr_ios` - `v0.1.3+1`](#xandr_ios---v0131)
+ - [`xandr_platform_interface` - `v0.1.3+1`](#xandr_platform_interface---v0131)
+
+---
+
+#### `xandr` - `v0.1.3+1`
+
+#### `xandr_android` - `v0.1.3+1`
+
+ - **FIX**(deps): update dependency com.android.tools.build:gradle to v8.5.0.
+ - **FIX**(deps): update dependency com.appnexus.opensdk:appnexus-sdk to v9.
+
+#### `xandr_ios` - `v0.1.3+1`
+
+ - Bump "xandr_ios" to `0.1.3+1`.
+
+#### `xandr_platform_interface` - `v0.1.3+1`
+
+ - Bump "xandr_platform_interface" to `0.1.3+1`.
+
+
+## 2024-06-18
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`xandr` - `v0.1.3`](#xandr---v013)
  - [`xandr_android` - `v0.1.3`](#xandr_android---v013)
  - [`xandr_ios` - `v0.1.3`](#xandr_ios---v013)
