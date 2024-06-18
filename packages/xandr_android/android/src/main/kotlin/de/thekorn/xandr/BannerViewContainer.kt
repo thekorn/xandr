@@ -14,8 +14,7 @@ class BannerViewContainer(
     private var state: FlutterState,
     widgetId: Int,
     private val bannerViewOptions: BannerViewOptions?
-) :
-    PlatformView {
+) : PlatformView {
     private val banner: BannerAd
 
     init {

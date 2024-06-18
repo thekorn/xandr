@@ -53,7 +53,7 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
     required int? widgetId,
     String? placementID,
     String? inventoryCode,
-    Map<String?, String?>? customKeywords,
+    Map<String?, List<String?>?>? customKeywords,
   }) =>
       (super.noSuchMethod(
         Invocation.method(

@@ -43,7 +43,7 @@ abstract class XandrHostApi {
     required int widgetId,
     String? placementID,
     String? inventoryCode,
-    Map<String, String>? customKeywords,
+    Map<String, List<String>>? customKeywords,
   });
 
   @async

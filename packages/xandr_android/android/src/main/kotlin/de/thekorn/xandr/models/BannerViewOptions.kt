@@ -5,7 +5,7 @@ import io.flutter.Log
 
 data class BannerViewOptions(
     val adSizes: ArrayList<AdSize>? = null,
-    val customKeywords: HashMap<String, String>? = null,
+    val customKeywords: HashMap<String, List<String>>? = null,
     val allowNativeDemand: Boolean? = null,
     val layoutWidth: Int? = null,
     val layoutHeight: Int? = null,
@@ -39,10 +39,10 @@ fun Map<*, *>.toBannerAdViewOptions(): BannerViewOptions {
         "using '$adSizes' -> '$sizes'"
     )
 
-    val customKeywords = HashMap<String, String>()
+    val customKeywords = HashMap<String, List<String>>()
     val keywords = this["customKeywords"] as HashMap<*, *>?
     keywords?.forEach {
-        customKeywords[it.key.toString()] = it.value.toString()
+        customKeywords[it.key.toString()] = it.value as List<String>
     }
 
     return BannerViewOptions(

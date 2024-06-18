@@ -1,3 +1,15 @@
+## 0.1.3
+
+ - Note: this is introducing a breaking change, customKeyword values are now a list of strings
+
+## 0.1.2
+
+ - Note: this is introducing a breaking change, customKeyword values are now a list of strings
+
+## 0.1.1+3
+
+ - Bump "xandr" to `0.1.1+3`.
+
 ## 0.1.1+2
 
  - Bump "xandr" to `0.1.1+2`.

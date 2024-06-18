@@ -108,7 +108,7 @@ private object XandrHostApiCodec : StandardMessageCodec() {
 interface XandrHostApi {
   fun init(memberId: Long, callback: (Result<Boolean>) -> Unit)
   fun loadAd(widgetId: Long, callback: (Result<Boolean>) -> Unit)
-  fun loadInterstitialAd(widgetId: Long, placementID: String?, inventoryCode: String?, customKeywords: Map<String, String>?, callback: (Result<Boolean>) -> Unit)
+  fun loadInterstitialAd(widgetId: Long, placementID: String?, inventoryCode: String?, customKeywords: Map<String, List<String>>?, callback: (Result<Boolean>) -> Unit)
   fun showInterstitialAd(autoDismissDelay: Long?, callback: (Result<Boolean>) -> Unit)
   fun setPublisherUserId(publisherUserId: String, callback: (Result<Unit>) -> Unit)
   fun getPublisherUserId(callback: (Result<String>) -> Unit)
@@ -177,7 +177,7 @@ interface XandrHostApi {
             val widgetIdArg = args[0].let { num -> if (num is Int) num.toLong() else num as Long }
             val placementIDArg = args[1] as String?
             val inventoryCodeArg = args[2] as String?
-            val customKeywordsArg = args[3] as Map<String, String>?
+            val customKeywordsArg = args[3] as Map<String, List<String>>?
             api.loadInterstitialAd(widgetIdArg, placementIDArg, inventoryCodeArg, customKeywordsArg) { result: Result<Boolean> ->
               val error = result.exceptionOrNull()
               if (error != null) {

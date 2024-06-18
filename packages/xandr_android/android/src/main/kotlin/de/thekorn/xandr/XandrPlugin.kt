@@ -21,7 +21,10 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
+class XandrPlugin :
+    FlutterPlugin,
+    ActivityAware,
+    XandrHostApi {
     private lateinit var flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
 
     private lateinit var flutterState: FlutterState
@@ -111,7 +114,7 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
         widgetId: Long,
         placementID: String?,
         inventoryCode: String?,
-        customKeywords: Map<String, String>?,
+        customKeywords: Map<String, List<String>>?,
         callback: (Result<Boolean>) -> Unit
     ) {
         interstitialAd = InterstitialAd(activity)
@@ -121,7 +124,9 @@ class XandrPlugin : FlutterPlugin, ActivityAware, XandrHostApi {
             interstitialAd
         )
         customKeywords?.forEach {
-            interstitialAd.addCustomKeywords(it.key, it.value)
+            it.value.forEach { value ->
+                interstitialAd.addCustomKeywords(it.key, value)
+            }
         }
 
         this.flutterState.isInitialized.invokeOnCompletion {
