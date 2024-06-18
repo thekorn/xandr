@@ -29,7 +29,9 @@ class BannerAd(
             }
 
             it.customKeywords?.forEach { kw ->
-                this.addCustomKeywords(kw.key, kw.value)
+                kw.value.forEach { value ->
+                    this.addCustomKeywords(kw.key, value)
+                }
             }
 
             it.allowNativeDemand?.let { allowNativeDemand ->

@@ -76,7 +76,7 @@ class MockMethodChannelXandr extends _i1.Mock
   _i4.Future<bool> loadInterstitialAd(
     String? placementID,
     String? inventoryCode,
-    Map<String, String>? customKeywords,
+    Map<String, List<String>>? customKeywords,
   ) =>
       (super.noSuchMethod(
         Invocation.method(

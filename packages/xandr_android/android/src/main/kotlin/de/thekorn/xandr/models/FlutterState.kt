@@ -11,10 +11,7 @@ import io.flutter.plugin.common.BinaryMessenger
 import kotlin.properties.Delegates
 import kotlinx.coroutines.CompletableDeferred
 
-class FlutterState(
-    var applicationContext: Context,
-    private var binaryMessenger: BinaryMessenger
-) {
+class FlutterState(var applicationContext: Context, private var binaryMessenger: BinaryMessenger) {
     val isInitialized: CompletableDeferred<Boolean> = CompletableDeferred()
 
     private val flutterBannerAdViews = mutableMapOf<Int, BannerViewContainer>()

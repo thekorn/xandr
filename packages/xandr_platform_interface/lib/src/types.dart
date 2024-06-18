@@ -13,11 +13,13 @@ abstract class BannerAdEvent {
 /// A typedef representing a map of custom keywords.
 ///
 /// The keys are strings representing the keyword names,
-/// and the values are strings representing the keyword values.
-typedef CustomKeywords = Map<String, String>;
+/// and the values are list of strings representing the keyword values.
+typedef CustomKeywords = Map<String, List<String>>;
 
 /// A constant representing the use of demo ads.
-const CustomKeywords useDemoAds = {'kw': 'demoads'};
+const CustomKeywords useDemoAds = {
+  'kw': ['demoads'],
+};
 
 /// Enum representing the source of a user ID.
 enum UserIdSource {

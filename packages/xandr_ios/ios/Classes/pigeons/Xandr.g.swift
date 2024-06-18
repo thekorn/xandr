@@ -143,7 +143,7 @@ class XandrHostApiCodec: FlutterStandardMessageCodec {
 protocol XandrHostApi {
   func initXandrSdk(memberId: Int64, completion: @escaping (Result<Bool, Error>) -> Void)
   func loadInterstitialAd(widgetId: Int64, placementID: String?, inventoryCode: String?,
-                          customKeywords: [String: String]?,
+                          customKeywords: [String: [String]]?,
                           completion: @escaping (Result<Bool, Error>) -> Void)
   func showInterstitialAd(autoDismissDelay: Int64?,
                           completion: @escaping (Result<Bool, Error>) -> Void)
@@ -205,7 +205,7 @@ class XandrHostApiSetup {
         let widgetIdArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
         let placementIDArg: String? = nilOrValue(args[1])
         let inventoryCodeArg: String? = nilOrValue(args[2])
-        let customKeywordsArg: [String: String]? = nilOrValue(args[3])
+        let customKeywordsArg: [String: [String]]? = nilOrValue(args[3])
         api.loadInterstitialAd(
           widgetId: widgetIdArg,
           placementID: placementIDArg,

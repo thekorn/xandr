@@ -90,7 +90,9 @@ class _XandrExampleState extends State<XandrExample> {
                 //placementID: '17058950',
                 inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
                 adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
-                //customKeywords: useDemoAds,
+                customKeywords: const {
+                  'kw': ['test-kw', 'demoads'],
+                },
                 resizeAdToFitContainer: true,
                 enableLazyLoad: true,
               ),
