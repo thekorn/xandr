@@ -60,10 +60,10 @@ open class XandrAdListener(private var widgetId: Int, private var flutterApi: Xa
         }
     }
 
-    override fun onAdRequestFailed(p0: AdView?, p1: ResultCode?) {
+    override fun onAdRequestFailed(adview: AdView?, result: ResultCode?) {
         Log.d(
             "Xandr.BannerView",
-            ">>> Ad Request failed, AdView:p0=$p0 ResultCode:p1=$p1"
+            ">>> Ad Request failed, AdView=${adview?.adResponseInfo} ResultCode=$result"
         )
     }
 
