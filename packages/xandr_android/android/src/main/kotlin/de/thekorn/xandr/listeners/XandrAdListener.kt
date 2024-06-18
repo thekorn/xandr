@@ -12,10 +12,8 @@ import io.flutter.Log
 // / FIXME: create explicit XandrBannerAdListener
 // /  means: XandrAdListener as base plus an interstitial and banner implementation
 
-open class XandrAdListener(
-    private var widgetId: Int,
-    private var flutterApi: XandrFlutterApi
-) : AdListener {
+open class XandrAdListener(private var widgetId: Int, private var flutterApi: XandrFlutterApi) :
+    AdListener {
     override fun onAdLoaded(view: AdView?) {
         Log.d(
             "Xandr.BannerView",

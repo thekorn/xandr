@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:xandr/xandr.dart';
+import 'package:xandr_platform_interface/xandr_platform_interface.dart';
 
 /// Represents an interstitial ad.
 class InterstitialAd {
@@ -30,7 +31,7 @@ class InterstitialAd {
   final String? inventoryCode;
 
   /// The custom keywords for the ad interstitial.
-  final Map<String, String>? customKeywords;
+  final CustomKeywords? customKeywords;
   bool _hasBeenShown = false;
 
   /// Returns a boolean value indicating whether the interstitial ad has

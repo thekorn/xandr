@@ -72,13 +72,15 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   }
 
   func loadInterstitialAd(widgetId: Int64, placementID: String?, inventoryCode: String?,
-                          customKeywords: [String: String]?,
+                          customKeywords: [String: [String]]?,
                           completion: @escaping (Result<Bool, Error>) -> Void) {
     interstitialAd = InterstitialAd()
     interstitialAd!.delegate = self
 
     customKeywords?.forEach { keyword in
-      interstitialAd?.addCustomKeyword(withKey: keyword.key, value: keyword.value)
+      for value in keyword.value {
+        interstitialAd?.addCustomKeyword(withKey: keyword.key, value: value)
+      }
     }
 
     flutterState?.setIsInitializedCompletionHandler(handler: { _ in
@@ -308,7 +310,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
     }
 
     let inventoryCode = arguments["inventoryCode"] as? String
-    let customKeywords = arguments["customKeywords"] as? [String: String]
+    let customKeywords = arguments["customKeywords"] as? [String: [String]]
     let adSizesArgs = arguments["adSizes"] as? [[String: Int]]
 
     var adSizes: [NSValue] = []
@@ -328,7 +330,9 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
       )
       banner?.delegate = self
       customKeywords?.forEach { item in
-        banner?.addCustomKeyword(withKey: item.key, value: item.value)
+        for value in item.value {
+          banner?.addCustomKeyword(withKey: item.key, value: value)
+        }
       }
 
       banner?.adSizes = adSizes
