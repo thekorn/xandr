@@ -88,136 +88,14 @@ class _XandrExampleState extends State<XandrExample> {
               AdBanner(
                 controller: _controller,
                 //placementID: '17058950',
-                inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-                adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
-                customKeywords: const {
-                  'kw': ['test-kw', 'demoads'],
-                },
+                inventoryCode: 'bunte_androidapp_fuermich_frontpage_hor_2',
+                adSizes: const [AdSize(300, 250)],
+                //customKeywords: const {
+                //  'kw': ['test-kw', 'demoads'],
+                //},
                 resizeAdToFitContainer: true,
                 enableLazyLoad: true,
               ),
-              //FIXME: not working
-              //const Text(
-              //  'Lorem Ipsum is simply dummy text of the printing and '
-              //  'typesetting industry. Lorem Ipsum has been the boo '
-              //  'standard dummy text ever since the 1500s, when an aha '
-              //  'printer took a galley of type and scrambled it to n'),
-              //const Padding(
-              //  padding: EdgeInsets.symmetric(vertical: 8),
-              //  child: Align(
-              //    alignment: Alignment.topLeft,
-              //    child: Text(
-              //      'crop to reserved space:',
-              //      style: TextStyle(
-              //        fontWeight: FontWeight.bold,
-              //      ),
-              //    ),
-              //  ),
-              //),
-              //AdBanner(
-              //  controller: _controller,
-              //  //placementID: '17058950',
-              //  inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-              //  adSizes: const [
-              //    AdSize(1, 1),
-              //    AdSize(728, 90),
-              //  ], //[AdSize(300, 250)],
-              //  width: 90,
-              //  height: 90,
-              //  //customKeywords: useDemoAds,
-              //  resizeWhenLoaded: true,
-              //),
-              const Text('Lorem Ipsum is simply dummy text of the printing and '
-                  'typesetting industry. Lorem Ipsum has been the boo '
-                  'standard dummy text ever since the 1500s, when an aha '
-                  'printer took a galley of type and scrambled it to v'),
-              const Text('Lorem Ipsum is simply dummy text of the printing and '
-                  'typesetting industry. Lorem Ipsum has been the boo '
-                  'standard dummy text ever since the 1500s, when an aha '
-                  'printer took a galley of type and scrambled it to v'),
-              const Text('Lorem Ipsum is simply dummy text of the printing and '
-                  'typesetting industry. Lorem Ipsum has been the boo '
-                  'standard dummy text ever since the 1500s, when an aha '
-                  'printer took a galley of type and scrambled it to v'),
-              const Text('Lorem Ipsum is simply dummy text of the printing and '
-                  'typesetting industry. Lorem Ipsum has been the boo '
-                  'standard dummy text ever since the 1500s, when an aha '
-                  'printer took a galley of type and scrambled it to v'),
-              const Text('Lorem Ipsum is simply dummy text of the printing and '
-                  'typesetting industry. Lorem Ipsum has been the boo '
-                  'standard dummy text ever since the 1500s, when an aha '
-                  'printer took a galley of type and scrambled it to v'),
-              const Text('Lorem Ipsum is simply dummy text of the printing and '
-                  'typesetting industry. Lorem Ipsum has been the boo '
-                  'standard dummy text ever since the 1500s, when an aha '
-                  'printer took a galley of type and scrambled it to v'),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'use winning ad size:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              AdBanner(
-                controller: _controller,
-                //placementID: '17058950',
-                inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-                adSizes: const [
-                  AdSize(1, 1),
-                  AdSize(728, 90),
-                ], //[AdSize(300, 250)],
-                width: 90,
-                height: 90,
-                loadsInBackground: true,
-                //customKeywords: useDemoAds,
-              ),
-              const Text('Lorem Ipsum is simply dummy text of the printing and '
-                  'typesetting industry. Lorem Ipsum has been the boo '
-                  'standard dummy text ever since the 1500s, when an aha '
-                  'printer took a galley of type and scrambled it to g'),
-              const Text('Lorem Ipsum is simply dummy text of the printing and '
-                  'typesetting industry. Lorem Ipsum has been the boo '
-                  'standard dummy text ever since the 1500s, when an aha '
-                  'printer took a galley of type and scrambled it to g'),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'load when in viewport:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              AdBanner(
-                controller: _controller,
-                //placementID: '17058950',
-                inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-                adSizes: const [
-                  AdSize(728, 90),
-                  AdSize(1, 1),
-                ],
-                //customKeywords: useDemoAds,
-                resizeAdToFitContainer: true,
-                loadMode: LoadMode.whenInViewport(
-                  _checkIfAdIsInViewport.stream,
-                ),
-              ),
-              const Text('Lorem Ipsum is simply dummy text of the printing and '
-                  'typesetting industry. Lorem Ipsum has been the boo '
-                  'standard dummy text ever since the 1500s, when an aha '
-                  'printer took a galley of type and scrambled it to g'),
-              const Text('Lorem Ipsum is simply dummy text of the printing and '
-                  'typesetting industry. Lorem Ipsum has been the boo '
-                  'standard dummy text ever since the 1500s, when an aha '
-                  'printer took a galley of type and scrambled it to g'),
             ],
           ),
         ),
