@@ -26,6 +26,7 @@ class XandrController {
   /// Initializes the Xandr SDK.
   ///
   /// [memberId] is the Xandr member ID.
+  /// [publisherId] is the optional Xandr publisher ID.
   Future<bool> init(int memberId, {int? publisherId}) async {
     debugPrint('init xandr with memberId=$memberId publisherId=$publisherId');
     if (isInitialized.isCompleted) {
