@@ -1,6 +1,6 @@
 name: xandr_platform_interface
 description: A common platform interface for the xandr plugin.
-version: 0.1.3
+version: 0.1.4
 homepage: https://github.com/thekorn/xandr
 repository: https://github.com/thekorn/xandr
 

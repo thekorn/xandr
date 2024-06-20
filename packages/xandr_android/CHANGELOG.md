@@ -1,3 +1,9 @@
+## 0.1.4
+
+ - **FIX**(deps): update dependency com.android.tools.build:gradle to v8.5.0.
+ - **FIX**(deps): update dependency com.appnexus.opensdk:appnexus-sdk to v9.
+ - **FEAT**: Integrate optional publisherId across SDK init methods.
+
 ## 0.1.3
 
  - Bump "xandr_android" to `0.1.3`.
