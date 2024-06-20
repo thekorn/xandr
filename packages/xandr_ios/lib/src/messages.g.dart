@@ -102,7 +102,7 @@ class XandrHostApi {
 
   final String __pigeon_messageChannelSuffix;
 
-  Future<bool> initXandrSdk({required int memberId}) async {
+  Future<bool> initXandrSdk({required int memberId, int? publisherId}) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.initXandrSdk$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -110,7 +110,7 @@ class XandrHostApi {
       binaryMessenger: __pigeon_binaryMessenger,
     );
     final List<Object?>? __pigeon_replyList =
-        await __pigeon_channel.send(<Object?>[memberId]) as List<Object?>?;
+        await __pigeon_channel.send(<Object?>[memberId, publisherId]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {

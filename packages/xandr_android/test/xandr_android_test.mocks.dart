@@ -27,11 +27,18 @@ import 'package:xandr_android/src/messages.g.dart' as _i2;
 /// See the documentation for Mockito's code generation for more information.
 class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
   @override
-  _i3.Future<bool> init({required int? memberId}) => (super.noSuchMethod(
+  _i3.Future<bool> init({
+    required int? memberId,
+    int? publisherId,
+  }) =>
+      (super.noSuchMethod(
         Invocation.method(
           #init,
           [],
-          {#memberId: memberId},
+          {
+            #memberId: memberId,
+            #publisherId: publisherId,
+          },
         ),
         returnValue: _i3.Future<bool>.value(false),
         returnValueForMissingStub: _i3.Future<bool>.value(false),

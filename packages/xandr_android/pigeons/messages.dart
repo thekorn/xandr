@@ -34,9 +34,7 @@ class HostAPIUserId {
 @HostApi()
 abstract class XandrHostApi {
   @async
-  bool init({
-    required int memberId,
-  });
+  bool init({required int memberId, int? publisherId});
 
   @async
   bool loadAd({

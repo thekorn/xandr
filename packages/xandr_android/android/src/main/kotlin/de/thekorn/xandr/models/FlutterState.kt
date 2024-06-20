@@ -17,6 +17,7 @@ class FlutterState(var applicationContext: Context, private var binaryMessenger:
     private val flutterBannerAdViews = mutableMapOf<Int, BannerViewContainer>()
 
     var memberId by Delegates.notNull<Int>()
+    var publisherId: Int? = null
     lateinit var flutterApi: XandrFlutterApi
 
     fun startListening(methodCallHandler: XandrPlugin) {
