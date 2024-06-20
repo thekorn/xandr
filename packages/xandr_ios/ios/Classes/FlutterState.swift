@@ -12,6 +12,7 @@ public class FlutterState {
   public var isInitialized: Completer<Bool> = .init()
   private var flutterAPI: XandrFlutterApi?
   public var memberId: Int!
+  public var publisherId: Int?
 
   private var binaryMessenger: FlutterBinaryMessenger
 

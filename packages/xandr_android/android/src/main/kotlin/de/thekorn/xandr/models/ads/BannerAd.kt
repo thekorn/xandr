@@ -71,6 +71,10 @@ class BannerAd(
             }
         }
 
+        if (state.publisherId != null) {
+            this.publisherId = state.publisherId!!
+        }
+
         state.isInitialized.invokeOnCompletion {
             // / need to make sure the sdk is initialized to access the memberId
             // / docs: Note that if both inventory code and placement ID are passed in, the

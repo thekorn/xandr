@@ -44,7 +44,8 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
     registrar.register(factory, withId: "de.thekorn.xandr/ad_banner")
   }
 
-  func initXandrSdk(memberId: Int64, completion: @escaping (Result<Bool, Error>) -> Void) {
+  func initXandrSdk(memberId: Int64, publisherId: Int64?,
+                    completion: @escaping (Result<Bool, Error>) -> Void) {
     // init thge xandr sdk and store the memberId in the state on success
     // return true on success
     logger.debug(message: "initXandrSdk")
@@ -55,11 +56,17 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
             if success {
               logger.debug(message: "initXandrSdk was successfull")
               flutterState?.memberId = Int(memberId)
+              if publisherId != nil {
+                flutterState?.publisherId = Int(publisherId!)
+              }
               flutterState?.setIsInitialized(success: true)
               completion(.success(true))
             } else {
               logger.debug(message: "initXandrSdk failed")
               flutterState?.memberId = Int(memberId)
+              if publisherId != nil {
+                flutterState?.publisherId = Int(publisherId!)
+              }
               flutterState?.setIsInitialized(success: false)
               completion(.failure(NSError(
                 domain: "XandrAd.sharedInstance().initWithMemberID",
@@ -128,8 +135,16 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
       completion(Result.failure(XandrPluginError.noMemberId))
       return
     }
-
-    let mar = ANMultiAdRequest(memberId: memberId, andDelegate: self)
+    let mar: ANMultiAdRequest?
+    if flutterState?.publisherId != nil {
+      mar = ANMultiAdRequest(
+        memberId: memberId,
+        publisherId: (flutterState?.publisherId)!,
+        andDelegate: self
+      )
+    } else {
+      mar = ANMultiAdRequest(memberId: memberId, andDelegate: self)
+    }
     if mar == nil {
       completion(Result.failure(XandrPluginError.noMemberId))
       return
@@ -333,6 +348,9 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
         for value in item.value {
           banner?.addCustomKeyword(withKey: item.key, value: value)
         }
+      }
+      if state.publisherId != nil {
+        banner?.publisherId = state.publisherId!
       }
 
       banner?.adSizes = adSizes

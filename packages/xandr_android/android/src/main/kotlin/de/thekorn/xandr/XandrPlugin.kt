@@ -85,8 +85,9 @@ class XandrPlugin :
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun init(memberId: Long, callback: (Result<Boolean>) -> Unit) {
+    override fun init(memberId: Long, publisherId: Long?, callback: (Result<Boolean>) -> Unit) {
         this.flutterState.memberId = memberId.toInt()
+        this.flutterState.publisherId = publisherId?.toInt()
         XandrAd.init(
             memberId.toInt(),
             this.flutterState.applicationContext,
@@ -194,19 +195,37 @@ class XandrPlugin :
     }
 
     override fun initMultiAdRequest(callback: (Result<String>) -> Unit) {
-        val mar = ANMultiAdRequest(
-            activity,
-            this.flutterState.memberId,
-            object : MultiAdRequestListener {
-                override fun onMultiAdRequestCompleted() {
-                    Log.d("Xandr.MultiAdRequest", "completed")
-                }
+        val mar: ANMultiAdRequest
+        if (flutterState.publisherId != null) {
+            mar = ANMultiAdRequest(
+                activity,
+                this.flutterState.memberId,
+                this.flutterState.publisherId!!,
+                object : MultiAdRequestListener {
+                    override fun onMultiAdRequestCompleted() {
+                        Log.d("Xandr.MultiAdRequest", "completed")
+                    }
 
-                override fun onMultiAdRequestFailed(code: ResultCode) {
-                    Log.d("Xandr.MultiAdRequest", "failed")
+                    override fun onMultiAdRequestFailed(code: ResultCode) {
+                        Log.d("Xandr.MultiAdRequest", "failed")
+                    }
                 }
-            }
-        )
+            )
+        } else {
+            mar = ANMultiAdRequest(
+                activity,
+                this.flutterState.memberId,
+                object : MultiAdRequestListener {
+                    override fun onMultiAdRequestCompleted() {
+                        Log.d("Xandr.MultiAdRequest", "completed")
+                    }
+
+                    override fun onMultiAdRequestFailed(code: ResultCode) {
+                        Log.d("Xandr.MultiAdRequest", "failed")
+                    }
+                }
+            )
+        }
         val id = MultiAdRequestRegistry.initNewRequest(mar)
         callback(Result.success(id))
     }
