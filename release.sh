@@ -12,9 +12,8 @@ fi
 
 echo "copy doc/ to xandr..."
 
-cp README.md packages/xandr/README.md
-cp CONTRIBUTING.md packages/xandr/CONTRIBUTING.md
-cp -r doc packages/xandr/
+sed  's/(\.\/doc\/images\//(https\:\/\/github\.com\/thekorn\/xandr\/raw\/main\/doc\/images\//g' README.md > packages/xandr/README.md 
+sed  's/(\.\/doc\/images\//(https\:\/\/github\.com\/thekorn\/xandr\/raw\/main\/doc\/images\//g' CONTRIBUTING.md > packages/xandr/CONTRIBUTING.md
 
 git add .
 
