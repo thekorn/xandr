@@ -15,8 +15,7 @@ PlatformException _createConnectionError(String channelName) {
   );
 }
 
-List<Object?> wrapResponse(
-    {Object? result, PlatformException? error, bool empty = false}) {
+List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty = false}) {
   if (empty) {
     return <Object?>[];
   }
@@ -60,6 +59,7 @@ class HostAPIUserId {
   }
 }
 
+
 class _PigeonCodec extends StandardMessageCodec {
   const _PigeonCodec();
   @override
@@ -67,7 +67,7 @@ class _PigeonCodec extends StandardMessageCodec {
     if (value is HostAPIUserId) {
       buffer.putUint8(129);
       writeValue(buffer, value.encode());
-    } else if (value is HostAPIUserIdSource) {
+    } else     if (value is HostAPIUserIdSource) {
       buffer.putUint8(130);
       writeValue(buffer, value.index);
     } else {
@@ -78,9 +78,9 @@ class _PigeonCodec extends StandardMessageCodec {
   @override
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
-      case 129:
+      case 129: 
         return HostAPIUserId.decode(readValue(buffer)!);
-      case 130:
+      case 130: 
         final int? value = readValue(buffer) as int?;
         return value == null ? null : HostAPIUserIdSource.values[value];
       default:
@@ -93,11 +93,9 @@ class XandrHostApi {
   /// Constructor for [XandrHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  XandrHostApi(
-      {BinaryMessenger? binaryMessenger, String messageChannelSuffix = ''})
+  XandrHostApi({BinaryMessenger? binaryMessenger, String messageChannelSuffix = ''})
       : __pigeon_binaryMessenger = binaryMessenger,
-        __pigeon_messageChannelSuffix =
-            messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
+        __pigeon_messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
   final BinaryMessenger? __pigeon_binaryMessenger;
 
   static const MessageCodec<Object?> pigeonChannelCodec = _PigeonCodec();
@@ -105,16 +103,14 @@ class XandrHostApi {
   final String __pigeon_messageChannelSuffix;
 
   Future<bool> init({required int memberId, int? publisherId}) async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.init$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.init$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
     );
-    final List<Object?>? __pigeon_replyList = await __pigeon_channel
-        .send(<Object?>[memberId, publisherId]) as List<Object?>?;
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[memberId, publisherId]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {
@@ -134,10 +130,8 @@ class XandrHostApi {
   }
 
   Future<bool> loadAd({required int widgetId}) async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.loadAd$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.loadAd$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
@@ -162,23 +156,15 @@ class XandrHostApi {
     }
   }
 
-  Future<bool> loadInterstitialAd({
-    required int widgetId,
-    String? placementID,
-    String? inventoryCode,
-    Map<String?, List<String?>?>? customKeywords,
-  }) async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.loadInterstitialAd$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+  Future<bool> loadInterstitialAd({required int widgetId, String? placementID, String? inventoryCode, Map<String?, List<String?>?>? customKeywords,}) async {
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.loadInterstitialAd$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
     );
-    final List<Object?>? __pigeon_replyList = await __pigeon_channel.send(
-            <Object?>[widgetId, placementID, inventoryCode, customKeywords])
-        as List<Object?>?;
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[widgetId, placementID, inventoryCode, customKeywords]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {
@@ -198,16 +184,14 @@ class XandrHostApi {
   }
 
   Future<bool> showInterstitialAd({int? autoDismissDelay}) async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.showInterstitialAd$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.showInterstitialAd$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
     );
-    final List<Object?>? __pigeon_replyList = await __pigeon_channel
-        .send(<Object?>[autoDismissDelay]) as List<Object?>?;
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[autoDismissDelay]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {
@@ -227,16 +211,14 @@ class XandrHostApi {
   }
 
   Future<void> setPublisherUserId(String publisherUserId) async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.setPublisherUserId$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.setPublisherUserId$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
     );
-    final List<Object?>? __pigeon_replyList = await __pigeon_channel
-        .send(<Object?>[publisherUserId]) as List<Object?>?;
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[publisherUserId]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {
@@ -251,10 +233,8 @@ class XandrHostApi {
   }
 
   Future<String> getPublisherUserId() async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.getPublisherUserId$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.getPublisherUserId$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
@@ -280,10 +260,8 @@ class XandrHostApi {
   }
 
   Future<void> setUserIds(List<HostAPIUserId?> userIds) async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.setUserIds$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.setUserIds$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
@@ -304,10 +282,8 @@ class XandrHostApi {
   }
 
   Future<List<HostAPIUserId?>> getUserIds() async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.getUserIds$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.getUserIds$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
@@ -333,10 +309,8 @@ class XandrHostApi {
   }
 
   Future<String> initMultiAdRequest() async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.initMultiAdRequest$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.initMultiAdRequest$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
@@ -362,16 +336,14 @@ class XandrHostApi {
   }
 
   Future<void> disposeMultiAdRequest(String multiAdRequestID) async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.disposeMultiAdRequest$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.disposeMultiAdRequest$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
     );
-    final List<Object?>? __pigeon_replyList = await __pigeon_channel
-        .send(<Object?>[multiAdRequestID]) as List<Object?>?;
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[multiAdRequestID]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {
@@ -386,16 +358,14 @@ class XandrHostApi {
   }
 
   Future<bool> loadAdsForMultiAdRequest(String multiAdRequestID) async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.loadAdsForMultiAdRequest$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.loadAdsForMultiAdRequest$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
     );
-    final List<Object?>? __pigeon_replyList = await __pigeon_channel
-        .send(<Object?>[multiAdRequestID]) as List<Object?>?;
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[multiAdRequestID]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {
@@ -415,16 +385,14 @@ class XandrHostApi {
   }
 
   Future<void> setGDPRConsentRequired(bool isConsentRequired) async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.setGDPRConsentRequired$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.setGDPRConsentRequired$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
     );
-    final List<Object?>? __pigeon_replyList = await __pigeon_channel
-        .send(<Object?>[isConsentRequired]) as List<Object?>?;
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[isConsentRequired]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {
@@ -439,10 +407,8 @@ class XandrHostApi {
   }
 
   Future<void> setGDPRConsentString(String consentString) async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.setGDPRConsentString$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.setGDPRConsentString$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
@@ -463,16 +429,14 @@ class XandrHostApi {
   }
 
   Future<void> setGDPRPurposeConsents(String purposeConsents) async {
-    final String __pigeon_channelName =
-        'dev.flutter.pigeon.xandr_android.XandrHostApi.setGDPRPurposeConsents$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel =
-        BasicMessageChannel<Object?>(
+    final String __pigeon_channelName = 'dev.flutter.pigeon.xandr_android.XandrHostApi.setGDPRPurposeConsents$__pigeon_messageChannelSuffix';
+    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
     );
-    final List<Object?>? __pigeon_replyList = await __pigeon_channel
-        .send(<Object?>[purposeConsents]) as List<Object?>?;
+    final List<Object?>? __pigeon_replyList =
+        await __pigeon_channel.send(<Object?>[purposeConsents]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {
@@ -490,35 +454,26 @@ class XandrHostApi {
 abstract class XandrFlutterApi {
   static const MessageCodec<Object?> pigeonChannelCodec = _PigeonCodec();
 
-  void onAdLoaded(int viewId, int width, int height, String creativeId,
-      String adType, String tagId, String auctionId, double cpm, int memberId);
+  void onAdLoaded(int viewId, int width, int height, String creativeId, String adType, String tagId, String auctionId, double cpm, int memberId);
 
   void onAdLoadedError(int viewId, String reason);
 
-  void onNativeAdLoaded(
-      int viewId, String title, String description, String imageUrl);
+  void onNativeAdLoaded(int viewId, String title, String description, String imageUrl);
 
   void onNativeAdLoadedError(int viewId, String reason);
 
-  static void setUp(
-    XandrFlutterApi? api, {
-    BinaryMessenger? binaryMessenger,
-    String messageChannelSuffix = '',
-  }) {
-    messageChannelSuffix =
-        messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
+  static void setUp(XandrFlutterApi? api, {BinaryMessenger? binaryMessenger, String messageChannelSuffix = '',}) {
+    messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
     {
-      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<
-              Object?>(
-          'dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded$messageChannelSuffix',
-          pigeonChannelCodec,
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded$messageChannelSuffix', pigeonChannelCodec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
         __pigeon_channel.setMessageHandler(null);
       } else {
         __pigeon_channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded was null.');
+          'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_viewId = (args[0] as int?);
           assert(arg_viewId != null,
@@ -548,38 +503,26 @@ abstract class XandrFlutterApi {
           assert(arg_memberId != null,
               'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoaded was null, expected non-null int.');
           try {
-            api.onAdLoaded(
-                arg_viewId!,
-                arg_width!,
-                arg_height!,
-                arg_creativeId!,
-                arg_adType!,
-                arg_tagId!,
-                arg_auctionId!,
-                arg_cpm!,
-                arg_memberId!);
+            api.onAdLoaded(arg_viewId!, arg_width!, arg_height!, arg_creativeId!, arg_adType!, arg_tagId!, arg_auctionId!, arg_cpm!, arg_memberId!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          } catch (e) {
-            return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
           }
         });
       }
     }
     {
-      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<
-              Object?>(
-          'dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoadedError$messageChannelSuffix',
-          pigeonChannelCodec,
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoadedError$messageChannelSuffix', pigeonChannelCodec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
         __pigeon_channel.setMessageHandler(null);
       } else {
         __pigeon_channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoadedError was null.');
+          'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdLoadedError was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_viewId = (args[0] as int?);
           assert(arg_viewId != null,
@@ -592,25 +535,22 @@ abstract class XandrFlutterApi {
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          } catch (e) {
-            return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
           }
         });
       }
     }
     {
-      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<
-              Object?>(
-          'dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded$messageChannelSuffix',
-          pigeonChannelCodec,
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded$messageChannelSuffix', pigeonChannelCodec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
         __pigeon_channel.setMessageHandler(null);
       } else {
         __pigeon_channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded was null.');
+          'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_viewId = (args[0] as int?);
           assert(arg_viewId != null,
@@ -625,30 +565,26 @@ abstract class XandrFlutterApi {
           assert(arg_imageUrl != null,
               'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.');
           try {
-            api.onNativeAdLoaded(
-                arg_viewId!, arg_title!, arg_description!, arg_imageUrl!);
+            api.onNativeAdLoaded(arg_viewId!, arg_title!, arg_description!, arg_imageUrl!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          } catch (e) {
-            return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
           }
         });
       }
     }
     {
-      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<
-              Object?>(
-          'dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoadedError$messageChannelSuffix',
-          pigeonChannelCodec,
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoadedError$messageChannelSuffix', pigeonChannelCodec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
         __pigeon_channel.setMessageHandler(null);
       } else {
         __pigeon_channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoadedError was null.');
+          'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoadedError was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_viewId = (args[0] as int?);
           assert(arg_viewId != null,
@@ -661,9 +597,8 @@ abstract class XandrFlutterApi {
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          } catch (e) {
-            return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
           }
         });
       }
