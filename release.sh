@@ -14,7 +14,7 @@ echo "copy doc/ to xandr..."
 
 cp README.md packages/xandr/README.md
 cp CONTRIBUTING.md packages/xandr/CONTRIBUTING.md
-cp -r docs packages/xandr/
+cp -r doc packages/xandr/
 
 git add .
 

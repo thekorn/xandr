@@ -64,7 +64,7 @@ XandrBuilder(
 
 **Result:**
 
-![](./docs/images/android_sample1.gif) ![](./docs/images/ios_sample1.gif)
+![](./doc/images/android_sample1.gif) ![](./doc/images/ios_sample1.gif)
 
 Also, results of the `AdResponse` are propagated to the flutter side:
 
@@ -123,7 +123,7 @@ XandrInterstitialBuilder(
 
 ***Result:***
 
-![](./docs/images/android_interstitial.gif)
+![](./doc/images/android_interstitial.gif)
 
 To run the interstitial example app, run `melos run run:example:interstitial -- -d sdk` (android only atm).
 
@@ -199,6 +199,6 @@ clicking on the `load ads` button will load the ads in a single request.
 
 ***Result:***
 
-![](./docs/images/android_multi_ad_request.gif)
+![](./doc/images/android_multi_ad_request.gif)
 
 To run the multi ad request example app, run `melos run run:example:multiadrequest -- -d sdk` (android only atm).

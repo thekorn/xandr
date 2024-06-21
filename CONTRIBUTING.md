@@ -45,7 +45,7 @@ Once the build phase is done, open xcode and open the `xcworkspace` file in the 
 is opening the project in the right scope.
 Now use the code navigation within xcode to navigate all the levels of symlinks in the development pods section.
 
-![](./docs/images/xcode.gif)
+![](./doc/images/xcode.gif)
 
 ## resources
 
