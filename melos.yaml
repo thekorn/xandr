@@ -28,6 +28,7 @@ scripts:
 
   format:
     run: |
+      melos format && \
       swiftformat . 2>&1 && \
       ktlint --format '**/*.kt' '**/*.kts' '!**/*.g.kt' 
     description: |
