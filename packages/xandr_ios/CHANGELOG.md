@@ -1,3 +1,7 @@
+## 0.2.0
+
+ - Bump "xandr_ios" to `0.2.0`.
+
 ## 0.1.7
 
  - Bump "xandr_ios" to `0.1.7`.

@@ -1,3 +1,7 @@
+## 0.2.0
+
+ - Bump "xandr_android" to `0.2.0`.
+
 ## 0.1.7
 
  - Bump "xandr_android" to `0.1.7`.

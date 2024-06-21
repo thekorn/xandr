@@ -23,7 +23,8 @@ melos version \
     -V xandr_android:$1 \
     -V xandr_ios:$1 \
     -V xandr_platform_interface:$1 \
-    -r
+    -r \
+    --verbose
 
-melos publish --no-dry-run
+melos publish --no-dry-run --verbose
 git push
