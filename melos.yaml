@@ -22,16 +22,14 @@ command:
     workspaceChangelog: true
     
 scripts:
-  analyze:
-    exec: fvm flutter analyze .
+  analyze: fvm flutter analyze .
 
-  pana:
-    exec: fvm exec pana . --no-warning
+  pana: fvm dart run pana . --exit-code-threshold 40 2>&1
 
   format:
     run: |
-      fvm dart pub global run flutter_plugin_tools format && \
-      swiftformat . && \
+      melos format && \
+      swiftformat . 2>&1 && \
       ktlint --format '**/*.kt' '**/*.kts' '!**/*.g.kt' 
     description: |
        - Requires `swiftformat` (can be installed via Brew on macOS).
@@ -60,7 +58,12 @@ scripts:
       melos exec -- "fvm flutter pub run pigeon --input ./pigeons/messages.dart" && \
       melos run format --no-select
     packageFilters:
-      fileExists: 'pigeons/messages.dart'
+      fileExists: "pigeons/messages.dart"
+    description: Generate the pigeon messages for supported packages.
+
+  generate:pigeon:all:
+    run: |
+      melos run generate:pigeon --no-select
     description: Generate the pigeon messages for all the supported packages.
 
   generate:mocks:
@@ -71,6 +74,11 @@ scripts:
       dependsOn:
         - build_runner
     description: Generate mocks for tests.
+
+  generate:mocks:all:
+    run: |
+      melos run generate:mocks --no-select
+    description: Generate mocks for all tests.
 
   run:example:
     run: fvm flutter run
