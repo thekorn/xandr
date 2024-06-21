@@ -15,6 +15,42 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`xandr` - `v0.1.7`](#xandr---v017)
+ - [`xandr_android` - `v0.1.7`](#xandr_android---v017)
+ - [`xandr_ios` - `v0.1.7`](#xandr_ios---v017)
+ - [`xandr_platform_interface` - `v0.1.7`](#xandr_platform_interface---v017)
+
+---
+
+#### `xandr` - `v0.1.7`
+
+ - Bump "xandr" to `0.1.7`.
+
+#### `xandr_android` - `v0.1.7`
+
+ - Bump "xandr_android" to `0.1.7`.
+
+#### `xandr_ios` - `v0.1.7`
+
+ - Bump "xandr_ios" to `0.1.7`.
+
+#### `xandr_platform_interface` - `v0.1.7`
+
+ - Bump "xandr_platform_interface" to `0.1.7`.
+
+
+## 2024-06-21
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`xandr` - `v0.1.6`](#xandr---v016)
  - [`xandr_android` - `v0.1.6`](#xandr_android---v016)
  - [`xandr_ios` - `v0.1.6`](#xandr_ios---v016)
