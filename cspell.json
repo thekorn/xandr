@@ -19,21 +19,22 @@
   ],
   "useGitignore": true,
   "words": [
+    "adserver",
+    "appnexus",
     "bunte",
+    "criteo",
     "demoads",
     "flutterfire",
     "fluttium",
     "ktlint",
+    "liveramp",
+    "multiadrequest",
+    "opensdk",
     "swiftformat",
     "swiftversion",
     "thekorn",
     "webdesktop",
     "webphone",
-    "xandr",
-    "appnexus",
-    "criteo",
-    "liveramp",
-    "multiadrequest",
-    "adserver"
+    "xandr"
   ]
 }
