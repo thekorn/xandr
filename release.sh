@@ -12,6 +12,8 @@ fi
 
 echo "copy doc/ to xandr..."
 
+# serve static files within documentation from github
+# this reduced package size 
 sed  's/(\.\/doc\/images\//(https\:\/\/github\.com\/thekorn\/xandr\/raw\/main\/doc\/images\//g' README.md > packages/xandr/README.md 
 sed  's/(\.\/doc\/images\//(https\:\/\/github\.com\/thekorn\/xandr\/raw\/main\/doc\/images\//g' CONTRIBUTING.md > packages/xandr/CONTRIBUTING.md
 
