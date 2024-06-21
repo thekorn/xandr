@@ -48,3 +48,7 @@ build/
 
 # FVM Version Cache
 .fvm/
+
+# generated files during publishing
+packages/xandr/CONTRIBUTING.md
+packages/xandr/README.md
