@@ -1,3 +1,7 @@
+## 0.1.5
+
+ - Bump "xandr_android" to `0.1.5`.
+
 ## 0.1.4
 
  - **FIX**(deps): update dependency com.android.tools.build:gradle to v8.5.0.

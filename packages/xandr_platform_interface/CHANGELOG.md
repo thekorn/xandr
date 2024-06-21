@@ -1,3 +1,7 @@
+## 0.1.5
+
+ - Bump "xandr_platform_interface" to `0.1.5`.
+
 ## 0.1.4
 
  - **FEAT**: Integrate optional publisherId across SDK init methods.
