@@ -106,6 +106,9 @@ class AdBanner extends StatefulWidget {
   /// The controller for managing multi ad requests.
   final MultiAdRequestController? multiAdRequestController;
 
+  /// A completer that indicates when loading is done.
+  final Completer<bool> doneLoading = Completer();
+
   @override
   State<AdBanner> createState() => _AdBannerState();
 }
@@ -171,10 +174,14 @@ class _AdBannerState extends State<AdBanner> {
   }
 
   void onDoneLoading({required bool success}) {
+    debugPrint('>>>> onDoneLoading: $success');
     setState(() {
       _loading = false;
       _loaded = success;
     });
+    if (!widget.doneLoading.isCompleted) {
+      widget.doneLoading.complete(success);
+    }
   }
 
   Future<bool> waitIsInitialized() async {
@@ -228,6 +235,9 @@ class _AdBannerState extends State<AdBanner> {
             return const Text('Error initializing Xandr, error: false');
           }
         } else if (snapshot.hasError) {
+          if (!widget.doneLoading.isCompleted) {
+            widget.doneLoading.completeError(snapshot.error!);
+          }
           return const Text('unknown Error initializing Xandr');
         } else {
           return SizedBox(

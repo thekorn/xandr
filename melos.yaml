@@ -112,3 +112,11 @@ scripts:
       concurrency: 1
     packageFilters:
         scope: 'xandr_example'
+
+  run:example:fadeOnDone:
+    run: fvm flutter run -t lib/main_fadeOnDone.dart
+    description: Run the example app fading in once ad loaded.
+    exec:
+      concurrency: 1
+    packageFilters:
+        scope: 'xandr_example'
