@@ -63,6 +63,11 @@ abstract class XandrHostApi {
   bool loadAdsForMultiAdRequest(String multiAdRequestID);
 
   @async
+  bool loadAd({
+    required int widgetId,
+  });
+
+  @async
   String getPublisherUserId();
 
   @async

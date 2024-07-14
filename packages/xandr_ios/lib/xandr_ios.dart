@@ -134,6 +134,13 @@ class XandrIOS extends XandrPlatform {
   }
 
   @override
+  Future<bool> loadAd(int widgetId) async {
+    return _api.loadAd(
+      widgetId: widgetId,
+    );
+  }
+
+  @override
   Future<void> setGDPRConsentRequired(bool isConsentRequired) {
     return _api.setGDPRConsentRequired(isConsentRequired);
   }
