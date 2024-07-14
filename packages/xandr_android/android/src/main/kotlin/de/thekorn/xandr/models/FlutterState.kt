@@ -45,7 +45,7 @@ class FlutterState(var applicationContext: Context, private var binaryMessenger:
 
     fun getBannerView(id: Int): BannerViewContainer {
         if (flutterBannerAdViews.containsKey(id)) {
-            Log.d("Xandr.BannerViewFactory", "Create new FlutterBannerAdView for id=$id")
+            Log.d("Xandr.BannerViewFactory", "Return XandrBanner for widgetId=$id")
             return flutterBannerAdViews[id]!!
         }
         Log.e("Xandr.BannerViewFactory", "Banner for widgetId=$id not found!")
