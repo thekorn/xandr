@@ -37,3 +37,5 @@ public class Logger {
     Logger.log(logType: OSLogType.info, category: category, message: message)
   }
 }
+
+var logger = Logger(category: "XandrPlugin")

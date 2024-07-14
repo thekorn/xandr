@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+enum XandrPluginError: Error {
+  case notValidSource
+  case noMemberId
+  case runtimeError(String)
+}
