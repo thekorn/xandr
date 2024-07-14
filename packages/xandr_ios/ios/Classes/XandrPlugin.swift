@@ -78,6 +78,11 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
     }
   }
 
+  func loadAd(widgetId: Int64, completion: @escaping (Result<Bool, any Error>) -> Void) {
+    logger.debug(message: "load Ad for widgetId=\(widgetId)")
+    completion(.success(true))
+  }
+
   func loadInterstitialAd(widgetId: Int64, placementID: String?, inventoryCode: String?,
                           customKeywords: [String: [String]]?,
                           completion: @escaping (Result<Bool, Error>) -> Void) {

@@ -135,6 +135,17 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
       ) as _i3.Future<bool>);
 
   @override
+  _i3.Future<bool> loadAd({required int? widgetId}) => (super.noSuchMethod(
+        Invocation.method(
+          #loadAd,
+          [],
+          {#widgetId: widgetId},
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+        returnValueForMissingStub: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
   _i3.Future<String> getPublisherUserId() => (super.noSuchMethod(
         Invocation.method(
           #getPublisherUserId,
