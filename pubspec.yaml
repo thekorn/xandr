@@ -7,4 +7,3 @@ environment:
   flutter: '>=3.0.0'
 dev_dependencies:
   melos: ^6.0.0
-  pana: ^0.22.6

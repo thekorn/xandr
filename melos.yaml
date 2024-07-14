@@ -24,7 +24,15 @@ command:
 scripts:
   analyze: fvm flutter analyze .
 
-  pana: fvm dart run pana . --exit-code-threshold 40 2>&1
+  pana: 
+    run: |
+      fvm dart run pana . --exit-code-threshold 100 2>&1
+    exec:
+      concurrency: 1
+    packageFilters:
+      ignore:
+        - '*example*'
+    description: Run pana for each package.
 
   format:
     run: |

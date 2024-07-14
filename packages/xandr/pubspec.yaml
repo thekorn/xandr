@@ -1,5 +1,6 @@
 name: xandr
-description: xandr plugin for flutter
+description: flutter plugin for the Xandr,
+  with integrations for Android and iOS
 version: 0.2.3
 homepage: https://github.com/thekorn/xandr
 repository: https://github.com/thekorn/xandr
@@ -30,5 +31,6 @@ dev_dependencies:
     sdk: flutter
   mockito: ^5.4.4
   mocktail: ^1.0.3
+  pana: ^0.21.32
   plugin_platform_interface: ^2.1.8
   very_good_analysis: ^6.0.0
