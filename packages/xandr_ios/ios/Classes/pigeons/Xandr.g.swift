@@ -165,6 +165,7 @@ protocol XandrHostApi {
                              completion: @escaping (Result<Bool, Error>) -> Void)
   func loadAdsForMultiAdRequest(multiAdRequestID: String,
                                 completion: @escaping (Result<Bool, Error>) -> Void)
+  func loadAd(widgetId: Int64, completion: @escaping (Result<Bool, Error>) -> Void)
   func getPublisherUserId(completion: @escaping (Result<String, Error>) -> Void)
   func setUserIds(userIds: [HostAPIUserId], completion: @escaping (Result<Bool, Error>) -> Void)
   func getUserIds(completion: @escaping (Result<[HostAPIUserId], Error>) -> Void)
@@ -338,6 +339,27 @@ class XandrHostApiSetup {
       }
     } else {
       loadAdsForMultiAdRequestChannel.setMessageHandler(nil)
+    }
+    let loadAdChannel = FlutterBasicMessageChannel(
+      name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.loadAd\(channelSuffix)",
+      binaryMessenger: binaryMessenger,
+      codec: codec
+    )
+    if let api {
+      loadAdChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let widgetIdArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
+        api.loadAd(widgetId: widgetIdArg) { result in
+          switch result {
+          case let .success(res):
+            reply(wrapResult(res))
+          case let .failure(error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      loadAdChannel.setMessageHandler(nil)
     }
     let getPublisherUserIdChannel = FlutterBasicMessageChannel(
       name: "dev.flutter.pigeon.xandr_ios.XandrHostApi.getPublisherUserId\(channelSuffix)",

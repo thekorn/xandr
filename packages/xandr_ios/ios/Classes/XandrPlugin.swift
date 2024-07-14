@@ -4,13 +4,6 @@ import UIKit
 
 extension FlutterError: Swift.Error {}
 
-var logger = Logger(category: "XandrPlugin")
-
-enum XandrPluginError: Error {
-  case notValidSource
-  case noMemberId
-}
-
 public class XandrPlugin: UIViewController, FlutterPlugin,
   XandrHostApi {
   public static var instance: XandrPlugin?
@@ -75,6 +68,26 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
               )))
             }
         }
+    }
+  }
+
+  func loadAd(widgetId: Int64, completion: @escaping (Result<Bool, any Error>) -> Void) {
+    logger.debug(message: "load Ad for widgetId=\(widgetId)")
+
+    flutterState?.setIsInitializedCompletionHandler { [self] result in
+      do {
+        let ad = try flutterState?.getXandrBanner(id: widgetId)
+        logger
+          .debug(
+            message: "loadAd found ad for widgetId=\(widgetId), ad=\(String(describing: ad))"
+          )
+        ad?.loadAd()
+
+        completion(.success(true))
+      } catch let err {
+        logger.error(message: "Loading ad for widgetId=\(widgetId) results in error=\(err)")
+        completion(.success(false))
+      }
     }
   }
 
@@ -294,13 +307,7 @@ class XandrBannerFactory: NSObject, FlutterPlatformViewFactory {
               viewIdentifier viewId: Int64,
               arguments args: Any?) -> FlutterPlatformView {
     logger.debug(message: "create banner")
-    return XandrBanner(
-      state: state,
-      frame: frame,
-      viewIdentifier: viewId,
-      args: args,
-      binaryMessenger: messenger
-    )
+    return state.getOrCreateXandrBanner(frame: frame, id: viewId, args: args)
   }
 
   func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
@@ -365,5 +372,9 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
       return UIView()
     }
     return temp
+  }
+
+  func loadAd() {
+    banner?.loadAd()
   }
 }
