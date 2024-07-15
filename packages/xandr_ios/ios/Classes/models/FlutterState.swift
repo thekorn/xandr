@@ -63,4 +63,9 @@ public class FlutterState {
       throw XandrPluginError.runtimeError("Unable to find Banner for widgetId=\(id)")
     }
   }
+    
+    func onAdLoaded(viewId: Int64, width: Int64, height: Int64, creativeId: String, adType: String, tagId: String, auctionId: String, cpm: Double, memberId: Int64) {
+        flutterAPI?.onAdLoaded(viewId: viewId, width: width, height: height, creativeId: creativeId, adType: adType, tagId: tagId, auctionId: auctionId, cpm: cpm, memberId: memberId, completion: (Result<Void, PigeonError>) -> Void)
+    }
 }
+    
