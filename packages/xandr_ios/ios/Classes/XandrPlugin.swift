@@ -16,11 +16,11 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
 
   private func parentController() -> UIViewController {
     var topController: UIViewController = UIApplication.shared.keyWindow!.rootViewController!
-        while (topController.presentedViewController != nil) {
-            topController = topController.presentedViewController!
-        }
-        return topController
+    while topController.presentedViewController != nil {
+      topController = topController.presentedViewController!
     }
+    return topController
+  }
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     // init the plugin and call onRegister
@@ -140,7 +140,10 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
       if autoDismissDelay == nil {
         self.interstitialAd?.display(from: self.parentController())
       } else {
-        self.interstitialAd?.display(from: self.parentController(), autoDismissDelay: Double(autoDismissDelay!))
+        self.interstitialAd?.display(
+          from: self.parentController(),
+          autoDismissDelay: Double(autoDismissDelay!)
+        )
       }
     }
 
