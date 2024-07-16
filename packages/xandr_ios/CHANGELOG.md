@@ -1,3 +1,7 @@
+## 0.2.3+1
+
+ - dont use testMode anymore
+
 ## 0.2.3
 
 ## 0.2.2

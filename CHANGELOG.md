@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-16
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`xandr` - `v0.2.3+1`](#xandr---v0231)
+ - [`xandr_android` - `v0.2.3+1`](#xandr_android---v0231)
+ - [`xandr_ios` - `v0.2.3+1`](#xandr_ios---v0231)
+ - [`xandr_platform_interface` - `v0.2.3+1`](#xandr_platform_interface---v0231)
+
+---
+
+#### `xandr` - `v0.2.3+1`
+
+#### `xandr_android` - `v0.2.3+1`
+
+#### `xandr_ios` - `v0.2.3+1`
+
+ - dont use testMode anymore
+
+#### `xandr_platform_interface` - `v0.2.3+1`
+
+
 ## 2024-07-14
 
 ### Changes
