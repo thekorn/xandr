@@ -1,3 +1,7 @@
+## 0.2.3+2
+
+ - iOS interstitials: bind the interstitial to the parentmost view controller
+
 ## 0.2.3+1
 
  - dont use testMode anymore

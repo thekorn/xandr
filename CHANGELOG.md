@@ -15,6 +15,42 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`xandr` - `v0.2.3+2`](#xandr---v0232)
+ - [`xandr_android` - `v0.2.3+2`](#xandr_android---v0232)
+ - [`xandr_ios` - `v0.2.3+2`](#xandr_ios---v0232)
+ - [`xandr_platform_interface` - `v0.2.3+2`](#xandr_platform_interface---v0232)
+
+---
+
+#### `xandr` - `v0.2.3+2`
+
+ - Bump "xandr" to `0.2.3+2`.
+
+#### `xandr_android` - `v0.2.3+2`
+
+ - Bump "xandr_android" to `0.2.3+2`.
+
+#### `xandr_ios` - `v0.2.3+2`
+
+ - iOS interstitials: bind the interstitial to the parentmost view controller
+
+#### `xandr_platform_interface` - `v0.2.3+2`
+
+ - Bump "xandr_platform_interface" to `0.2.3+2`.
+
+
+## 2024-07-16
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`xandr` - `v0.2.3+1`](#xandr---v0231)
  - [`xandr_android` - `v0.2.3+1`](#xandr_android---v0231)
  - [`xandr_ios` - `v0.2.3+1`](#xandr_ios---v0231)
