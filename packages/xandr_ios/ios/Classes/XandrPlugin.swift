@@ -25,8 +25,6 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
     // setup the state, start listening on the host api instance and register the banner factory
     logger.debug(message: "onRegister plugin instance")
 
-    ANSDKSettings.sharedInstance().enableTestMode = true
-
     flutterState = FlutterState(binaryMessenger: registrar.messenger())
     flutterState?.startListening(api: self)
 
