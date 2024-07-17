@@ -144,6 +144,7 @@ class _AdBannerState extends State<AdBanner> {
 
   /// function used only with the [WhenInViewport] loadMode
   void _checkViewport(int pixelOffset) {
+    if (!mounted || !context.mounted) return;
     final object = context.findRenderObject();
 
     if (object == null || !object.attached) {
