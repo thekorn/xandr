@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-17
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`xandr` - `v0.2.3+3`](#xandr---v0233)
+ - [`xandr_android` - `v0.2.3+3`](#xandr_android---v0233)
+ - [`xandr_ios` - `v0.2.3+3`](#xandr_ios---v0233)
+ - [`xandr_platform_interface` - `v0.2.3+3`](#xandr_platform_interface---v0233)
+
+---
+
+#### `xandr` - `v0.2.3+3`
+
+ - Fix #111 - Bad State in the scroll detector
+
+#### `xandr_android` - `v0.2.3+3`
+
+ - Bump "xandr_android" to `0.2.3+3`.
+
+#### `xandr_ios` - `v0.2.3+3`
+
+ - Bump "xandr_ios" to `0.2.3+3`.
+
+#### `xandr_platform_interface` - `v0.2.3+3`
+
+ - Bump "xandr_platform_interface" to `0.2.3+3`.
+
+
 ## 2024-07-16
 
 ### Changes

@@ -1,3 +1,7 @@
+## 0.2.3+3
+
+ - Fix #111 - Bad State in the scroll detector
+
 ## 0.2.3+2
 
  - Bump "xandr" to `0.2.3+2`.
