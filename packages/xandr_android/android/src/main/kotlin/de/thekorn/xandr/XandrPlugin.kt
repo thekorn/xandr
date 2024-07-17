@@ -20,6 +20,10 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.google.android.gms.ads.MobileAds
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class XandrPlugin :
     FlutterPlugin,
@@ -95,9 +99,27 @@ class XandrPlugin :
             true,
             AdInitListener(this.flutterState)
         )
-        this.flutterState.isInitialized.invokeOnCompletion {
-            callback(Result.success(this.flutterState.isInitialized.getCompleted()))
+        val backgroundScope = CoroutineScope(Dispatchers.IO)
+        backgroundScope.launch {
+            // Initialize the Google Mobile Ads SDK on a background thread.
+            MobileAds.initialize(activity) { initializationStatus ->
+                val statusMap = initializationStatus.adapterStatusMap
+                for (adapterClass in statusMap.keys) {
+                    val status = statusMap[adapterClass]
+                    Log.d(
+                        "MyApp", String.format(
+                        "Adapter name: %s, Description: %s, Latency: %d, status: %s",
+                        adapterClass, status!!.description, status.latency, status
+                        )
+                    )
+                }
+                flutterState.isInitialized.invokeOnCompletion {
+                    callback(Result.success(flutterState.isInitialized.getCompleted()))
+                }
+            }
         }
+
+        
     }
 
     override fun loadAd(widgetId: Long, callback: (Result<Boolean>) -> Unit) {

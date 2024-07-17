@@ -1,6 +1,7 @@
 import AppNexusSDK
 import Flutter
 import UIKit
+import GoogleMobileAds
 
 extension FlutterError: Swift.Error {}
 
@@ -58,20 +59,56 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
               if publisherId != nil {
                 flutterState?.publisherId = Int(publisherId!)
               }
-              flutterState?.setIsInitialized(success: true)
-              completion(.success(true))
+
+                GADMobileAds.sharedInstance().start(completionHandler: { result in 
+                NSLog("GADMobileAds setup %@", result)
+                let ads = GADMobileAds.sharedInstance()
+                ads.start { status in
+                // Optional: Log each adapter's initialization latency.
+                let adapterStatuses = status.adapterStatusesByClassName
+                for adapter in adapterStatuses {
+                    let adapterStatus = adapter.value
+                    NSLog("Adapter Name: %@, Description: %@, Latency: %f", adapter.key,
+                    adapterStatus.description, adapterStatus.latency)
+                }
+
+                  flutterState?.setIsInitialized(success: true)
+                  completion(.success(true))
+                }
+                
+                
+                })
+
+              
+
+              
             } else {
               logger.debug(message: "initXandrSdk failed")
               flutterState?.memberId = Int(memberId)
               if publisherId != nil {
                 flutterState?.publisherId = Int(publisherId!)
               }
-              flutterState?.setIsInitialized(success: false)
-              completion(.failure(NSError(
-                domain: "XandrAd.sharedInstance().initWithMemberID",
-                code: 1,
-                userInfo: nil
-              )))
+
+              let ads = GADMobileAds.sharedInstance()
+              ads.start { status in
+              // Optional: Log each adapter's initialization latency.
+              let adapterStatuses = status.adapterStatusesByClassName
+              for adapter in adapterStatuses {
+                  let adapterStatus = adapter.value
+                  NSLog("Adapter Name: %@, Description: %@, Latency: %f", adapter.key,
+                  adapterStatus.description, adapterStatus.latency)
+              }
+
+                flutterState?.setIsInitialized(success: false)
+                completion(.failure(NSError(
+                  domain: "XandrAd.sharedInstance().initWithMemberID",
+                  code: 1,
+                  userInfo: nil
+                )))
+              }
+
+
+              
             }
         }
     }

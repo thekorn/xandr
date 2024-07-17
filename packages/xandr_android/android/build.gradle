@@ -50,4 +50,16 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.appnexus.opensdk:appnexus-sdk:9.0.0'
+    implementation 'com.appnexus.opensdk.mediatedviews:appnexus-googleplay-mediation:[9,10)'
+    implementation 'androidx.work:work-runtime:2.7.0'
+    implementation 'com.google.android.gms:play-services-ads:20.4.0'
+    // For apps targeting Android 12, add WorkManager dependency.
+    constraints {
+        implementation('androidx.work:work-runtime:2.7.0') {
+        because '''androidx.work:work-runtime:2.1.0 pulled from
+        play-services-ads has a bug using PendingIntent without
+        FLAG_IMMUTABLE or FLAG_MUTABLE and will fail in Apps
+        targeting S+.'''
+        }
+    }
 }

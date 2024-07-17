@@ -51,7 +51,7 @@ class _XandrExampleState extends State<XandrExample> {
   void initState() {
     super.initState();
 
-    _controller = XandrController()..init(9517);
+    _controller = XandrController()..init(9517, publisherId: 1889276);
     _scrollController.addListener(() {
       _checkIfAdIsInViewport.add(_scrollController.position);
     });
@@ -87,14 +87,22 @@ class _XandrExampleState extends State<XandrExample> {
               ),
               AdBanner(
                 controller: _controller,
-                //placementID: '17058950',
-                inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-                adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
-                customKeywords: const {
-                  'kw': ['test-kw', 'demoads'],
-                },
-                resizeAdToFitContainer: true,
-                enableLazyLoad: true,
+                inventoryCode: 'bunte_androidapp_fuermich_frontpage_hor_2',
+                adSizes: const [
+                  AdSize(300, 250),
+                  AdSize(320, 150),
+                  AdSize(320, 100),
+                  AdSize(320, 75),
+                  AdSize(320, 50),
+                  AdSize(320, 250),
+                  AdSize(1, 1),
+                  AdSize(320, 480),
+                  AdSize(300, 600),
+                ], //[AdSize(300, 250)],
+                loadsInBackground: true,
+                customKeywords: Map<String, List<String>>.from({
+                  'kw': ['p-visionapp'],
+                }),
               ),
               //FIXME: not working
               //const Text(
