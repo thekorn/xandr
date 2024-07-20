@@ -48,7 +48,11 @@ class LoadWhenCreated extends LoadMode {
 class WhenInViewport extends LoadMode {
   /// load ad when it's in the viewport
   WhenInViewport({required this.checkIfInViewport, int? pixelOffset})
-      : pixelOffset = pixelOffset ?? 0,
+      : assert(
+          checkIfInViewport.isBroadcast,
+          'The stream must be of broadcast type.',
+        ),
+        pixelOffset = pixelOffset ?? 0,
         super._();
 
   /// stream which should get new events when scrolling changes

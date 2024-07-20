@@ -1,3 +1,15 @@
+## 0.2.3+3
+
+ - Bump "xandr_ios" to `0.2.3+3`.
+
+## 0.2.3+2
+
+ - iOS interstitials: bind the interstitial to the parentmost view controller
+
+## 0.2.3+1
+
+ - dont use testMode anymore
+
 ## 0.2.3
 
 ## 0.2.2

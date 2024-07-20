@@ -14,6 +14,14 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
 
   private var marRegistry: MultiAdRequestRegistry = .init()
 
+  private func parentController() -> UIViewController {
+    var topController: UIViewController = UIApplication.shared.keyWindow!.rootViewController!
+    while topController.presentedViewController != nil {
+      topController = topController.presentedViewController!
+    }
+    return topController
+  }
+
   public static func register(with registrar: FlutterPluginRegistrar) {
     // init the plugin and call onRegister
     logger.debug(message: "register plugin instance")
@@ -24,8 +32,6 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
   public func onRegister(registrar: FlutterPluginRegistrar) {
     // setup the state, start listening on the host api instance and register the banner factory
     logger.debug(message: "onRegister plugin instance")
-
-    ANSDKSettings.sharedInstance().enableTestMode = true
 
     flutterState = FlutterState(binaryMessenger: registrar.messenger())
     flutterState?.startListening(api: self)
@@ -132,9 +138,12 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
 
     interstitialAd?.isLoaded.invokeOnCompletion { _ in
       if autoDismissDelay == nil {
-        self.interstitialAd?.display(from: self)
+        self.interstitialAd?.display(from: self.parentController())
       } else {
-        self.interstitialAd?.display(from: self, autoDismissDelay: Double(autoDismissDelay!))
+        self.interstitialAd?.display(
+          from: self.parentController(),
+          autoDismissDelay: Double(autoDismissDelay!)
+        )
       }
     }
 
