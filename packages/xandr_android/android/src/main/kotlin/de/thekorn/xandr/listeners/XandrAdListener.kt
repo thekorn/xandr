@@ -65,6 +65,11 @@ open class XandrAdListener(private var widgetId: Int, private var flutterApi: Xa
             "Xandr.BannerView",
             ">>> Ad Request failed, AdView:p0=$p0 ResultCode:p1=$p1"
         )
+
+        flutterApi.onAdLoadedError(
+            widgetId.toLong(),
+            "Error while loading banner ad: ${p1?.message}"
+        ) { }
     }
 
     override fun onAdExpanded(p0: AdView?) {
