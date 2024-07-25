@@ -10,19 +10,20 @@ import Flutter
 import Foundation
 
 class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
-    
-  private var banner: ANBannerAdView?
-    private var flutterState: FlutterState?
+  public var banner: ANBannerAdView?
+  public var state: FlutterState?
+  public var viewId: Int64
 
   init(state: FlutterState, frame: CGRect,
        viewIdentifier viewId: Int64,
        args: Any?,
        binaryMessenger messenger: FlutterBinaryMessenger?) {
+      self.viewId = viewId
     super.init()
     // Do any additional setup after loading the view.
     ANSDKSettings.sharedInstance().enableOMIDOptimization = true
     logger.debug(message: "init banner")
-      flutterState = state
+    self.state = state
 
     guard let arguments = args as? [String: Any] else {
       return
@@ -48,7 +49,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
         inventoryCode: inventoryCode!
       )
       banner?.delegate = self
-        //banner?.appEventDelegate = self
+      // banner?.appEventDelegate = self
       customKeywords?.forEach { item in
         for value in item.value {
           banner?.addCustomKeyword(withKey: item.key, value: value)
@@ -75,23 +76,31 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
   func loadAd() {
     banner?.loadAd()
   }
-    
-    public func adDidReceiveAd(_ ad: Any) {
-        logger.debug(message: ">>> WE GOT AN AD \(ad)")
-        if ad is ANBannerAdView {
-            let a = ad as? ANBannerAdView
-            let info = a?.adResponseInfo
-            
-            logger.debug(message: ">>> \(String(describing: a?.adResponseInfo))")
-            flutterState
-        } else {
-            logger.debug(message: ">>> WE DONT KNOW WHAT TO DO")
-        }
+
+  public func adDidReceiveAd(_ ad: Any) {
+    if ad is ANBannerAdView {
+      let a = ad as? ANBannerAdView
+      if let info = a?.adResponseInfo {
+        state?.onAdLoadedAPI(
+          viewId: viewId,
+          width: a!.loadedAdSize.width,
+          height: (a?.loadedAdSize.height)!,
+          creativeId: info.creativeId!,
+          adType: info.adType,
+          tagId: "",
+          auctionId: info.auctionId!,
+          cpm: info.cpm!.doubleValue,
+          memberId: info.memberId
+        )
+
+      } else {
+        logger
+          .error(
+            message: "BannerAd.adDidRecieveAd: we did not get an adResponseInfo back, got \(String(describing: a))"
+          )
+      }
+    } else {
+      logger.error(message: "BannerAd.adDidRecieveAd: recieved an unknown payload \(ad)")
     }
-    
-    //func ad(_ ad: any ANAdProtocol, didReceiveAppEvent name: String, withData data: String) {
-    //    logger.debug(message: ">>> DELEGATE: WE GOT AN AD \(ad), name=\(name), data=\(data)")
-    //}
+  }
 }
-
-
