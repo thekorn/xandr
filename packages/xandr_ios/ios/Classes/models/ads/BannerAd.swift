@@ -102,7 +102,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
     banner?.loadAd()
   }
 
-  func ad(_ ad: Any, requestFailedWithError error: any Error) {
+  public func adDidReceiveAd(_ ad: Any) {
     if ad is ANBannerAdView {
       let a = ad as? ANBannerAdView
       if let info = a?.adResponseInfo {
@@ -125,8 +125,12 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
           )
       }
     } else {
-      logger.error(message: "BannerAd.adDidRecieveAd: an error \(error)")
-      state?.onAdLoadedError(viewId: viewId, reason: error.localizedDescription)
+      logger.error(message: "BannerAd.adDidRecieveAd: unknown \(ad)")
     }
+  }
+
+  func ad(_ ad: Any, requestFailedWithError error: any Error) {
+    logger.error(message: "BannerAd.adDidRecieveAd: an error \(error)")
+    state?.onAdLoadedError(viewId: viewId, reason: error.localizedDescription)
   }
 }
