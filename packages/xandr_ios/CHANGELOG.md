@@ -1,3 +1,7 @@
+## 0.2.3+9
+
+ - **FIX**: ios on load handler and error handler.
+
 ## 0.2.3+8
 
  - Bump "xandr_ios" to `0.2.3+8`.
