@@ -35,6 +35,7 @@ class AdBanner extends StatefulWidget {
     LoadMode? loadMode,
     double? width,
     double? height,
+    this.onBannerFinishLoading,
   })  : assert(adSizes.isNotEmpty, 'adSizes must not be empty'),
         assert(
           placementID != null || inventoryCode != null,
@@ -106,6 +107,11 @@ class AdBanner extends StatefulWidget {
   /// The controller for managing multi ad requests.
   final MultiAdRequestController? multiAdRequestController;
 
+  final _DoneLoadingCallback? onBannerFinishLoading;
+
+  /// A completer that indicates when loading is done.
+  final Completer<bool> doneLoading = Completer();
+
   @override
   State<AdBanner> createState() => _AdBannerState();
 }
@@ -165,17 +171,34 @@ class _AdBannerState extends State<AdBanner> {
   }
 
   void changeSize(double width, double height) {
+    debugPrint('>>>> changeSize: $width x $height');
     setState(() {
       _width = width;
       _height = height;
     });
   }
 
-  void onDoneLoading({required bool success}) {
+  void onDoneLoading({required bool success, int? width, int? height}) {
+    if (widget.onBannerFinishLoading != null) {
+      widget.onBannerFinishLoading!(
+        success: success,
+        width: width,
+        height: height,
+      );
+    }
+
+    debugPrint('>>>> onDoneLoading: $success');
     setState(() {
       _loading = false;
       _loaded = success;
     });
+    if (!widget.doneLoading.isCompleted) {
+      widget.doneLoading.complete(success);
+    }
+
+    if (success && width != null && height != null) {
+      changeSize(width.toDouble(), height.toDouble());
+    }
   }
 
   Future<bool> waitIsInitialized() async {
@@ -217,26 +240,20 @@ class _AdBannerState extends State<AdBanner> {
                 widgetId: _widgetId,
                 enableLazyLoad: widget.enableLazyLoad,
                 multiAdRequestId: widget.multiAdRequestController?.requestId,
-                delegate: BannerAdEventDelegate(
-                  onBannerAdLoaded: (event) {
-                    debugPrint('>>>> onBannerAdLoaded: $event');
-                    changeSize(event.width.toDouble(), event.height.toDouble());
-                  },
-                ),
               ),
             );
           } else {
             return const Text('Error initializing Xandr, error: false');
           }
         } else if (snapshot.hasError) {
+          if (!widget.doneLoading.isCompleted) {
+            widget.doneLoading.completeError(snapshot.error!);
+          }
           return const Text('unknown Error initializing Xandr');
         } else {
           return SizedBox(
             width: _width, //adSizes.first.width.toDouble(),
             height: _height, //adSizes.first.height.toDouble(),
-            child: const Center(
-              child: Text('loading xandr...'),
-            ),
           );
         }
       },
@@ -268,7 +285,11 @@ enum ClickThroughAction {
   }
 }
 
-typedef _DoneLoadingCallback = void Function({required bool success});
+typedef _DoneLoadingCallback = void Function({
+  required bool success,
+  int? width,
+  int? height,
+});
 
 class _HostAdBannerView extends StatelessWidget {
   _HostAdBannerView({
@@ -366,8 +387,9 @@ class _HostAdBannerView extends StatelessWidget {
       widgetId.complete(id);
     }
     controller.listen(id, (event) {
+      debugPrint('>>>> controller listen: $event');
       if (event is BannerAdLoadedEvent) {
-        _onDoneLoading(success: true);
+        _onDoneLoading(success: true, width: event.width, height: event.height);
         delegate?.onBannerAdLoaded?.call(event);
       } else if (event is BannerAdLoadedErrorEvent) {
         _onDoneLoading(success: false);

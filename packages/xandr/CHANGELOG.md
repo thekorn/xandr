@@ -1,3 +1,13 @@
+## 0.2.3+6
+
+ - Bump "xandr" to `0.2.3+6`.
+
+## 0.2.3+5
+
+ - Bump "xandr" to `0.2.3+5`.
+
+## 0.2.3+4
+
 ## 0.2.3+3
 
  - Fix #111 - Bad State in the scroll detector
