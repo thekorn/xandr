@@ -5,8 +5,16 @@
 //  Created by markus korn on 13.05.24.
 //
 
+import AppNexusSDK
 import Flutter
 import Foundation
+
+private func logResult(_ result: Any?) {
+  logger
+    .debug(
+      message: "flutter api: we got a result back from the flutter api \(String(describing: result))"
+    )
+}
 
 public class FlutterState {
   public var isInitialized: Completer<Bool> = .init()
@@ -62,5 +70,30 @@ public class FlutterState {
       logger.error(message: "XandrBanner for widgetId=\(id) not found!")
       throw XandrPluginError.runtimeError("Unable to find Banner for widgetId=\(id)")
     }
+  }
+
+  public func onAdLoadedAPI(viewId: Int64, width: CGFloat, height: CGFloat, creativeId: String,
+                            adType: ANAdType, tagId: String, auctionId: String, cpm: Double,
+                            memberId: Int) {
+    let adTypeIndentifier = switch adType {
+    case ANAdType.banner: "banner"
+    case ANAdType.native: "native"
+    case ANAdType.unknown: "unknown"
+    case ANAdType.video: "video"
+    @unknown default: "unknwon"
+    }
+
+    flutterAPI?.onAdLoaded(
+      viewId: viewId,
+      width: Int64(width),
+      height: Int64(height),
+      creativeId: creativeId,
+      adType: adTypeIndentifier,
+      tagId: tagId,
+      auctionId: auctionId,
+      cpm: cpm,
+      memberId: Int64(memberId),
+      completion: logResult
+    )
   }
 }

@@ -38,7 +38,7 @@ class _XandrExampleState extends State<XandrExample> {
   late final XandrController _controller;
   final ScrollController _scrollController = ScrollController();
   final StreamController<ScrollPosition> _checkIfAdIsInViewport =
-      StreamController();
+      StreamController.broadcast();
 
   @override
   void dispose() {
