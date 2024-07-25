@@ -133,6 +133,8 @@ class _AdBannerState extends State<AdBanner> {
         _checkViewport((widget.loadMode as WhenInViewport).pixelOffset);
       });
     }
+    _height = widget.height;
+    _width = widget.width;
     super.initState();
   }
 
@@ -296,8 +298,11 @@ enum ClickThroughAction {
   }
 }
 
-typedef _DoneLoadingCallback = void Function(
-    {required bool success, int? width, int? height});
+typedef _DoneLoadingCallback = void Function({
+  required bool success,
+  int? width,
+  int? height,
+});
 
 class _HostAdBannerView extends StatelessWidget {
   _HostAdBannerView({
