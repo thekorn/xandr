@@ -18,7 +18,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
        viewIdentifier viewId: Int64,
        args: Any?,
        binaryMessenger messenger: FlutterBinaryMessenger?) {
-      self.viewId = viewId
+    self.viewId = viewId
     super.init()
     // Do any additional setup after loading the view.
     ANSDKSettings.sharedInstance().enableOMIDOptimization = true
@@ -29,9 +29,23 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
       return
     }
 
-    let inventoryCode = arguments["inventoryCode"] as? String
-    let customKeywords = arguments["customKeywords"] as? [String: [String]]
     let adSizesArgs = arguments["adSizes"] as? [[String: Int]]
+    let customKeywords = arguments["customKeywords"] as? [String: [String]]
+    // let layoutHeight = arguments["layoutHeight"] as? Int
+    // let layoutWidth = arguments["layoutWidth"] as? Int
+    // let shouldServePSAs = arguments["shouldServePSAs"] as? Bool ?? false
+    // let loadsInBackground = arguments["loadsInBackground"] as? Bool ?? false
+    let resizeAdToFitContainer = arguments["resizeAdToFitContainer"] as? Bool ?? false
+    let placementID = arguments["placementID"] as? String
+    // let memberId = arguments["memberId"] as? String //<--- taken from state
+    let inventoryCode = arguments["inventoryCode"] as? String
+    // let clickThroughAction = arguments["clickThroughAction"] as? String
+    let autoRefreshInterval = arguments["autoRefreshInterval"] as? Double ?? 30
+    // let resizeWhenLoaded = arguments["resizeWhenLoaded"] as? Bool ?? false
+    let allowNativeDemand = arguments["allowNativeDemand"] as? Bool ?? false
+    // let loadWhenCreated = arguments["loadWhenCreated"] as? Bool ?? false
+    let enableLazyLoad = arguments["enableLazyLoad"] as? Bool ?? false
+    // let multiAdRequestId = arguments["multiAdRequestId"] as? String
 
     var adSizes: [NSValue] = []
     adSizesArgs?.forEach { size in
@@ -60,6 +74,17 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
       }
 
       banner?.adSizes = adSizes
+      banner?.shouldResizeAdToFitContainer = resizeAdToFitContainer
+      banner?.autoRefreshInterval = autoRefreshInterval
+      banner?.shouldAllowNativeDemand = allowNativeDemand
+      banner?.enableLazyLoad = enableLazyLoad
+
+      if inventoryCode != nil {
+        banner?.setInventoryCode(inventoryCode, memberId: state.memberId)
+      } else {
+        banner?.placementId = placementID
+      }
+
       logger.debug(message: "init banner, load ad...")
       banner?.loadAd()
     }
@@ -77,7 +102,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
     banner?.loadAd()
   }
 
-  public func adDidReceiveAd(_ ad: Any) {
+  func ad(_ ad: Any, requestFailedWithError error: any Error) {
     if ad is ANBannerAdView {
       let a = ad as? ANBannerAdView
       if let info = a?.adResponseInfo {
@@ -100,7 +125,8 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
           )
       }
     } else {
-      logger.error(message: "BannerAd.adDidRecieveAd: recieved an unknown payload \(ad)")
+      logger.error(message: "BannerAd.adDidRecieveAd: an error \(error)")
+      state?.onAdLoadedError(viewId: viewId, reason: error.localizedDescription)
     }
   }
 }

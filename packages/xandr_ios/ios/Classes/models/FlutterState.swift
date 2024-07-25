@@ -96,4 +96,8 @@ public class FlutterState {
       completion: logResult
     )
   }
+
+  public func onAdLoadedError(viewId: Int64, reason: String) {
+    flutterAPI?.onAdLoadedError(viewId: viewId, reason: reason, completion: logResult)
+  }
 }

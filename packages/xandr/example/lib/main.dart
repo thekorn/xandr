@@ -93,8 +93,8 @@ class _XandrExampleState extends State<XandrExample> {
                 customKeywords: const {
                   'kw': ['test-kw', 'demoads'],
                 },
-                resizeAdToFitContainer: true,
-                enableLazyLoad: true,
+                //resizeAdToFitContainer: false,
+                //enableLazyLoad: true,
               ),
               //FIXME: not working
               //const Text(
