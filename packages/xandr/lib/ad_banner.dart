@@ -240,19 +240,6 @@ class _AdBannerState extends State<AdBanner> {
                 widgetId: _widgetId,
                 enableLazyLoad: widget.enableLazyLoad,
                 multiAdRequestId: widget.multiAdRequestController?.requestId,
-                delegate: BannerAdEventDelegate(
-                  onBannerAdLoaded: (event) {
-                    debugPrint('>>>> onBannerAdLoaded: $event');
-                    onDoneLoading(
-                        success: true,
-                        width: event.width,
-                        height: event.height);
-                  },
-                  onBannerAdLoadedError: (error) {
-                    debugPrint('>>>> onBannerAdLoadedError: $error');
-                    onDoneLoading(success: false);
-                  },
-                ),
               ),
             );
           } else {
