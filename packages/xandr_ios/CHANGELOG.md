@@ -1,3 +1,7 @@
+## 0.2.3+7
+
+ - implementation of the onAdRecieved signal
+
 ## 0.2.3+6
 
  - Bump "xandr_ios" to `0.2.3+6`.
