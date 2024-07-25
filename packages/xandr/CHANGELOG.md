@@ -1,3 +1,5 @@
+## 0.2.3+4
+
 ## 0.2.3+3
 
  - Fix #111 - Bad State in the scroll detector
