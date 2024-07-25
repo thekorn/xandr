@@ -241,7 +241,14 @@ class _AdBannerState extends State<AdBanner> {
                 delegate: BannerAdEventDelegate(
                   onBannerAdLoaded: (event) {
                     debugPrint('>>>> onBannerAdLoaded: $event');
-                    changeSize(event.width.toDouble(), event.height.toDouble());
+                    onDoneLoading(
+                        success: true,
+                        width: event.width,
+                        height: event.height);
+                  },
+                  onBannerAdLoadedError: (error) {
+                    debugPrint('>>>> onBannerAdLoadedError: $error');
+                    onDoneLoading(success: false);
                   },
                 ),
               ),
@@ -258,9 +265,6 @@ class _AdBannerState extends State<AdBanner> {
           return SizedBox(
             width: _width, //adSizes.first.width.toDouble(),
             height: _height, //adSizes.first.height.toDouble(),
-            child: const Center(
-              child: Text('loading xandr...'),
-            ),
           );
         }
       },
