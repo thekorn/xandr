@@ -133,6 +133,8 @@ class _AdBannerState extends State<AdBanner> {
         _checkViewport((widget.loadMode as WhenInViewport).pixelOffset);
       });
     }
+    _height = widget.height;
+    _width = widget.width;
     super.initState();
   }
 
@@ -238,19 +240,6 @@ class _AdBannerState extends State<AdBanner> {
                 widgetId: _widgetId,
                 enableLazyLoad: widget.enableLazyLoad,
                 multiAdRequestId: widget.multiAdRequestController?.requestId,
-                delegate: BannerAdEventDelegate(
-                  onBannerAdLoaded: (event) {
-                    debugPrint('>>>> onBannerAdLoaded: $event');
-                    onDoneLoading(
-                        success: true,
-                        width: event.width,
-                        height: event.height);
-                  },
-                  onBannerAdLoadedError: (error) {
-                    debugPrint('>>>> onBannerAdLoadedError: $error');
-                    onDoneLoading(success: false);
-                  },
-                ),
               ),
             );
           } else {
@@ -296,8 +285,11 @@ enum ClickThroughAction {
   }
 }
 
-typedef _DoneLoadingCallback = void Function(
-    {required bool success, int? width, int? height});
+typedef _DoneLoadingCallback = void Function({
+  required bool success,
+  int? width,
+  int? height,
+});
 
 class _HostAdBannerView extends StatelessWidget {
   _HostAdBannerView({
