@@ -1,3 +1,7 @@
+## 0.2.3+5
+
+ - Bump "xandr_ios" to `0.2.3+5`.
+
 ## 0.2.3+4
 
  - Bump "xandr_ios" to `0.2.3+4`.
