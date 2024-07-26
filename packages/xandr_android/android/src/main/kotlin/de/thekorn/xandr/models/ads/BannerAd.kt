@@ -2,23 +2,31 @@ package de.thekorn.xandr.models.ads
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Application
+import android.os.Bundle
+import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.DefaultLifecycleObserver
 import com.appnexus.opensdk.ANClickThroughAction
 import com.appnexus.opensdk.BannerAdView
 import de.thekorn.xandr.listeners.XandrBannerAdListener
 import de.thekorn.xandr.models.BannerViewOptions
 import de.thekorn.xandr.models.FlutterState
 import de.thekorn.xandr.models.MultiAdRequestRegistry
-import io.flutter.Log
 
 @SuppressLint("ViewConstructor")
 class BannerAd(
     private var activity: Activity,
     private var state: FlutterState,
     private var widgetId: Int
-) : BannerAdView(activity) {
+) : BannerAdView(activity), DefaultLifecycleObserver, Application.ActivityLifecycleCallbacks {
+
+    init {
+        activity.application.registerActivityLifecycleCallbacks(this)
+    }
 
     fun configure(bannerViewOptions: BannerViewOptions) {
+
         bannerViewOptions.let {
             it.adSizes?.let { adSizes ->
                 this.adSizes = adSizes
@@ -108,6 +116,25 @@ class BannerAd(
             )
             return super.loadAd()
         }
-        
     }
+
+    override fun onActivityResumed(p0: Activity) {
+        Log.d("Xandr.BannerView", "activityOnResume")
+        this.activityOnResume()
+    }
+
+    override fun onActivityPaused(p0: Activity) {
+        Log.d("Xandr.BannerView", "activityOnPause")
+        this.activityOnPause()
+    }
+
+    override fun onActivityDestroyed(p0: Activity) {
+        Log.d("Xandr.BannerView", "activityOnDestroy")
+        this.activityOnDestroy()
+    }
+
+    override fun onActivityCreated(p0: Activity, p1: Bundle?) { }
+    override fun onActivityStarted(p0: Activity) { }
+    override fun onActivityStopped(p0: Activity) { }
+    override fun onActivitySaveInstanceState(p0: Activity, p1: Bundle) { }
 }
