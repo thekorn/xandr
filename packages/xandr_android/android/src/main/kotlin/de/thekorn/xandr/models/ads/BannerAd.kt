@@ -91,17 +91,23 @@ class BannerAd(
     }
 
     override fun loadAd(): Boolean {
-        Log.d("Xandr.BannerView", "loadAd; id=$widgetId")
-        this.adListener = null
+        if (adListener != null) {
+            Log.d("Xandr.BannerView", "loadAd; id=$widgetId / stopped because ad already loaded")
+            return false
+        } else {
+            Log.d("Xandr.BannerView", "loadAd; id=$widgetId")
+            this.adListener = null
 
-        this.adListener = XandrBannerAdListener(
-            widgetId.toLong(),
-            state.flutterApi,
-            this
-        )
-        this.setBackgroundColor(
-            ContextCompat.getColor(activity, android.R.color.transparent)
-        )
-        return super.loadAd()
+            this.adListener = XandrBannerAdListener(
+                widgetId.toLong(),
+                state.flutterApi,
+                this
+            )
+            this.setBackgroundColor(
+                ContextCompat.getColor(activity, android.R.color.transparent)
+            )
+            return super.loadAd()
+        }
+        
     }
 }
