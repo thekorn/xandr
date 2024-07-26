@@ -5,7 +5,7 @@ import android.view.View
 import de.thekorn.xandr.models.BannerViewOptions
 import de.thekorn.xandr.models.FlutterState
 import de.thekorn.xandr.models.ads.BannerAd
-import io.flutter.Log
+import android.util.Log
 import io.flutter.plugin.platform.PlatformView
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 

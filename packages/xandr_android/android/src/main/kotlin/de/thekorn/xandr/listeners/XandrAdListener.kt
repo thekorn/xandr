@@ -7,7 +7,7 @@ import com.appnexus.opensdk.NativeAdResponse
 import com.appnexus.opensdk.ResultCode
 import de.thekorn.xandr.models.ads.BannerAd
 import de.thekorn.xandr.models.ads.InterstitialAd
-import io.flutter.Log
+import android.util.Log
 
 // / FIXME: create explicit XandrBannerAdListener
 // /  means: XandrAdListener as base plus an interstitial and banner implementation
