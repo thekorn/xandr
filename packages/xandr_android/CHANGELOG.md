@@ -1,3 +1,7 @@
+## 0.2.3+13
+
+ - android: fix some imports in the kotlin code
+
 ## 0.2.3+12
 
 ## 0.2.3+11
