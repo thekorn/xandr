@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-26
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`xandr` - `v0.2.3+10`](#xandr---v02310)
+ - [`xandr_android` - `v0.2.3+10`](#xandr_android---v02310)
+ - [`xandr_ios` - `v0.2.3+10`](#xandr_ios---v02310)
+ - [`xandr_platform_interface` - `v0.2.3+10`](#xandr_platform_interface---v02310)
+
+---
+
+#### `xandr` - `v0.2.3+10`
+
+ - Bump "xandr" to `0.2.3+10`.
+
+#### `xandr_android` - `v0.2.3+10`
+
+ - Bump "xandr_android" to `0.2.3+10`.
+
+#### `xandr_ios` - `v0.2.3+10`
+
+ - Bump "xandr_ios" to `0.2.3+10`.
+
+#### `xandr_platform_interface` - `v0.2.3+10`
+
+ - Bump "xandr_platform_interface" to `0.2.3+10`.
+
+
 ## 2024-07-25
 
 ### Changes
