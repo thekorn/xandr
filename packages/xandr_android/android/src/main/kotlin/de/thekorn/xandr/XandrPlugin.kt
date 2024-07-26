@@ -15,7 +15,7 @@ import de.thekorn.xandr.listeners.XandrInterstitialAdListener
 import de.thekorn.xandr.models.FlutterState
 import de.thekorn.xandr.models.MultiAdRequestRegistry
 import de.thekorn.xandr.models.ads.InterstitialAd
-import android.util.Log
+import io.flutter.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding

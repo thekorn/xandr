@@ -6,7 +6,7 @@ import android.app.Activity
 import android.content.Context
 import de.thekorn.xandr.BannerViewContainer
 import de.thekorn.xandr.XandrPlugin
-import android.util.Log
+import io.flutter.Log
 import io.flutter.plugin.common.BinaryMessenger
 import kotlin.properties.Delegates
 import kotlinx.coroutines.CompletableDeferred

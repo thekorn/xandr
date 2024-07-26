@@ -1,7 +1,7 @@
 package de.thekorn.xandr.models
 
 import com.appnexus.opensdk.AdSize
-import android.util.Log
+import io.flutter.Log
 
 data class BannerViewOptions(
     val adSizes: ArrayList<AdSize>? = null,

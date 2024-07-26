@@ -3,7 +3,7 @@
 @file:Suppress("UNCHECKED_CAST", "ArrayInDataClass")
 
 
-import android.util.Log
+import io.flutter.Log
 import io.flutter.plugin.common.BasicMessageChannel
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MessageCodec

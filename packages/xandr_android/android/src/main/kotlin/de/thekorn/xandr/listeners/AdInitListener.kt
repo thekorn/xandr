@@ -1,6 +1,6 @@
 package de.thekorn.xandr.listeners
 
-import android.util.Log
+import io.flutter.Log
 import com.appnexus.opensdk.InitListener
 import com.appnexus.opensdk.SDKSettings
 import de.thekorn.xandr.models.FlutterState
