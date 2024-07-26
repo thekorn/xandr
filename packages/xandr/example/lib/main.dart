@@ -88,11 +88,30 @@ class _XandrExampleState extends State<XandrExample> {
               AdBanner(
                 controller: _controller,
                 //placementID: '17058950',
-                inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-                adSizes: const [AdSize(728, 90)], //[AdSize(300, 250)],
+                inventoryCode: 'bunte_androidapp_fuermich_frontpage_hor_2',
+                adSizes: const [AdSize(300, 250)], //[AdSize(300, 250)],
                 customKeywords: const {
-                  'kw': ['test-kw', 'demoads'],
+                  'kw': [],
                 },
+                resizeAdToFitContainer: false,
+                resizeWhenLoaded: true,
+                enableLazyLoad: false,
+                autoRefreshInterval: Duration.zero,
+                //resizeAdToFitContainer: false,
+                //enableLazyLoad: true,
+              ),
+              AdBanner(
+                controller: _controller,
+                //placementID: '17058950',
+                inventoryCode: 'bunte_androidapp_fuermich_frontpage_hor_3',
+                adSizes: const [AdSize(300, 250)], //[AdSize(300, 250)],
+                customKeywords: const {
+                  'kw': [],
+                },
+                resizeAdToFitContainer: false,
+                resizeWhenLoaded: true,
+                enableLazyLoad: false,
+                autoRefreshInterval: Duration.zero,
                 //resizeAdToFitContainer: false,
                 //enableLazyLoad: true,
               ),
@@ -163,19 +182,6 @@ class _XandrExampleState extends State<XandrExample> {
                   ),
                 ),
               ),
-              AdBanner(
-                controller: _controller,
-                //placementID: '17058950',
-                inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-                adSizes: const [
-                  AdSize(1, 1),
-                  AdSize(728, 90),
-                ], //[AdSize(300, 250)],
-                width: 90,
-                height: 90,
-                loadsInBackground: true,
-                //customKeywords: useDemoAds,
-              ),
               const Text('Lorem Ipsum is simply dummy text of the printing and '
                   'typesetting industry. Lorem Ipsum has been the boo '
                   'standard dummy text ever since the 1500s, when an aha '
@@ -194,20 +200,6 @@ class _XandrExampleState extends State<XandrExample> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-              ),
-              AdBanner(
-                controller: _controller,
-                //placementID: '17058950',
-                inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-                adSizes: const [
-                  AdSize(728, 90),
-                  AdSize(1, 1),
-                ],
-                //customKeywords: useDemoAds,
-                resizeAdToFitContainer: true,
-                loadMode: LoadMode.whenInViewport(
-                  _checkIfAdIsInViewport.stream,
                 ),
               ),
               const Text('Lorem Ipsum is simply dummy text of the printing and '
