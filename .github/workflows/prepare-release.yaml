@@ -4,31 +4,18 @@ on:
     branches: [main]
 
 jobs:
-  fvmrc:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: get fvmrc
-      id: fvmrc
-      uses: ActionsTools/read-json-action@v1.0.5
-      with:
-        file_path: ".fvmrc"
   prepare-release:
     name: Prepare release
-    needs: fvmrc
     permissions:
       contents: write
       pull-requests: write
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'chore(release)')"
     steps:
+      - name: Set environment variable
+        run: echo "MELOS_SDK_PATH=auto" >> $GITHUB_ENV
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{needs.fvmrc.outputs.flutter}}
-          channel: stabel
-          cache: true
-          cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
       - uses: bluefireteam/melos-action@v3
         with:
           run-versioning: true
