@@ -14,7 +14,7 @@ jobs:
    steps:
      - name: Set environment variable
        run: echo "MELOS_SDK_PATH=auto" >> $GITHUB_ENV
-     - uses: actions/checkout@v3
+     - uses: actions/checkout@v4
      - uses: subosito/flutter-action@v2
      - uses: bluefireteam/melos-action@v3
        with:
