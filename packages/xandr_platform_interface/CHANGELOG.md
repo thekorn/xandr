@@ -1,3 +1,15 @@
+## 0.2.4
+
+ - **REFACTOR**(xandr): change StreamController type from String to BannerAdEvent for better type safety.
+ - **REFACTOR**(xandr_android): replace eventSink with XandrFlutterApi for better event handling.
+ - **FEAT**: Integrate optional publisherId across SDK init methods.
+ - **FEAT**: initial implementation of multi ad requests.
+ - **FEAT**(xandr_ios): add support for Xandr SDK initialization, interstitial ad loading and showing.
+ - **FEAT**(xandr): add support for interstitial ads.
+ - **FEAT**: initial implementation of an event stream for banner ads.
+ - **FEAT**(xandr_platform_interface): add new interface and method channel classes.
+ - **DOCS**(xandr): add detailed comments to public classes and methods for better understanding.
+
 ## 0.2.3+13
 
  - Bump "xandr_platform_interface" to `0.2.3+13`.
