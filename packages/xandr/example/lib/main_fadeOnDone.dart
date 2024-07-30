@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:xandr/ad_banner.dart';
 import 'package:xandr/ad_size.dart';
-import 'package:xandr/load_mode.dart';
 import 'package:xandr/xandr.dart';
 
 void main() {
