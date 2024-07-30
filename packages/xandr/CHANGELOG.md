@@ -1,3 +1,7 @@
+## 0.2.5+1
+
+ - **FIX**: lint warnings.
+
 ## 0.2.5
 
  - **REFACTOR**(xandr): add lazy loading support for banner ads.

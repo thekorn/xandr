@@ -1,3 +1,7 @@
+## 0.2.5+1
+
+ - **FIX**: _onDoneLoading callback not called on ios.
+
 ## 0.2.5
 
  - **REFACTOR**(xandr): change StreamController type from String to BannerAdEvent for better type safety.

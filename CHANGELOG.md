@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-30
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`xandr` - `v0.2.5+1`](#xandr---v0251)
+ - [`xandr_android` - `v0.2.5+1`](#xandr_android---v0251)
+ - [`xandr_ios` - `v0.2.5+1`](#xandr_ios---v0251)
+ - [`xandr_platform_interface` - `v0.2.5+1`](#xandr_platform_interface---v0251)
+
+---
+
+#### `xandr` - `v0.2.5+1`
+
+ - **FIX**: lint warnings.
+
+#### `xandr_android` - `v0.2.5+1`
+
+ - **FIX**: _onDoneLoading callback not called on ios.
+
+#### `xandr_ios` - `v0.2.5+1`
+
+ - **FIX**: _onDoneLoading callback not called on ios.
+
+#### `xandr_platform_interface` - `v0.2.5+1`
+
+ - **FIX**: _onDoneLoading callback not called on ios.
+
+
 ## 2024-07-28
 
 ### Changes

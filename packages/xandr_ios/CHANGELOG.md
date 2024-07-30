@@ -1,3 +1,7 @@
+## 0.2.5+1
+
+ - **FIX**: _onDoneLoading callback not called on ios.
+
 ## 0.2.5
 
  - **REFACTOR**(xandr_ios): update minimum iOS version to 11.0 and add AppNexusSDK dependency.
