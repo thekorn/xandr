@@ -456,12 +456,12 @@ class XandrFlutterApi(private val binaryMessenger: BinaryMessenger, private val 
       } 
     }
   }
-  fun onNativeAdLoaded(viewIdArg: Long, titleArg: String, descriptionArg: String, imageUrlArg: String, callback: (Result<Unit>) -> Unit)
+  fun onNativeAdLoaded(viewIdArg: Long, titleArg: String, descriptionArg: String, imageUrlArg: String, clickUrlArg: String?, callback: (Result<Unit>) -> Unit)
 {
     val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
     val channelName = "dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoaded$separatedMessageChannelSuffix"
     val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
-    channel.send(listOf(viewIdArg, titleArg, descriptionArg, imageUrlArg)) {
+    channel.send(listOf(viewIdArg, titleArg, descriptionArg, imageUrlArg, clickUrlArg)) {
       if (it is List<*>) {
         if (it.size > 1) {
           callback(Result.failure(XandrFlutterError(it[0] as String, it[1] as String, it[2] as String?)))
