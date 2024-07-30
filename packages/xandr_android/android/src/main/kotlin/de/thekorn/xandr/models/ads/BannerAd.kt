@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import io.flutter.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import com.appnexus.opensdk.ANClickThroughAction
@@ -13,20 +12,22 @@ import de.thekorn.xandr.listeners.XandrBannerAdListener
 import de.thekorn.xandr.models.BannerViewOptions
 import de.thekorn.xandr.models.FlutterState
 import de.thekorn.xandr.models.MultiAdRequestRegistry
+import io.flutter.Log
 
 @SuppressLint("ViewConstructor")
 class BannerAd(
     private var activity: Activity,
     private var state: FlutterState,
     private var widgetId: Int
-) : BannerAdView(activity), DefaultLifecycleObserver, Application.ActivityLifecycleCallbacks {
+) : BannerAdView(activity),
+    DefaultLifecycleObserver,
+    Application.ActivityLifecycleCallbacks {
 
     init {
         activity.application.registerActivityLifecycleCallbacks(this)
     }
 
     fun configure(bannerViewOptions: BannerViewOptions) {
-
         bannerViewOptions.let {
             it.adSizes?.let { adSizes ->
                 this.adSizes = adSizes
