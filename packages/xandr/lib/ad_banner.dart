@@ -7,7 +7,6 @@ import 'package:flutter/widgets.dart';
 import 'package:xandr/ad_size.dart';
 import 'package:xandr/load_mode.dart';
 import 'package:xandr/xandr.dart';
-import 'package:xandr_android/xandr_android.dart';
 
 /// A widget that displays an banner advertisement.
 class AdBanner extends StatefulWidget {
@@ -107,7 +106,10 @@ class AdBanner extends StatefulWidget {
   /// The controller for managing multi ad requests.
   final MultiAdRequestController? multiAdRequestController;
 
-  final _DoneLoadingCallback? onBannerFinishLoading;
+  /// Callback called when the ad finishes loading
+  /// whether it's success or failure
+  /// This also provides, if success, width and height of the ad
+  final DoneLoadingCallback? onBannerFinishLoading;
 
   /// A completer that indicates when loading is done.
   final Completer<bool> doneLoading = Completer();
@@ -179,13 +181,11 @@ class _AdBannerState extends State<AdBanner> {
   }
 
   void onDoneLoading({required bool success, int? width, int? height}) {
-    if (widget.onBannerFinishLoading != null) {
-      widget.onBannerFinishLoading!(
-        success: success,
-        width: width,
-        height: height,
-      );
-    }
+    widget.onBannerFinishLoading?.call(
+      success: success,
+      width: width,
+      height: height,
+    );
 
     debugPrint('>>>> onDoneLoading: $success');
     setState(() {
@@ -285,7 +285,9 @@ enum ClickThroughAction {
   }
 }
 
-typedef _DoneLoadingCallback = void Function({
+/// Represents a callback which is called when an ad is either loaded or
+/// throws an error
+typedef DoneLoadingCallback = void Function({
   required bool success,
   int? width,
   int? height,
@@ -305,14 +307,13 @@ class _HostAdBannerView extends StatelessWidget {
     required int layoutWidth,
     required bool resizeAdToFitContainer,
     required LoadMode loadMode,
-    required _DoneLoadingCallback onDoneLoading,
+    required DoneLoadingCallback onDoneLoading,
     required this.widgetId,
     required String? multiAdRequestId,
     ClickThroughAction? clickThroughAction,
     bool? loadsInBackground,
     bool? shouldServePSAs,
     bool? enableLazyLoad,
-    this.delegate,
   })  : _onDoneLoading = onDoneLoading,
         creationParams = <String, dynamic>{
           'placementID': placementID,
@@ -347,8 +348,7 @@ class _HostAdBannerView extends StatelessWidget {
   static const StandardMessageCodec _decoder = StandardMessageCodec();
   final Map<String, dynamic> creationParams;
   final XandrController controller;
-  final BannerAdEventDelegate? delegate;
-  final _DoneLoadingCallback _onDoneLoading;
+  final DoneLoadingCallback _onDoneLoading;
   final Completer<int> widgetId;
 
   static const viewType = 'de.thekorn.xandr/ad_banner';
@@ -390,16 +390,12 @@ class _HostAdBannerView extends StatelessWidget {
       debugPrint('>>>> controller listen: $event');
       if (event is BannerAdLoadedEvent) {
         _onDoneLoading(success: true, width: event.width, height: event.height);
-        delegate?.onBannerAdLoaded?.call(event);
       } else if (event is BannerAdLoadedErrorEvent) {
         _onDoneLoading(success: false);
-        delegate?.onBannerAdLoadedError?.call(event);
       } else if (event is NativeBannerAdLoadedEvent) {
         _onDoneLoading(success: true);
-        delegate?.onNativeBannerAdLoaded?.call(event);
       } else if (event is NativeBannerAdLoadedErrorEvent) {
         _onDoneLoading(success: false);
-        delegate?.onNativeBannerAdLoadedError?.call(event);
       }
     });
   }

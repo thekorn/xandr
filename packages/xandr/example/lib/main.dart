@@ -93,6 +93,8 @@ class _XandrExampleState extends State<XandrExample> {
                 customKeywords: const {
                   'kw': ['test-kw', 'demoads'],
                 },
+                onBannerFinishLoading: ({required success, height, width}) =>
+                    debugPrint('on banner finish loading: success: $success'),
                 //resizeAdToFitContainer: false,
                 //enableLazyLoad: true,
               ),
