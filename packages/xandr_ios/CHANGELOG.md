@@ -1,3 +1,7 @@
+## 0.2.5+2
+
+ - **FIX**: fix clickThroughAction ios implementation + onAdClicked callback.
+
 ## 0.2.5+1
 
  - **FIX**: _onDoneLoading callback not called on ios.

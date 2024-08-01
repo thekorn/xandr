@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-08-01
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`xandr` - `v0.2.5+2`](#xandr---v0252)
+ - [`xandr_android` - `v0.2.5+2`](#xandr_android---v0252)
+ - [`xandr_ios` - `v0.2.5+2`](#xandr_ios---v0252)
+ - [`xandr_platform_interface` - `v0.2.5+2`](#xandr_platform_interface---v0252)
+
+---
+
+#### `xandr` - `v0.2.5+2`
+
+ - **FIX**: fix clickThroughAction ios implementation + onAdClicked callback.
+
+#### `xandr_android` - `v0.2.5+2`
+
+ - **FIX**: fix clickThroughAction ios implementation + onAdClicked callback.
+
+#### `xandr_ios` - `v0.2.5+2`
+
+ - **FIX**: fix clickThroughAction ios implementation + onAdClicked callback.
+
+#### `xandr_platform_interface` - `v0.2.5+2`
+
+ - **FIX**: fix clickThroughAction ios implementation + onAdClicked callback.
+
+
 ## 2024-07-30
 
 ### Changes
