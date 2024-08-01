@@ -220,6 +220,19 @@ class _XandrExampleState extends State<XandrExample> {
                   'typesetting industry. Lorem Ipsum has been the boo '
                   'standard dummy text ever since the 1500s, when an aha '
                   'printer took a galley of type and scrambled it to g'),
+              AdBanner(
+                controller: _controller,
+                inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
+                adSizes: const [AdSize(300, 250)],
+                customKeywords: const {
+                  'kw': ['demoads'],
+                },
+                onBannerFinishLoading: ({required success, height, width}) =>
+                    debugPrint('on banner finish loading: success: $success'),
+                autoRefreshInterval: Duration.zero,
+                clickThroughAction: ClickThroughAction.returnUrl,
+                onAdClicked: (url) => debugPrint('click url: $url'),
+              ),
             ],
           ),
         ),

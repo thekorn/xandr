@@ -98,6 +98,13 @@ open class XandrAdListener(private var widgetId: Int, private var flutterApi: Xa
             "Xandr.BannerView",
             ">>> Ad clicked, AdView:p0=$p0 String:p1=$p1"
         )
+        p1?.let {
+            flutterApi.onAdClicked(
+                widgetId.toLong(),
+                it
+            ) { }
+        }
+        
     }
 
     override fun onLazyAdLoaded(adView: AdView?) {

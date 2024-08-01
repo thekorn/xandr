@@ -500,6 +500,8 @@ abstract class XandrFlutterApi {
 
   void onNativeAdLoadedError(int viewId, String reason);
 
+  void onAdClicked(int viewId, String url);
+
   static void setUp(
     XandrFlutterApi? api, {
     BinaryMessenger? binaryMessenger,
@@ -658,6 +660,37 @@ abstract class XandrFlutterApi {
               'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onNativeAdLoadedError was null, expected non-null String.');
           try {
             api.onNativeAdLoadedError(arg_viewId!, arg_reason!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          } catch (e) {
+            return wrapResponse(
+                error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<
+              Object?>(
+          'dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdClicked$messageChannelSuffix',
+          pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdClicked was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final int? arg_viewId = (args[0] as int?);
+          assert(arg_viewId != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdClicked was null, expected non-null int.');
+          final String? arg_url = (args[1] as String?);
+          assert(arg_url != null,
+              'Argument for dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdClicked was null, expected non-null String.');
+          try {
+            api.onAdClicked(arg_viewId!, arg_url!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);

@@ -35,6 +35,7 @@ class AdBanner extends StatefulWidget {
     double? width,
     double? height,
     this.onBannerFinishLoading,
+    this.onAdClicked,
   })  : assert(adSizes.isNotEmpty, 'adSizes must not be empty'),
         assert(
           placementID != null || inventoryCode != null,
@@ -113,6 +114,9 @@ class AdBanner extends StatefulWidget {
 
   /// A completer that indicates when loading is done.
   final Completer<bool> doneLoading = Completer();
+
+  /// A callback that is called when the banner is clicked
+  final AdClickedCallback? onAdClicked;
 
   @override
   State<AdBanner> createState() => _AdBannerState();
@@ -240,6 +244,7 @@ class _AdBannerState extends State<AdBanner> {
                 widgetId: _widgetId,
                 enableLazyLoad: widget.enableLazyLoad,
                 multiAdRequestId: widget.multiAdRequestController?.requestId,
+                onAdClicked: widget.onAdClicked,
               ),
             );
           } else {
@@ -293,6 +298,9 @@ typedef DoneLoadingCallback = void Function({
   int? height,
 });
 
+/// Represents a callback which is called when an ad is clicked
+typedef AdClickedCallback = void Function(String url);
+
 class _HostAdBannerView extends StatelessWidget {
   _HostAdBannerView({
     required String? placementID,
@@ -314,6 +322,7 @@ class _HostAdBannerView extends StatelessWidget {
     bool? loadsInBackground,
     bool? shouldServePSAs,
     bool? enableLazyLoad,
+    this.onAdClicked,
   })  : _onDoneLoading = onDoneLoading,
         creationParams = <String, dynamic>{
           'placementID': placementID,
@@ -350,6 +359,7 @@ class _HostAdBannerView extends StatelessWidget {
   final XandrController controller;
   final DoneLoadingCallback _onDoneLoading;
   final Completer<int> widgetId;
+  final AdClickedCallback? onAdClicked;
 
   static const viewType = 'de.thekorn.xandr/ad_banner';
 
@@ -396,6 +406,8 @@ class _HostAdBannerView extends StatelessWidget {
         _onDoneLoading(success: true);
       } else if (event is NativeBannerAdLoadedErrorEvent) {
         _onDoneLoading(success: false);
+      } else if (event is BannerAdClickedEvent) {
+        onAdClicked?.call(event.url);
       }
     });
   }
