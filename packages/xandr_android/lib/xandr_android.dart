@@ -234,4 +234,10 @@ class XandrEventHandler implements messages.XandrFlutterApi {
     _controller
         .add(NativeBannerAdLoadedErrorEvent(viewId: viewId, reason: reason));
   }
+
+  @override
+  void onAdClicked(int viewId, String url) {
+    debugPrint("xandr.onAdClicked: $viewId, url='$url'");
+    _controller.add(BannerAdClickedEvent(viewId: viewId, url: url));
+  }
 }

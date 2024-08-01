@@ -100,4 +100,12 @@ public class FlutterState {
   public func onAdLoadedError(viewId: Int64, reason: String) {
     flutterAPI?.onAdLoadedError(viewId: viewId, reason: reason, completion: logResult)
   }
+
+  public func onAdClickedAPI(viewId: Int64, url: String) {
+    flutterAPI?.onAdClicked(
+      viewId: viewId,
+      url: url,
+      completion: logResult
+    )
+  }
 }

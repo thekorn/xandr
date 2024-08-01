@@ -39,7 +39,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
     let placementID = arguments["placementID"] as? String
     // let memberId = arguments["memberId"] as? String //<--- taken from state
     let inventoryCode = arguments["inventoryCode"] as? String
-    // let clickThroughAction = arguments["clickThroughAction"] as? String
+    let clickThroughAction = arguments["clickThroughAction"] as? String
     let autoRefreshInterval = arguments["autoRefreshInterval"] as? Double ?? 30
     // let resizeWhenLoaded = arguments["resizeWhenLoaded"] as? Bool ?? false
     let allowNativeDemand = arguments["allowNativeDemand"] as? Bool ?? false
@@ -78,6 +78,19 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
       banner?.autoRefreshInterval = autoRefreshInterval
       banner?.shouldAllowNativeDemand = allowNativeDemand
       banner?.enableLazyLoad = enableLazyLoad
+
+      if clickThroughAction != nil {
+        switch clickThroughAction {
+        case "open_device_browser":
+          banner?.clickThroughAction = .openDeviceBrowser
+        case "open_sdk_browser":
+          banner?.clickThroughAction = .openSDKBrowser
+        case "return_url":
+          banner?.clickThroughAction = .returnURL
+        default:
+          banner?.clickThroughAction = .openSDKBrowser
+        }
+      }
 
       if inventoryCode != nil {
         banner?.setInventoryCode(inventoryCode, memberId: state.memberId)
@@ -132,5 +145,17 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
   func ad(_ ad: Any, requestFailedWithError error: any Error) {
     logger.error(message: "BannerAd.adDidRecieveAd: an error \(error)")
     state?.onAdLoadedError(viewId: viewId, reason: error.localizedDescription)
+  }
+
+  public func adWasClicked(_ ad: Any, withURL urlString: String) {
+    if ad is ANBannerAdView {
+      let a = ad as? ANBannerAdView
+      state?.onAdClickedAPI(
+        viewId: viewId,
+        url: urlString
+      )
+    } else {
+      logger.error(message: "BannerAd.adWasClicked: unknown \(ad)")
+    }
   }
 }

@@ -129,11 +129,7 @@ class BannerAd(
         this.activityOnPause()
     }
 
-    override fun onActivityDestroyed(p0: Activity) {
-        Log.d("Xandr.BannerView", "activityOnDestroy")
-        this.activityOnDestroy()
-    }
-
+    override fun onActivityDestroyed(p0: Activity) { }
     override fun onActivityCreated(p0: Activity, p1: Bundle?) { }
     override fun onActivityStarted(p0: Activity) { }
     override fun onActivityStopped(p0: Activity) { }

@@ -490,4 +490,21 @@ class XandrFlutterApi(private val binaryMessenger: BinaryMessenger, private val 
       } 
     }
   }
+  fun onAdClicked(viewIdArg: Long, urlArg: String, callback: (Result<Unit>) -> Unit)
+{
+    val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
+    val channelName = "dev.flutter.pigeon.xandr_android.XandrFlutterApi.onAdClicked$separatedMessageChannelSuffix"
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
+    channel.send(listOf(viewIdArg, urlArg)) {
+      if (it is List<*>) {
+        if (it.size > 1) {
+          callback(Result.failure(XandrFlutterError(it[0] as String, it[1] as String, it[2] as String?)))
+        } else {
+          callback(Result.success(Unit))
+        }
+      } else {
+        callback(Result.failure(createConnectionError(channelName)))
+      } 
+    }
+  }
 }

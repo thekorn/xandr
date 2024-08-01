@@ -70,6 +70,19 @@ class BannerAdLoadedEvent extends BannerAdEvent {
   final int memberId;
 }
 
+/// Represents an ad clicked event
+/// This class is an abstract class that extends [BannerAdEvent].
+class BannerAdClickedEvent extends BannerAdEvent {
+  /// Event that occurs when an ad is clicked
+  BannerAdClickedEvent({
+    required super.viewId,
+    required this.url,
+  });
+
+  /// The URL of the ad
+  final String url;
+}
+
 /// Represents an event that occurs when a banner ad fails to load.
 /// This event is a subclass of [BannerAdErrorEvent].
 class BannerAdLoadedErrorEvent extends BannerAdErrorEvent {
