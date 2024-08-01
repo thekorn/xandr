@@ -104,7 +104,6 @@ open class XandrAdListener(private var widgetId: Int, private var flutterApi: Xa
                 it
             ) { }
         }
-        
     }
 
     override fun onLazyAdLoaded(adView: AdView?) {
