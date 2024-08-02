@@ -297,6 +297,7 @@ class _XandrExampleState extends State<XandrExample> {
                       children: [
                         Text(nativeAd.title),
                         Text(nativeAd.description),
+                        Image.network(nativeAd.imageUrl),
                       ],
                     ),
                   ),
