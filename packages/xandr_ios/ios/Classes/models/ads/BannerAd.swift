@@ -142,6 +142,24 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
     }
   }
 
+  public func ad(_ loadInstance: Any, didReceiveNativeAd responseInstance: Any) {
+    if let nativeAdResponse = responseInstance as? ANNativeAdResponse,
+       let title = nativeAdResponse.title, let description = nativeAdResponse.body,
+       let imageUrl = nativeAdResponse.mainImageURL {
+      state?.onNativeAdLoadedAPI(
+        viewId: viewId,
+        title: title,
+        description: description,
+        imageUrl: imageUrl.absoluteString
+      )
+    } else {
+      logger
+        .error(
+          message: "BannerAd.addidReceiveNativeAd: we did not get an ANNativeAdResponse back, got \(String(describing: responseInstance))"
+        )
+    }
+  }
+
   func ad(_ ad: Any, requestFailedWithError error: any Error) {
     logger.error(message: "BannerAd.adDidRecieveAd: an error \(error)")
     state?.onAdLoadedError(viewId: viewId, reason: error.localizedDescription)

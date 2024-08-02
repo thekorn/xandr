@@ -108,4 +108,15 @@ public class FlutterState {
       completion: logResult
     )
   }
+
+  public func onNativeAdLoadedAPI(viewId: Int64, title: String, description: String,
+                                  imageUrl: String) {
+    flutterAPI?.onNativeAdLoaded(
+      viewId: viewId,
+      title: title,
+      description: description,
+      imageUrl: imageUrl,
+      completion: logResult
+    )
+  }
 }
