@@ -93,7 +93,12 @@ class _XandrExampleState extends State<XandrExample> {
                 customKeywords: const {
                   'kw': ['test-kw', 'demoads'],
                 },
-                onBannerFinishLoading: ({required success, height, width}) =>
+                onBannerFinishLoading: ({
+                  required success,
+                  height,
+                  width,
+                  nativeAd,
+                }) =>
                     debugPrint('on banner finish loading: success: $success'),
                 //resizeAdToFitContainer: false,
                 //enableLazyLoad: true,
@@ -227,11 +232,63 @@ class _XandrExampleState extends State<XandrExample> {
                 customKeywords: const {
                   'kw': ['demoads'],
                 },
-                onBannerFinishLoading: ({required success, height, width}) =>
+                onBannerFinishLoading: ({
+                  required success,
+                  height,
+                  width,
+                  nativeAd,
+                }) =>
                     debugPrint('on banner finish loading: success: $success'),
                 autoRefreshInterval: Duration.zero,
                 clickThroughAction: ClickThroughAction.returnUrl,
                 onAdClicked: (url) => debugPrint('click url: $url'),
+              ),
+              const Text('Lorem Ipsum is simply dummy text of the printing and '
+                  'typesetting industry. Lorem Ipsum has been the boo '
+                  'standard dummy text ever since the 1500s, when an aha '
+                  'printer took a galley of type and scrambled it to g'),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'native ad below:',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              AdBanner(
+                controller: _controller,
+                inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
+                adSizes: const [AdSize(1, 1)],
+                customKeywords: const {
+                  'kw': ['test-kw', 'demoads_native'],
+                },
+                onBannerFinishLoading: ({
+                  required success,
+                  height,
+                  width,
+                  nativeAd,
+                }) =>
+                    debugPrint(
+                        'on native banner finish loading: success: $success'),
+                autoRefreshInterval: Duration.zero,
+                clickThroughAction: ClickThroughAction.returnUrl,
+                onAdClicked: (url) => debugPrint('click url: $url'),
+                allowNativeDemand: true,
+                nativeAdBuilder: (nativeAd) => Container(
+                  width: 200,
+                  height: 200,
+                  color: Colors.amber,
+                  child: Column(
+                    children: [
+                      Text(nativeAd.title),
+                      Text(nativeAd.description),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

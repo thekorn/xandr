@@ -25,6 +25,7 @@ class AdBanner extends StatefulWidget {
     this.autoRefreshInterval = const Duration(seconds: 30),
     this.resizeWhenLoaded = false,
     this.allowNativeDemand = false,
+    this.nativeAdBuilder,
     this.clickThroughAction,
     this.resizeAdToFitContainer = false,
     this.loadsInBackground,
@@ -73,6 +74,11 @@ class AdBanner extends StatefulWidget {
 
   /// Whether to allow native demand for the ad banner.
   final bool allowNativeDemand;
+
+  /// Widget builder for native ads
+  final Widget Function(
+    NativeAdData nativeAd,
+  )? nativeAdBuilder;
 
   /// The width of the ad banner.
   final double width;
@@ -127,6 +133,7 @@ class _AdBannerState extends State<AdBanner> {
   double _height = 1;
   bool _loading = false;
   bool _loaded = false;
+  NativeAdData? _nativeAd;
   final Completer<int> _widgetId = Completer();
 
   @override
@@ -184,7 +191,12 @@ class _AdBannerState extends State<AdBanner> {
     });
   }
 
-  void onDoneLoading({required bool success, int? width, int? height}) {
+  void onDoneLoading({
+    required bool success,
+    int? width,
+    int? height,
+    NativeAdData? nativeAd,
+  }) {
     widget.onBannerFinishLoading?.call(
       success: success,
       width: width,
@@ -195,6 +207,7 @@ class _AdBannerState extends State<AdBanner> {
     setState(() {
       _loading = false;
       _loaded = success;
+      _nativeAd = nativeAd;
     });
     if (!widget.doneLoading.isCompleted) {
       widget.doneLoading.complete(success);
@@ -213,6 +226,11 @@ class _AdBannerState extends State<AdBanner> {
         await widget.multiAdRequestController!.isInitialized.future;
     return multiAdrequestInitialized;
   }
+
+  Widget? nativeAdWidget() =>
+      _nativeAd != null && widget.nativeAdBuilder != null
+          ? widget.nativeAdBuilder!(_nativeAd!)
+          : null;
 
   @override
   Widget build(BuildContext context) {
@@ -245,6 +263,7 @@ class _AdBannerState extends State<AdBanner> {
                 enableLazyLoad: widget.enableLazyLoad,
                 multiAdRequestId: widget.multiAdRequestController?.requestId,
                 onAdClicked: widget.onAdClicked,
+                nativeAdWidget: nativeAdWidget(),
               ),
             );
           } else {
@@ -290,40 +309,65 @@ enum ClickThroughAction {
   }
 }
 
+/// Encapsulated data needed to render the native ad
+class NativeAdData {
+  /// Encapsulated data needed to render the native ad
+  NativeAdData({
+    required this.viewId,
+    required this.title,
+    required this.description,
+    required this.imageUrl,
+  });
+
+  /// native ad viewId
+  final int viewId;
+
+  /// native ad title
+  final String title;
+
+  /// native ad description
+  final String description;
+
+  /// native ad imageUrl
+  final String imageUrl;
+}
+
 /// Represents a callback which is called when an ad is either loaded or
 /// throws an error
 typedef DoneLoadingCallback = void Function({
   required bool success,
   int? width,
   int? height,
+  NativeAdData? nativeAd,
 });
 
 /// Represents a callback which is called when an ad is clicked
 typedef AdClickedCallback = void Function(String url);
 
 class _HostAdBannerView extends StatelessWidget {
-  _HostAdBannerView({
-    required String? placementID,
-    required String? inventoryCode,
-    required List<AdSize> adSizes,
-    required CustomKeywords customKeywords,
-    required bool allowNativeDemand,
-    required Duration autoRefreshInterval,
-    required bool resizeWhenLoaded,
-    required this.controller,
-    required int layoutHeight,
-    required int layoutWidth,
-    required bool resizeAdToFitContainer,
-    required LoadMode loadMode,
-    required DoneLoadingCallback onDoneLoading,
-    required this.widgetId,
-    required String? multiAdRequestId,
-    ClickThroughAction? clickThroughAction,
-    bool? loadsInBackground,
-    bool? shouldServePSAs,
-    bool? enableLazyLoad,
-    this.onAdClicked,
-  })  : _onDoneLoading = onDoneLoading,
+  _HostAdBannerView(
+      {required String? placementID,
+      required String? inventoryCode,
+      required List<AdSize> adSizes,
+      required CustomKeywords customKeywords,
+      required bool allowNativeDemand,
+      required Duration autoRefreshInterval,
+      required bool resizeWhenLoaded,
+      required this.controller,
+      required int layoutHeight,
+      required int layoutWidth,
+      required bool resizeAdToFitContainer,
+      required LoadMode loadMode,
+      required DoneLoadingCallback onDoneLoading,
+      required this.widgetId,
+      required String? multiAdRequestId,
+      ClickThroughAction? clickThroughAction,
+      bool? loadsInBackground,
+      bool? shouldServePSAs,
+      bool? enableLazyLoad,
+      this.onAdClicked,
+      this.nativeAdWidget})
+      : _onDoneLoading = onDoneLoading,
         creationParams = <String, dynamic>{
           'placementID': placementID,
           'inventoryCode': inventoryCode,
@@ -360,6 +404,7 @@ class _HostAdBannerView extends StatelessWidget {
   final DoneLoadingCallback _onDoneLoading;
   final Completer<int> widgetId;
   final AdClickedCallback? onAdClicked;
+  final Widget? nativeAdWidget;
 
   static const viewType = 'de.thekorn.xandr/ad_banner';
 
@@ -370,7 +415,10 @@ class _HostAdBannerView extends StatelessWidget {
           defaultTargetPlatform != TargetPlatform.iOS,
       'The AdBanner widget is not supported on $defaultTargetPlatform',
     );
-    if (defaultTargetPlatform == TargetPlatform.android) {
+    debugPrint('>>>> _HostAdBannerView: build widgetId: ');
+    if (nativeAdWidget != null) {
+      return nativeAdWidget!;
+    } else if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidView(
         viewType: viewType,
         onPlatformViewCreated: onPlatformViewCreated,
@@ -403,7 +451,15 @@ class _HostAdBannerView extends StatelessWidget {
       } else if (event is BannerAdLoadedErrorEvent) {
         _onDoneLoading(success: false);
       } else if (event is NativeBannerAdLoadedEvent) {
-        _onDoneLoading(success: true);
+        _onDoneLoading(
+          success: true,
+          nativeAd: NativeAdData(
+            viewId: event.viewId,
+            title: event.title,
+            description: event.description,
+            imageUrl: event.imageUrl,
+          ),
+        );
       } else if (event is NativeBannerAdLoadedErrorEvent) {
         _onDoneLoading(success: false);
       } else if (event is BannerAdClickedEvent) {
