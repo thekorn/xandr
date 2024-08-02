@@ -277,9 +277,8 @@ class _XandrExampleState extends State<XandrExample> {
                 autoRefreshInterval: Duration.zero,
                 clickThroughAction: ClickThroughAction.returnUrl,
                 onAdClicked: (url) => debugPrint('click url: $url'),
-                allowNativeDemand: true,
                 nativeAdBuilder: (nativeAd) => Container(
-                  width: 200,
+                  width: 400,
                   height: 200,
                   color: Colors.amber,
                   child: Column(

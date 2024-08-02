@@ -24,7 +24,6 @@ class AdBanner extends StatefulWidget {
     this.customKeywords,
     this.autoRefreshInterval = const Duration(seconds: 30),
     this.resizeWhenLoaded = false,
-    this.allowNativeDemand = false,
     this.nativeAdBuilder,
     this.clickThroughAction,
     this.resizeAdToFitContainer = false,
@@ -72,10 +71,7 @@ class AdBanner extends StatefulWidget {
   /// The interval at which the ad banner should automatically refresh.
   final Duration autoRefreshInterval;
 
-  /// Whether to allow native demand for the ad banner.
-  final bool allowNativeDemand;
-
-  /// Widget builder for native ads
+  /// If you want allow native ads - provide Widget builder for them
   final Widget Function(
     NativeAdData nativeAd,
   )? nativeAdBuilder;
@@ -239,32 +235,28 @@ class _AdBannerState extends State<AdBanner> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!) {
-            return SizedBox(
-              width: _width, //adSizes.first.width.toDouble(),
-              height: _height, //adSizes.first.height.toDouble(),
-              child: _HostAdBannerView(
-                placementID: widget.placementID,
-                inventoryCode: widget.inventoryCode,
-                adSizes: widget.adSizes,
-                customKeywords: widget.customKeywords ?? {},
-                allowNativeDemand: widget.allowNativeDemand,
-                autoRefreshInterval: widget.autoRefreshInterval,
-                resizeWhenLoaded: widget.resizeWhenLoaded,
-                controller: widget.controller,
-                layoutHeight: _height.toInt(),
-                layoutWidth: _width.toInt(),
-                clickThroughAction: widget.clickThroughAction,
-                resizeAdToFitContainer: widget.resizeAdToFitContainer,
-                loadsInBackground: widget.loadsInBackground,
-                shouldServePSAs: widget.shouldServePSAs,
-                loadMode: widget.loadMode,
-                onDoneLoading: onDoneLoading,
-                widgetId: _widgetId,
-                enableLazyLoad: widget.enableLazyLoad,
-                multiAdRequestId: widget.multiAdRequestController?.requestId,
-                onAdClicked: widget.onAdClicked,
-                nativeAdWidget: nativeAdWidget(),
-              ),
+            return _HostAdBannerView(
+              placementID: widget.placementID,
+              inventoryCode: widget.inventoryCode,
+              adSizes: widget.adSizes,
+              customKeywords: widget.customKeywords ?? {},
+              allowNativeDemand: widget.nativeAdBuilder != null,
+              autoRefreshInterval: widget.autoRefreshInterval,
+              resizeWhenLoaded: widget.resizeWhenLoaded,
+              controller: widget.controller,
+              layoutHeight: _height.toInt(),
+              layoutWidth: _width.toInt(),
+              clickThroughAction: widget.clickThroughAction,
+              resizeAdToFitContainer: widget.resizeAdToFitContainer,
+              loadsInBackground: widget.loadsInBackground,
+              shouldServePSAs: widget.shouldServePSAs,
+              loadMode: widget.loadMode,
+              onDoneLoading: onDoneLoading,
+              widgetId: _widgetId,
+              enableLazyLoad: widget.enableLazyLoad,
+              multiAdRequestId: widget.multiAdRequestController?.requestId,
+              onAdClicked: widget.onAdClicked,
+              nativeAdWidget: nativeAdWidget(),
             );
           } else {
             return const Text('Error initializing Xandr, error: false');
@@ -354,8 +346,8 @@ class _HostAdBannerView extends StatelessWidget {
       required Duration autoRefreshInterval,
       required bool resizeWhenLoaded,
       required this.controller,
-      required int layoutHeight,
-      required int layoutWidth,
+      required this.layoutHeight,
+      required this.layoutWidth,
       required bool resizeAdToFitContainer,
       required LoadMode loadMode,
       required DoneLoadingCallback onDoneLoading,
@@ -405,6 +397,8 @@ class _HostAdBannerView extends StatelessWidget {
   final Completer<int> widgetId;
   final AdClickedCallback? onAdClicked;
   final Widget? nativeAdWidget;
+  final int layoutWidth;
+  final int layoutHeight;
 
   static const viewType = 'de.thekorn.xandr/ad_banner';
 
@@ -419,18 +413,26 @@ class _HostAdBannerView extends StatelessWidget {
     if (nativeAdWidget != null) {
       return nativeAdWidget!;
     } else if (defaultTargetPlatform == TargetPlatform.android) {
-      return AndroidView(
-        viewType: viewType,
-        onPlatformViewCreated: onPlatformViewCreated,
-        creationParams: creationParams,
-        creationParamsCodec: _decoder,
+      return SizedBox(
+        width: layoutWidth.toDouble(),
+        height: layoutHeight.toDouble(),
+        child: AndroidView(
+          viewType: viewType,
+          onPlatformViewCreated: onPlatformViewCreated,
+          creationParams: creationParams,
+          creationParamsCodec: _decoder,
+        ),
       );
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return UiKitView(
-        viewType: viewType,
-        onPlatformViewCreated: onPlatformViewCreated,
-        creationParams: creationParams,
-        creationParamsCodec: _decoder,
+      return SizedBox(
+        width: layoutWidth.toDouble(),
+        height: layoutHeight.toDouble(),
+        child: UiKitView(
+          viewType: viewType,
+          onPlatformViewCreated: onPlatformViewCreated,
+          creationParams: creationParams,
+          creationParamsCodec: _decoder,
+        ),
       );
     } else {
       throw UnsupportedError(
