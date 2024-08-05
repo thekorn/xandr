@@ -215,15 +215,20 @@ class XandrEventHandler implements messages.XandrFlutterApi {
     String title,
     String description,
     String imageUrl,
+    String clickUrl,
   ) {
-    debugPrint("xandr.onNativeAdLoaded: $viewId, title='$title', "
-        "description='$description', imageUrl='$imageUrl'");
+    debugPrint(
+      "xandr.onNativeAdLoaded: $viewId, title='$title', "
+      "description='$description', imageUrl='$imageUrl', "
+      "clickUrl='$clickUrl'",
+    );
     _controller.add(
       NativeBannerAdLoadedEvent(
         viewId: viewId,
         title: title,
         description: description,
         imageUrl: imageUrl,
+        clickUrl: clickUrl,
       ),
     );
   }

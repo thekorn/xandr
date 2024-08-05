@@ -309,6 +309,7 @@ class NativeAdData {
     required this.title,
     required this.description,
     required this.imageUrl,
+    required this.clickUrl,
   });
 
   /// native ad viewId
@@ -322,6 +323,9 @@ class NativeAdData {
 
   /// native ad imageUrl
   final String imageUrl;
+
+  /// native ad clickUrl
+  final String clickUrl;
 }
 
 /// Represents a callback which is called when an ad is either loaded or
@@ -337,29 +341,29 @@ typedef DoneLoadingCallback = void Function({
 typedef AdClickedCallback = void Function(String url);
 
 class _HostAdBannerView extends StatelessWidget {
-  _HostAdBannerView(
-      {required String? placementID,
-      required String? inventoryCode,
-      required List<AdSize> adSizes,
-      required CustomKeywords customKeywords,
-      required bool allowNativeDemand,
-      required Duration autoRefreshInterval,
-      required bool resizeWhenLoaded,
-      required this.controller,
-      required this.layoutHeight,
-      required this.layoutWidth,
-      required bool resizeAdToFitContainer,
-      required LoadMode loadMode,
-      required DoneLoadingCallback onDoneLoading,
-      required this.widgetId,
-      required String? multiAdRequestId,
-      ClickThroughAction? clickThroughAction,
-      bool? loadsInBackground,
-      bool? shouldServePSAs,
-      bool? enableLazyLoad,
-      this.onAdClicked,
-      this.nativeAdWidget})
-      : _onDoneLoading = onDoneLoading,
+  _HostAdBannerView({
+    required String? placementID,
+    required String? inventoryCode,
+    required List<AdSize> adSizes,
+    required CustomKeywords customKeywords,
+    required bool allowNativeDemand,
+    required Duration autoRefreshInterval,
+    required bool resizeWhenLoaded,
+    required this.controller,
+    required this.layoutHeight,
+    required this.layoutWidth,
+    required bool resizeAdToFitContainer,
+    required LoadMode loadMode,
+    required DoneLoadingCallback onDoneLoading,
+    required this.widgetId,
+    required String? multiAdRequestId,
+    ClickThroughAction? clickThroughAction,
+    bool? loadsInBackground,
+    bool? shouldServePSAs,
+    bool? enableLazyLoad,
+    this.onAdClicked,
+    this.nativeAdWidget,
+  })  : _onDoneLoading = onDoneLoading,
         creationParams = <String, dynamic>{
           'placementID': placementID,
           'inventoryCode': inventoryCode,
@@ -460,6 +464,7 @@ class _HostAdBannerView extends StatelessWidget {
             title: event.title,
             description: event.description,
             imageUrl: event.imageUrl,
+            clickUrl: event.clickUrl,
           ),
         );
       } else if (event is NativeBannerAdLoadedErrorEvent) {

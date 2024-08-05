@@ -287,18 +287,24 @@ class _XandrExampleState extends State<XandrExample> {
                     nativeAd,
                   }) =>
                       debugPrint(
-                          'on native banner finish loading: success: $success'),
+                    'on native banner finish loading: success: $success',
+                  ),
                   autoRefreshInterval: Duration.zero,
                   clickThroughAction: ClickThroughAction.returnUrl,
                   onAdClicked: (url) => debugPrint('click url: $url'),
-                  nativeAdBuilder: (nativeAd) => ColoredBox(
-                    color: Colors.amber,
-                    child: Column(
-                      children: [
-                        Text(nativeAd.title),
-                        Text(nativeAd.description),
-                        Image.network(nativeAd.imageUrl),
-                      ],
+                  nativeAdBuilder: (nativeAd) => InkWell(
+                    onTap: () => debugPrint(
+                      'native ad click: ${nativeAd.clickUrl}',
+                    ),
+                    child: ColoredBox(
+                      color: Colors.amber,
+                      child: Column(
+                        children: [
+                          Text(nativeAd.title),
+                          Text(nativeAd.description),
+                          Image.network(nativeAd.imageUrl),
+                        ],
+                      ),
                     ),
                   ),
                 ),
