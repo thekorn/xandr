@@ -142,6 +142,36 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
     }
   }
 
+  public func ad(_ loadInstance: Any, didReceiveNativeAd responseInstance: Any) {
+    if let nativeAdResponse = responseInstance as? ANNativeAdResponse,
+       let title = nativeAdResponse.title, let description = nativeAdResponse.body,
+       let imageUrl = nativeAdResponse.mainImageURL,
+       let customElements = nativeAdResponse.customElements?["ELEMENT"] as? [String: Any?] {
+      let clickUrl = (customElements["link"] as? [String: Any])?["url"] as? String
+      let clickFallbackUrl = (customElements["link"] as? [String: Any])?["fallback_url"] as? String
+
+      if clickUrl != nil || clickFallbackUrl != nil {
+        state?.onNativeAdLoadedAPI(
+          viewId: viewId,
+          title: title,
+          description: description,
+          imageUrl: imageUrl.absoluteString,
+          clickUrl: clickUrl ?? clickFallbackUrl ?? ""
+        )
+      } else {
+        logger
+          .error(
+            message: "BannerAd.addidReceiveNativeAd: we did not get a click URL for response, got \(String(describing: responseInstance))"
+          )
+      }
+    } else {
+      logger
+        .error(
+          message: "BannerAd.addidReceiveNativeAd: we did not get an ANNativeAdResponse back, got \(String(describing: responseInstance))"
+        )
+    }
+  }
+
   func ad(_ ad: Any, requestFailedWithError error: any Error) {
     logger.error(message: "BannerAd.adDidRecieveAd: an error \(error)")
     state?.onAdLoadedError(viewId: viewId, reason: error.localizedDescription)

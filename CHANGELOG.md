@@ -494,7 +494,7 @@ Packages with other changes:
 
 #### `xandr_ios` - `v0.2.3+7`
 
- - implementation of the onAdRecieved signal
+ - implementation of the onAdReceived signal
 
 #### `xandr_platform_interface` - `v0.2.3+7`
 
@@ -670,7 +670,7 @@ Packages with other changes:
 
 #### `xandr_ios` - `v0.2.3+2`
 
- - iOS interstitials: bind the interstitial to the parentmost view controller
+ - iOS interstitial: bind the interstitial to the parent view controller
 
 #### `xandr_platform_interface` - `v0.2.3+2`
 
@@ -702,7 +702,7 @@ Packages with other changes:
 
 #### `xandr_ios` - `v0.2.3+1`
 
- - dont use testMode anymore
+ - don't use testMode anymore
 
 #### `xandr_platform_interface` - `v0.2.3+1`
 
