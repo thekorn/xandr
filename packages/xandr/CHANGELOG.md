@@ -1,3 +1,10 @@
+## 0.2.6
+
+ - Initial implementation of native ad rendering
+
+ - **FIX**: readd explicit allowNativeDemand param to AdBanner.
+ - **FEAT**: clickUrl implementation on nativeAdLoaded event.
+
 ## 0.2.5+2
 
  - **FIX**: fix clickThroughAction ios implementation + onAdClicked callback.

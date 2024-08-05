@@ -1,3 +1,8 @@
+## 0.2.6
+
+ - **FIX**: more spelling errors.
+ - **FEAT**: clickUrl implementation on nativeAdLoaded event.
+
 ## 0.2.5+2
 
  - **FIX**: fix clickThroughAction ios implementation + onAdClicked callback.

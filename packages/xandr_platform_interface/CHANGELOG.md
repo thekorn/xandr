@@ -1,3 +1,7 @@
+## 0.2.6
+
+ - **FEAT**: clickUrl implementation on nativeAdLoaded event.
+
 ## 0.2.5+2
 
  - **FIX**: fix clickThroughAction ios implementation + onAdClicked callback.
