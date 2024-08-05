@@ -1,3 +1,7 @@
+## 0.2.7
+
+ - **FEAT**: add test mode config param on init.
+
 ## 0.2.6
 
  - Initial implementation of native ad rendering

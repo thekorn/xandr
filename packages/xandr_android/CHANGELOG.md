@@ -1,3 +1,10 @@
+## 0.2.7
+
+ - Fix null check in kotlin land
+
+ - **FIX**: null safe call on xandr native ad response.
+ - **FEAT**: add test mode config param on init.
+
 ## 0.2.6
 
  - **FEAT**: clickUrl implementation on nativeAdLoaded event.

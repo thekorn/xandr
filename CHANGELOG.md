@@ -15,6 +15,45 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`xandr` - `v0.2.7`](#xandr---v027)
+ - [`xandr_android` - `v0.2.7`](#xandr_android---v027)
+ - [`xandr_ios` - `v0.2.7`](#xandr_ios---v027)
+ - [`xandr_platform_interface` - `v0.2.7`](#xandr_platform_interface---v027)
+
+---
+
+#### `xandr` - `v0.2.7`
+
+ - **FEAT**: add test mode config param on init.
+
+#### `xandr_android` - `v0.2.7`
+
+ - Fix null check in kotlin land
+
+ - **FIX**: null safe call on xandr native ad response.
+ - **FEAT**: add test mode config param on init.
+
+#### `xandr_ios` - `v0.2.7`
+
+ - **FEAT**: add test mode config param on init.
+
+#### `xandr_platform_interface` - `v0.2.7`
+
+ - **FEAT**: add test mode config param on init.
+
+
+## 2024-08-05
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`xandr` - `v0.2.6`](#xandr---v026)
  - [`xandr_android` - `v0.2.6`](#xandr_android---v026)
  - [`xandr_ios` - `v0.2.6`](#xandr_ios---v026)
