@@ -30,6 +30,7 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
   _i3.Future<bool> init({
     required int? memberId,
     int? publisherId,
+    bool? testMode = false,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -38,6 +39,7 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
           {
             #memberId: memberId,
             #publisherId: publisherId,
+            #testMode: testMode,
           },
         ),
         returnValue: _i3.Future<bool>.value(false),

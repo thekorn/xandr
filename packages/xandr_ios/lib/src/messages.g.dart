@@ -104,7 +104,11 @@ class XandrHostApi {
 
   final String __pigeon_messageChannelSuffix;
 
-  Future<bool> initXandrSdk({required int memberId, int? publisherId}) async {
+  Future<bool> initXandrSdk({
+    required int memberId,
+    int? publisherId,
+    bool testMode = false,
+  }) async {
     final String __pigeon_channelName =
         'dev.flutter.pigeon.xandr_ios.XandrHostApi.initXandrSdk$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel =
@@ -114,7 +118,7 @@ class XandrHostApi {
       binaryMessenger: __pigeon_binaryMessenger,
     );
     final List<Object?>? __pigeon_replyList = await __pigeon_channel
-        .send(<Object?>[memberId, publisherId]) as List<Object?>?;
+        .send(<Object?>[memberId, publisherId, testMode]) as List<Object?>?;
     if (__pigeon_replyList == null) {
       throw _createConnectionError(__pigeon_channelName);
     } else if (__pigeon_replyList.length > 1) {
@@ -525,8 +529,8 @@ abstract class XandrFlutterApi {
 
   void onAdLoadedError(int viewId, String reason);
 
-  void onNativeAdLoaded(
-      int viewId, String title, String description, String imageUrl);
+  void onNativeAdLoaded(int viewId, String title, String description,
+      String imageUrl, String clickUrl);
 
   void onNativeAdLoadedError(int viewId, String reason);
 
@@ -656,9 +660,12 @@ abstract class XandrFlutterApi {
           final String? arg_imageUrl = (args[3] as String?);
           assert(arg_imageUrl != null,
               'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.');
+          final String? arg_clickUrl = (args[4] as String?);
+          assert(arg_clickUrl != null,
+              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.');
           try {
-            api.onNativeAdLoaded(
-                arg_viewId!, arg_title!, arg_description!, arg_imageUrl!);
+            api.onNativeAdLoaded(arg_viewId!, arg_title!, arg_description!,
+                arg_imageUrl!, arg_clickUrl!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);

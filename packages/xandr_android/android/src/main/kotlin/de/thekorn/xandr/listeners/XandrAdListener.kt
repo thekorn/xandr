@@ -5,9 +5,11 @@ import com.appnexus.opensdk.AdListener
 import com.appnexus.opensdk.AdView
 import com.appnexus.opensdk.NativeAdResponse
 import com.appnexus.opensdk.ResultCode
+import com.appnexus.opensdk.utils.JsonUtil
 import de.thekorn.xandr.models.ads.BannerAd
 import de.thekorn.xandr.models.ads.InterstitialAd
 import io.flutter.Log
+import org.json.JSONObject
 
 // / FIXME: create explicit XandrBannerAdListener
 // /  means: XandrAdListener as base plus an interstitial and banner implementation
@@ -45,12 +47,29 @@ open class XandrAdListener(private var widgetId: Int, private var flutterApi: Xa
             ">>> Ad Loaded, NativeAdResponse=$adResonse, title=${adResonse?.title} " +
                 "for $widgetId"
         )
-        if (adResonse != null) {
+        var clickUrl: String? = null
+        if ((adResonse?.networkIdentifier == NativeAdResponse.Network.APPNEXUS) &&
+            (adResonse?.nativeElements?.get(NativeAdResponse.NATIVE_ELEMENT_OBJECT)) is JSONObject
+        ) {
+            val nativeResponseJSON = (
+                adResonse.nativeElements
+                [NativeAdResponse.NATIVE_ELEMENT_OBJECT]
+                )
+                as JSONObject
+            clickUrl = JsonUtil.getJSONObject(nativeResponseJSON, "link").getString("url")
+            if (clickUrl.isEmpty()) {
+                clickUrl =
+                    JsonUtil.getJSONObject(nativeResponseJSON, "link").getString("fallback_url")
+            }
+        }
+
+        if (adResonse != null && clickUrl != null) {
             flutterApi.onNativeAdLoaded(
                 widgetId.toLong(),
                 adResonse.title,
                 adResonse.description,
-                adResonse.imageUrl
+                adResonse.imageUrl,
+                clickUrl
             ) { }
         } else {
             flutterApi.onNativeAdLoadedError(

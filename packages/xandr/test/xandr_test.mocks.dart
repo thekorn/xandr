@@ -56,12 +56,16 @@ class MockMethodChannelXandr extends _i1.Mock
   _i4.Future<bool> init(
     int? memberId, {
     int? publisherId,
+    bool? testMode = false,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
           #init,
           [memberId],
-          {#publisherId: publisherId},
+          {
+            #publisherId: publisherId,
+            #testMode: testMode,
+          },
         ),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),

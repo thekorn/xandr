@@ -151,7 +151,7 @@ class XandrPigeonCodec: FlutterStandardMessageCodec, @unchecked Sendable {
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol XandrHostApi {
-  func initXandrSdk(memberId: Int64, publisherId: Int64?,
+  func initXandrSdk(memberId: Int64, publisherId: Int64?, testMode: Bool,
                     completion: @escaping (Result<Bool, Error>) -> Void)
   func loadInterstitialAd(widgetId: Int64, placementID: String?, inventoryCode: String?,
                           customKeywords: [String: [String]]?,
@@ -195,14 +195,17 @@ class XandrHostApiSetup {
         let memberIdArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
         let publisherIdArg: Int64? = isNullish(args[1]) ? nil :
           (args[1] is Int64? ? args[1] as! Int64? : Int64(args[1] as! Int32))
-        api.initXandrSdk(memberId: memberIdArg, publisherId: publisherIdArg) { result in
-          switch result {
-          case let .success(res):
-            reply(wrapResult(res))
-          case let .failure(error):
-            reply(wrapError(error))
+        let testModeArg = args[2] as! Bool
+        api
+          .initXandrSdk(memberId: memberIdArg, publisherId: publisherIdArg,
+                        testMode: testModeArg) { result in
+            switch result {
+            case let .success(res):
+              reply(wrapResult(res))
+            case let .failure(error):
+              reply(wrapError(error))
+            }
           }
-        }
       }
     } else {
       initXandrSdkChannel.setMessageHandler(nil)
@@ -497,6 +500,7 @@ protocol XandrFlutterApiProtocol {
                        completion: @escaping (Result<Void, PigeonError>) -> Void)
   func onNativeAdLoaded(viewId viewIdArg: Int64, title titleArg: String,
                         description descriptionArg: String, imageUrl imageUrlArg: String,
+                        clickUrl clickUrlArg: String,
                         completion: @escaping (Result<Void, PigeonError>) -> Void)
   func onNativeAdLoadedError(viewId viewIdArg: Int64, reason reasonArg: String,
                              completion: @escaping (Result<Void, PigeonError>) -> Void)
@@ -581,6 +585,7 @@ class XandrFlutterApi: XandrFlutterApiProtocol {
 
   func onNativeAdLoaded(viewId viewIdArg: Int64, title titleArg: String,
                         description descriptionArg: String, imageUrl imageUrlArg: String,
+                        clickUrl clickUrlArg: String,
                         completion: @escaping (Result<Void, PigeonError>) -> Void) {
     let channelName =
       "dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded\(messageChannelSuffix)"
@@ -589,20 +594,22 @@ class XandrFlutterApi: XandrFlutterApiProtocol {
       binaryMessenger: binaryMessenger,
       codec: codec
     )
-    channel.sendMessage([viewIdArg, titleArg, descriptionArg, imageUrlArg] as [Any?]) { response in
-      guard let listResponse = response as? [Any?] else {
-        completion(.failure(createConnectionError(withChannelName: channelName)))
-        return
+    channel
+      .sendMessage([viewIdArg, titleArg, descriptionArg, imageUrlArg,
+                    clickUrlArg] as [Any?]) { response in
+        guard let listResponse = response as? [Any?] else {
+          completion(.failure(createConnectionError(withChannelName: channelName)))
+          return
+        }
+        if listResponse.count > 1 {
+          let code: String = listResponse[0] as! String
+          let message: String? = nilOrValue(listResponse[1])
+          let details: String? = nilOrValue(listResponse[2])
+          completion(.failure(PigeonError(code: code, message: message, details: details)))
+        } else {
+          completion(.success(()))
+        }
       }
-      if listResponse.count > 1 {
-        let code: String = listResponse[0] as! String
-        let message: String? = nilOrValue(listResponse[1])
-        let details: String? = nilOrValue(listResponse[2])
-        completion(.failure(PigeonError(code: code, message: message, details: details)))
-      } else {
-        completion(.success(()))
-      }
-    }
   }
 
   func onNativeAdLoadedError(viewId viewIdArg: Int64, reason reasonArg: String,

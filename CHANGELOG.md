@@ -3,6 +3,85 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-08-05
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`xandr` - `v0.2.7`](#xandr---v027)
+ - [`xandr_android` - `v0.2.7`](#xandr_android---v027)
+ - [`xandr_ios` - `v0.2.7`](#xandr_ios---v027)
+ - [`xandr_platform_interface` - `v0.2.7`](#xandr_platform_interface---v027)
+
+---
+
+#### `xandr` - `v0.2.7`
+
+ - **FEAT**: add test mode config param on init.
+
+#### `xandr_android` - `v0.2.7`
+
+ - Fix null check in kotlin land
+
+ - **FIX**: null safe call on xandr native ad response.
+ - **FEAT**: add test mode config param on init.
+
+#### `xandr_ios` - `v0.2.7`
+
+ - **FEAT**: add test mode config param on init.
+
+#### `xandr_platform_interface` - `v0.2.7`
+
+ - **FEAT**: add test mode config param on init.
+
+
+## 2024-08-05
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`xandr` - `v0.2.6`](#xandr---v026)
+ - [`xandr_android` - `v0.2.6`](#xandr_android---v026)
+ - [`xandr_ios` - `v0.2.6`](#xandr_ios---v026)
+ - [`xandr_platform_interface` - `v0.2.6`](#xandr_platform_interface---v026)
+
+---
+
+#### `xandr` - `v0.2.6`
+
+ - Initial implementation of native ad rendering
+
+ - **FIX**: readd explicit allowNativeDemand param to AdBanner.
+ - **FEAT**: clickUrl implementation on nativeAdLoaded event.
+
+#### `xandr_android` - `v0.2.6`
+
+ - **FEAT**: clickUrl implementation on nativeAdLoaded event.
+
+#### `xandr_ios` - `v0.2.6`
+
+ - **FIX**: more spelling errors.
+ - **FEAT**: clickUrl implementation on nativeAdLoaded event.
+
+#### `xandr_platform_interface` - `v0.2.6`
+
+ - **FEAT**: clickUrl implementation on nativeAdLoaded event.
+
+
 ## 2024-08-01
 
 ### Changes
@@ -494,7 +573,7 @@ Packages with other changes:
 
 #### `xandr_ios` - `v0.2.3+7`
 
- - implementation of the onAdRecieved signal
+ - implementation of the onAdReceived signal
 
 #### `xandr_platform_interface` - `v0.2.3+7`
 
@@ -670,7 +749,7 @@ Packages with other changes:
 
 #### `xandr_ios` - `v0.2.3+2`
 
- - iOS interstitials: bind the interstitial to the parentmost view controller
+ - iOS interstitial: bind the interstitial to the parent view controller
 
 #### `xandr_platform_interface` - `v0.2.3+2`
 
@@ -702,7 +781,7 @@ Packages with other changes:
 
 #### `xandr_ios` - `v0.2.3+1`
 
- - dont use testMode anymore
+ - don't use testMode anymore
 
 #### `xandr_platform_interface` - `v0.2.3+1`
 

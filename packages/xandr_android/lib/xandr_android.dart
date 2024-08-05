@@ -68,8 +68,16 @@ class XandrAndroid extends XandrPlatform {
   }
 
   @override
-  Future<bool> init(int memberId, {int? publisherId}) async {
-    return _api.init(memberId: memberId, publisherId: publisherId);
+  Future<bool> init(
+    int memberId, {
+    int? publisherId,
+    bool testMode = false,
+  }) async {
+    return _api.init(
+      memberId: memberId,
+      publisherId: publisherId,
+      testMode: testMode,
+    );
   }
 
   @override
@@ -215,15 +223,19 @@ class XandrEventHandler implements messages.XandrFlutterApi {
     String title,
     String description,
     String imageUrl,
+    String clickUrl,
   ) {
-    debugPrint("xandr.onNativeAdLoaded: $viewId, title='$title', "
-        "description='$description', imageUrl='$imageUrl'");
+    debugPrint(
+      "xandr.onNativeAdLoaded: $viewId, title='$title', "
+      "description='$description', imageUrl='$imageUrl', clickUrl='$clickUrl'",
+    );
     _controller.add(
       NativeBannerAdLoadedEvent(
         viewId: viewId,
         title: title,
         description: description,
         imageUrl: imageUrl,
+        clickUrl: clickUrl,
       ),
     );
   }

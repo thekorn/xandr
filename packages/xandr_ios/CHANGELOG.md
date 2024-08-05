@@ -1,3 +1,12 @@
+## 0.2.7
+
+ - **FEAT**: add test mode config param on init.
+
+## 0.2.6
+
+ - **FIX**: more spelling errors.
+ - **FEAT**: clickUrl implementation on nativeAdLoaded event.
+
 ## 0.2.5+2
 
  - **FIX**: fix clickThroughAction ios implementation + onAdClicked callback.
@@ -50,7 +59,7 @@
 
 ## 0.2.3+7
 
- - implementation of the onAdRecieved signal
+ - implementation of the onAdReceived signal
 
 ## 0.2.3+6
 
@@ -70,11 +79,11 @@
 
 ## 0.2.3+2
 
- - iOS interstitials: bind the interstitial to the parentmost view controller
+ - iOS interstitial: bind the interstitial to the parent view controller
 
 ## 0.2.3+1
 
- - dont use testMode anymore
+ - don't use testMode anymore
 
 ## 0.2.3
 

@@ -34,7 +34,11 @@ class HostAPIUserId {
 @HostApi()
 abstract class XandrHostApi {
   @async
-  bool init({required int memberId, int? publisherId});
+  bool init({
+    required int memberId,
+    int? publisherId,
+    bool testMode = false,
+  });
 
   @async
   bool loadAd({
@@ -103,6 +107,7 @@ abstract class XandrFlutterApi {
     String title,
     String description,
     String imageUrl,
+    String clickUrl,
   ) {}
   void onNativeAdLoadedError(int viewId, String reason) {}
   void onAdClicked(int viewId, String url) {}
