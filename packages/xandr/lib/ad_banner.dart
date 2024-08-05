@@ -24,6 +24,7 @@ class AdBanner extends StatefulWidget {
     this.customKeywords,
     this.autoRefreshInterval = const Duration(seconds: 30),
     this.resizeWhenLoaded = false,
+    this.allowNativeDemand = false,
     this.nativeAdBuilder,
     this.clickThroughAction,
     this.resizeAdToFitContainer = false,
@@ -40,6 +41,11 @@ class AdBanner extends StatefulWidget {
         assert(
           placementID != null || inventoryCode != null,
           'placementID or inventoryCode must not be null',
+        ),
+        assert(
+          (allowNativeDemand == false && nativeAdBuilder == null) ||
+              (allowNativeDemand == true && nativeAdBuilder != null),
+          'nativeAdBuilder must be set if allowNativeDemand is true',
         ),
         width = width ?? adSizes.first.width.toDouble(),
         height = height ?? adSizes.first.height.toDouble(),
@@ -75,6 +81,9 @@ class AdBanner extends StatefulWidget {
   final Widget Function(
     NativeAdData nativeAd,
   )? nativeAdBuilder;
+
+  /// Whether to allow native ads to be served
+  final bool allowNativeDemand;
 
   /// The width of the ad banner.
   final double width;
@@ -240,7 +249,6 @@ class _AdBannerState extends State<AdBanner> {
               inventoryCode: widget.inventoryCode,
               adSizes: widget.adSizes,
               customKeywords: widget.customKeywords ?? {},
-              allowNativeDemand: widget.nativeAdBuilder != null,
               autoRefreshInterval: widget.autoRefreshInterval,
               resizeWhenLoaded: widget.resizeWhenLoaded,
               controller: widget.controller,
@@ -256,6 +264,7 @@ class _AdBannerState extends State<AdBanner> {
               enableLazyLoad: widget.enableLazyLoad,
               multiAdRequestId: widget.multiAdRequestController?.requestId,
               onAdClicked: widget.onAdClicked,
+              allowNativeDemand: widget.allowNativeDemand,
               nativeAdWidget: nativeAdWidget(),
             );
           } else {

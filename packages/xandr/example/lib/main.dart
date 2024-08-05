@@ -292,6 +292,7 @@ class _XandrExampleState extends State<XandrExample> {
                   autoRefreshInterval: Duration.zero,
                   clickThroughAction: ClickThroughAction.returnUrl,
                   onAdClicked: (url) => debugPrint('click url: $url'),
+                  allowNativeDemand: true,
                   nativeAdBuilder: (nativeAd) => InkWell(
                     onTap: () => debugPrint(
                       'native ad click: ${nativeAd.clickUrl}',
