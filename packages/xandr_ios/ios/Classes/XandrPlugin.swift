@@ -43,11 +43,14 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
     registrar.register(factory, withId: "de.thekorn.xandr/ad_banner")
   }
 
-  func initXandrSdk(memberId: Int64, publisherId: Int64?,
+  func initXandrSdk(memberId: Int64, publisherId: Int64?, testMode: Bool,
                     completion: @escaping (Result<Bool, Error>) -> Void) {
     // init thge xandr sdk and store the memberId in the state on success
     // return true on success
     logger.debug(message: "initXandrSdk")
+
+    ANSDKSettings.sharedInstance().enableTestMode = testMode
+
     DispatchQueue.main.async {
       XandrAd.sharedInstance()
         .initWithMemberID(Int(memberId), preCacheRequestObjects: true) { [self]

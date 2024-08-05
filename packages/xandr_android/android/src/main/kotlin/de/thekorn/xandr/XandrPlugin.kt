@@ -85,7 +85,14 @@ class XandrPlugin :
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun init(memberId: Long, publisherId: Long?, callback: (Result<Boolean>) -> Unit) {
+    override fun init(
+        memberId: Long,
+        publisherId: Long?,
+        testMode: Boolean,
+        callback: (Result<Boolean>) -> Unit
+    ) {
+        SDKSettings.enableTestMode(testMode)
+
         this.flutterState.memberId = memberId.toInt()
         this.flutterState.publisherId = publisherId?.toInt()
         XandrAd.init(

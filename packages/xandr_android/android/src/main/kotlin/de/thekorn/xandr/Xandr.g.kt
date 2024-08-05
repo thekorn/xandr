@@ -115,7 +115,7 @@ private object XandrPigeonCodec : StandardMessageCodec() {
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface XandrHostApi {
-  fun init(memberId: Long, publisherId: Long?, callback: (Result<Boolean>) -> Unit)
+  fun init(memberId: Long, publisherId: Long?, testMode: Boolean, callback: (Result<Boolean>) -> Unit)
   fun loadAd(widgetId: Long, callback: (Result<Boolean>) -> Unit)
   fun loadInterstitialAd(widgetId: Long, placementID: String?, inventoryCode: String?, customKeywords: Map<String, List<String>>?, callback: (Result<Boolean>) -> Unit)
   fun showInterstitialAd(autoDismissDelay: Long?, callback: (Result<Boolean>) -> Unit)
@@ -146,7 +146,8 @@ interface XandrHostApi {
             val args = message as List<Any?>
             val memberIdArg = args[0].let { num -> if (num is Int) num.toLong() else num as Long }
             val publisherIdArg = args[1].let { num -> if (num is Int) num.toLong() else num as Long? }
-            api.init(memberIdArg, publisherIdArg) { result: Result<Boolean> ->
+            val testModeArg = args[2] as Boolean
+            api.init(memberIdArg, publisherIdArg, testModeArg) { result: Result<Boolean> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))
