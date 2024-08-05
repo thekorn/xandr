@@ -27,12 +27,25 @@ class XandrController {
   ///
   /// [memberId] is the Xandr member ID.
   /// [publisherId] is the optional Xandr publisher ID.
-  Future<bool> init(int memberId, {int? publisherId}) async {
-    debugPrint('init xandr with memberId=$memberId publisherId=$publisherId');
+  /// set [testMode] to true if in a test environment
+
+  Future<bool> init(
+    int memberId, {
+    int? publisherId,
+    bool testMode = false,
+  }) async {
+    debugPrint(
+      'init xandr with memberId=$memberId, publisherId=$publisherId, '
+      'testMode=$testMode',
+    );
     if (isInitialized.isCompleted) {
       return isInitialized.future;
     }
-    final result = await _platform.init(memberId, publisherId: publisherId);
+    final result = await _platform.init(
+      memberId,
+      publisherId: publisherId,
+      testMode: testMode,
+    );
     isInitialized.complete(result);
     return result;
   }

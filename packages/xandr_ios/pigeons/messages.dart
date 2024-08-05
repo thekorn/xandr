@@ -37,6 +37,7 @@ abstract class XandrHostApi {
   bool initXandrSdk({
     required int memberId,
     int? publisherId,
+    bool testMode = false,
   });
 
   @async
