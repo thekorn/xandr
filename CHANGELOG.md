@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-08-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`xandr` - `v0.2.8`](#xandr---v028)
+ - [`xandr_android` - `v0.2.8`](#xandr_android---v028)
+ - [`xandr_ios` - `v0.2.8`](#xandr_ios---v028)
+ - [`xandr_platform_interface` - `v0.2.8`](#xandr_platform_interface---v028)
+
+---
+
+#### `xandr` - `v0.2.8`
+
+ - **FEAT**: Update dependencies and streamline naming.
+
+#### `xandr_android` - `v0.2.8`
+
+ - Fix StackOverflow error in XandrPlugin.kt Activity hooks (#141)
+
+ - **FIX**: dont recursivly call the onDetachFromActivity() in the android.
+ - **FEAT**: Update dependencies and streamline naming.
+ - **DOCS**: inline comment on the unimplemented hooks in XandrPlugin.kt.
+
+#### `xandr_ios` - `v0.2.8`
+
+ - **FEAT**: Update dependencies and streamline naming.
+
+#### `xandr_platform_interface` - `v0.2.8`
+
+ - **FEAT**: Update dependencies and streamline naming.
+
+
 ## 2024-08-05
 
 ### Changes

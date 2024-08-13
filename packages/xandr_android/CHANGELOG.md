@@ -1,3 +1,11 @@
+## 0.2.8
+
+ - Fix StackOverflow error in XandrPlugin.kt Activity hooks (#141)
+
+ - **FIX**: dont recursivly call the onDetachFromActivity() in the android.
+ - **FEAT**: Update dependencies and streamline naming.
+ - **DOCS**: inline comment on the unimplemented hooks in XandrPlugin.kt.
+
 ## 0.2.7
 
  - Fix null check in kotlin land

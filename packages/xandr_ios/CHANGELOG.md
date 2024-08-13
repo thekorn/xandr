@@ -1,3 +1,7 @@
+## 0.2.8
+
+ - **FEAT**: Update dependencies and streamline naming.
+
 ## 0.2.7
 
  - **FEAT**: add test mode config param on init.
