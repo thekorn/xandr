@@ -61,28 +61,19 @@ class XandrPlugin :
         )
     }
 
-    override fun onDetachedFromActivityForConfigChanges() {
-        Log.d(
-            "Xandr",
-            "--> onDetachedFromActivityForConfigChanges"
-        )
+    override fun onDetachedFromActivity() {
+        // (mkorn) nothing to do here for now
+        // we might want to clean up the created BannerAd at some point
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        Log.d(
-            "Xandr",
-            "--> onReattachedToActivityForConfigChanges"
-        )
-        onDetachedFromActivity()
+        // (mkorn) nothing to do here
     }
 
-    override fun onDetachedFromActivity() {
-        Log.d(
-            "Xandr",
-            "--> onDetachedFromActivity"
-        )
-        onDetachedFromActivity()
+    override fun onDetachedFromActivityForConfigChanges() {
+        // (mkorn) nothing to do here
     }
+
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun init(
