@@ -1,3 +1,7 @@
+## 0.2.9
+
+ - Bump "xandr_platform_interface" to `0.2.9`.
+
 ## 0.2.8
 
  - **FEAT**: Update dependencies and streamline naming.

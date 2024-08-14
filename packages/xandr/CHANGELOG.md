@@ -1,3 +1,5 @@
+## 0.2.9
+
 ## 0.2.8
 
  - **FEAT**: Update dependencies and streamline naming.

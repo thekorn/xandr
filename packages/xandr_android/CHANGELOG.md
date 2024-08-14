@@ -1,3 +1,7 @@
+## 0.2.9
+
+ - Bump "xandr_android" to `0.2.9`.
+
 ## 0.2.8
 
  - Fix StackOverflow error in XandrPlugin.kt Activity hooks (#141)
