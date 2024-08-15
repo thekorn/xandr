@@ -1,3 +1,7 @@
+## 0.2.10
+
+ - Downgrade appNexusSDK to 8.11.4
+
 ## 0.2.9
 
  - Bump "xandr_ios" to `0.2.9`.
