@@ -31,6 +31,6 @@ dev_dependencies:
     sdk: flutter
   mockito: ^5.4.4
   pana: ^0.22.9
-  pigeon: ^21.1.0
+  pigeon: ^22.0.0
   plugin_platform_interface: ^2.1.8
   very_good_analysis: ^6.0.0
