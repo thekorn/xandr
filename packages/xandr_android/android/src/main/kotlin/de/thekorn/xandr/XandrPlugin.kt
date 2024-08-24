@@ -74,7 +74,6 @@ class XandrPlugin :
         // (mkorn) nothing to do here
     }
 
-
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun init(
         memberId: Long,

@@ -100,7 +100,7 @@ Packages with other changes:
 
  - Fix StackOverflow error in XandrPlugin.kt Activity hooks (#141)
 
- - **FIX**: dont recursivly call the onDetachFromActivity() in the android.
+ - **FIX**: don't recursively call the onDetachFromActivity() in the android.
  - **FEAT**: Update dependencies and streamline naming.
  - **DOCS**: inline comment on the unimplemented hooks in XandrPlugin.kt.
 

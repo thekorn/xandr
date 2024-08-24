@@ -3,10 +3,10 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i4;
+import 'package:mockito/src/dummies.dart' as _i3;
 import 'package:xandr_ios/src/messages.g.dart' as _i2;
 
 // ignore_for_file: type=lint
@@ -27,7 +27,20 @@ import 'package:xandr_ios/src/messages.g.dart' as _i2;
 /// See the documentation for Mockito's code generation for more information.
 class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
   @override
-  _i3.Future<bool> initXandrSdk({
+  String get pigeonVar_messageChannelSuffix => (super.noSuchMethod(
+        Invocation.getter(#pigeonVar_messageChannelSuffix),
+        returnValue: _i3.dummyValue<String>(
+          this,
+          Invocation.getter(#pigeonVar_messageChannelSuffix),
+        ),
+        returnValueForMissingStub: _i3.dummyValue<String>(
+          this,
+          Invocation.getter(#pigeonVar_messageChannelSuffix),
+        ),
+      ) as String);
+
+  @override
+  _i4.Future<bool> initXandrSdk({
     required int? memberId,
     int? publisherId,
     bool? testMode = false,
@@ -42,12 +55,12 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
             #testMode: testMode,
           },
         ),
-        returnValue: _i3.Future<bool>.value(false),
-        returnValueForMissingStub: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 
   @override
-  _i3.Future<bool> loadInterstitialAd({
+  _i4.Future<bool> loadInterstitialAd({
     required int? widgetId,
     String? placementID,
     String? inventoryCode,
@@ -64,40 +77,40 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
             #customKeywords: customKeywords,
           },
         ),
-        returnValue: _i3.Future<bool>.value(false),
-        returnValueForMissingStub: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 
   @override
-  _i3.Future<bool> showInterstitialAd({int? autoDismissDelay}) =>
+  _i4.Future<bool> showInterstitialAd({int? autoDismissDelay}) =>
       (super.noSuchMethod(
         Invocation.method(
           #showInterstitialAd,
           [],
           {#autoDismissDelay: autoDismissDelay},
         ),
-        returnValue: _i3.Future<bool>.value(false),
-        returnValueForMissingStub: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 
   @override
-  _i3.Future<bool> setPublisherUserId(String? publisherUserId) =>
+  _i4.Future<bool> setPublisherUserId(String? publisherUserId) =>
       (super.noSuchMethod(
         Invocation.method(
           #setPublisherUserId,
           [publisherUserId],
         ),
-        returnValue: _i3.Future<bool>.value(false),
-        returnValueForMissingStub: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 
   @override
-  _i3.Future<String> initMultiAdRequest() => (super.noSuchMethod(
+  _i4.Future<String> initMultiAdRequest() => (super.noSuchMethod(
         Invocation.method(
           #initMultiAdRequest,
           [],
         ),
-        returnValue: _i3.Future<String>.value(_i4.dummyValue<String>(
+        returnValue: _i4.Future<String>.value(_i3.dummyValue<String>(
           this,
           Invocation.method(
             #initMultiAdRequest,
@@ -105,55 +118,55 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
           ),
         )),
         returnValueForMissingStub:
-            _i3.Future<String>.value(_i4.dummyValue<String>(
+            _i4.Future<String>.value(_i3.dummyValue<String>(
           this,
           Invocation.method(
             #initMultiAdRequest,
             [],
           ),
         )),
-      ) as _i3.Future<String>);
+      ) as _i4.Future<String>);
 
   @override
-  _i3.Future<bool> disposeMultiAdRequest(String? multiAdRequestID) =>
+  _i4.Future<bool> disposeMultiAdRequest(String? multiAdRequestID) =>
       (super.noSuchMethod(
         Invocation.method(
           #disposeMultiAdRequest,
           [multiAdRequestID],
         ),
-        returnValue: _i3.Future<bool>.value(false),
-        returnValueForMissingStub: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 
   @override
-  _i3.Future<bool> loadAdsForMultiAdRequest(String? multiAdRequestID) =>
+  _i4.Future<bool> loadAdsForMultiAdRequest(String? multiAdRequestID) =>
       (super.noSuchMethod(
         Invocation.method(
           #loadAdsForMultiAdRequest,
           [multiAdRequestID],
         ),
-        returnValue: _i3.Future<bool>.value(false),
-        returnValueForMissingStub: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 
   @override
-  _i3.Future<bool> loadAd({required int? widgetId}) => (super.noSuchMethod(
+  _i4.Future<bool> loadAd({required int? widgetId}) => (super.noSuchMethod(
         Invocation.method(
           #loadAd,
           [],
           {#widgetId: widgetId},
         ),
-        returnValue: _i3.Future<bool>.value(false),
-        returnValueForMissingStub: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 
   @override
-  _i3.Future<String> getPublisherUserId() => (super.noSuchMethod(
+  _i4.Future<String> getPublisherUserId() => (super.noSuchMethod(
         Invocation.method(
           #getPublisherUserId,
           [],
         ),
-        returnValue: _i3.Future<String>.value(_i4.dummyValue<String>(
+        returnValue: _i4.Future<String>.value(_i3.dummyValue<String>(
           this,
           Invocation.method(
             #getPublisherUserId,
@@ -161,68 +174,68 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
           ),
         )),
         returnValueForMissingStub:
-            _i3.Future<String>.value(_i4.dummyValue<String>(
+            _i4.Future<String>.value(_i3.dummyValue<String>(
           this,
           Invocation.method(
             #getPublisherUserId,
             [],
           ),
         )),
-      ) as _i3.Future<String>);
+      ) as _i4.Future<String>);
 
   @override
-  _i3.Future<bool> setUserIds(List<_i2.HostAPIUserId?>? userIds) =>
+  _i4.Future<bool> setUserIds(List<_i2.HostAPIUserId?>? userIds) =>
       (super.noSuchMethod(
         Invocation.method(
           #setUserIds,
           [userIds],
         ),
-        returnValue: _i3.Future<bool>.value(false),
-        returnValueForMissingStub: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 
   @override
-  _i3.Future<List<_i2.HostAPIUserId?>> getUserIds() => (super.noSuchMethod(
+  _i4.Future<List<_i2.HostAPIUserId?>> getUserIds() => (super.noSuchMethod(
         Invocation.method(
           #getUserIds,
           [],
         ),
         returnValue:
-            _i3.Future<List<_i2.HostAPIUserId?>>.value(<_i2.HostAPIUserId?>[]),
+            _i4.Future<List<_i2.HostAPIUserId?>>.value(<_i2.HostAPIUserId?>[]),
         returnValueForMissingStub:
-            _i3.Future<List<_i2.HostAPIUserId?>>.value(<_i2.HostAPIUserId?>[]),
-      ) as _i3.Future<List<_i2.HostAPIUserId?>>);
+            _i4.Future<List<_i2.HostAPIUserId?>>.value(<_i2.HostAPIUserId?>[]),
+      ) as _i4.Future<List<_i2.HostAPIUserId?>>);
 
   @override
-  _i3.Future<bool> setGDPRConsentRequired(bool? isConsentRequired) =>
+  _i4.Future<bool> setGDPRConsentRequired(bool? isConsentRequired) =>
       (super.noSuchMethod(
         Invocation.method(
           #setGDPRConsentRequired,
           [isConsentRequired],
         ),
-        returnValue: _i3.Future<bool>.value(false),
-        returnValueForMissingStub: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 
   @override
-  _i3.Future<bool> setGDPRConsentString(String? consentString) =>
+  _i4.Future<bool> setGDPRConsentString(String? consentString) =>
       (super.noSuchMethod(
         Invocation.method(
           #setGDPRConsentString,
           [consentString],
         ),
-        returnValue: _i3.Future<bool>.value(false),
-        returnValueForMissingStub: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 
   @override
-  _i3.Future<bool> setGDPRPurposeConsents(String? purposeConsents) =>
+  _i4.Future<bool> setGDPRPurposeConsents(String? purposeConsents) =>
       (super.noSuchMethod(
         Invocation.method(
           #setGDPRPurposeConsents,
           [purposeConsents],
         ),
-        returnValue: _i3.Future<bool>.value(false),
-        returnValueForMissingStub: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 }
