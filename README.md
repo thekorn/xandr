@@ -50,7 +50,7 @@ Used to display a simple advertisement banner.
 |autoRefreshInterval|no|`Duration` of each banner auto refresh (can be set to `Duration.zero` to prevent auto refresh)|Duration(seconds: 30)|
 |allowNativeDemand|no|`bool` whether to allow requesting native ads or not - If set to true you must also include `AdSize(1, 1)` in the adSizes|false|
 |nativeAdBuilder|no|widget rendering function to render a native ad - provides a `NativeAdData` which contains: `title`, `description`, `imageUrl`, `clickUrl` of the native ad|`nativeAdBuilder: (nativeAd) => Text(nativeAd.title)`
-|clickThroughAction|no|`ClickThroughAction` to handle ad behaviour when clicked|`ClickThroughAction.returnUrl` (does not handle ad click, needs to be handled by developer on `onAdClicked` callback), `ClickThroughAction.openSdkBrowser` (opens an internal app browser through the SDK), `ClickThroughAction.openDeviceBrowser` (opens the ad externally through the device browser)|
+|clickThroughAction|no|`ClickThroughAction` to handle ad behavior when clicked|`ClickThroughAction.returnUrl` (does not handle ad click, needs to be handled by developer on `onAdClicked` callback), `ClickThroughAction.openSdkBrowser` (opens an internal app browser through the SDK), `ClickThroughAction.openDeviceBrowser` (opens the ad externally through the device browser)|
 |onAdClicked|no|`Function` callback called when the ad is clicked and clickThroughAction is `ClickThroughAction.returnUrl`|`onAdClicked: (url) =>  print('click url: $url')`|
 |loadMode|no|`LoadMode` to handle ad creation logic|`LoadModeWhenCreated` to start loading the ad as soon as it's created, `LoadMode.whenInViewport` to only start loading the ad when in viewport|
 |multiAdRequestController|no|`MultiAdRequestController` if this placement should be included in a multi ad request||
@@ -219,7 +219,7 @@ FutureBuilder<bool>(
 )
 ```
 
-clicking on the `load ads` button will load the ads in a single request. 
+clicking on the `load ads` button will load the ads in a single request.
 
 ***Result:***
 
