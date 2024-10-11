@@ -64,7 +64,7 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
     required int? widgetId,
     String? placementID,
     String? inventoryCode,
-    Map<String?, List<String?>?>? customKeywords,
+    Map<String, List<String>>? customKeywords,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -184,7 +184,7 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
       ) as _i4.Future<String>);
 
   @override
-  _i4.Future<bool> setUserIds(List<_i2.HostAPIUserId?>? userIds) =>
+  _i4.Future<bool> setUserIds(List<_i2.HostAPIUserId>? userIds) =>
       (super.noSuchMethod(
         Invocation.method(
           #setUserIds,
@@ -195,16 +195,16 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
       ) as _i4.Future<bool>);
 
   @override
-  _i4.Future<List<_i2.HostAPIUserId?>> getUserIds() => (super.noSuchMethod(
+  _i4.Future<List<_i2.HostAPIUserId>> getUserIds() => (super.noSuchMethod(
         Invocation.method(
           #getUserIds,
           [],
         ),
         returnValue:
-            _i4.Future<List<_i2.HostAPIUserId?>>.value(<_i2.HostAPIUserId?>[]),
+            _i4.Future<List<_i2.HostAPIUserId>>.value(<_i2.HostAPIUserId>[]),
         returnValueForMissingStub:
-            _i4.Future<List<_i2.HostAPIUserId?>>.value(<_i2.HostAPIUserId?>[]),
-      ) as _i4.Future<List<_i2.HostAPIUserId?>>);
+            _i4.Future<List<_i2.HostAPIUserId>>.value(<_i2.HostAPIUserId>[]),
+      ) as _i4.Future<List<_i2.HostAPIUserId>>);
 
   @override
   _i4.Future<bool> setGDPRConsentRequired(bool? isConsentRequired) =>
