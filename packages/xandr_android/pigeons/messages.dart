@@ -86,6 +86,13 @@ abstract class XandrHostApi {
 
   @async
   void setGDPRPurposeConsents(String purposeConsents);
+
+  @async
+  bool setAutoRefreshInterval(
+    int autoRefreshIntervalInSeconds,
+    String? inventoryCode,
+    String? placementID,
+  );
 }
 
 @FlutterApi()

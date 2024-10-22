@@ -246,6 +246,30 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
     ANGDPRSettings.setPurposeConsents(purposeConsents)
     completion(Result.success(true))
   }
+
+  func setAutoRefreshInterval(autoRefreshIntervalInSeconds: Int64, inventoryCode: String?,
+                              placementID: String?,
+                              completion: @escaping (Result<Bool, Error>) -> Void) {
+    do {
+      let ad = try flutterState?.getXandrBannerWithCode(
+        inventoryCode: inventoryCode,
+        placementID: placementID
+      )
+      logger
+        .debug(
+          message: "setAutoRefreshInterval found ad for inventoryCode=\(inventoryCode), placementID=\(placementID), ad=\(String(describing: ad))"
+        )
+      ad?.banner?.autoRefreshInterval = Double(autoRefreshIntervalInSeconds)
+      completion(.success(true))
+    } catch let err {
+      logger
+        .error(
+          message: "Loading ad for inventoryCode=\(inventoryCode), placementID=\(placementID) results in error=\(err)"
+        )
+      completion(.success(false))
+    }
+    completion(Result.success(true))
+  }
 }
 
 extension HostAPIUserIdSource {

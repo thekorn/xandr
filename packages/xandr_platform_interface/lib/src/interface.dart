@@ -184,4 +184,23 @@ abstract class XandrPlatform extends PlatformInterface {
   Future<void> setGDPRPurposeConsents(String purposeConsents) {
     return _instance.setGDPRPurposeConsents(purposeConsents);
   }
+
+  /// Sets the autoRefreshInterval value of a banner view
+  ///
+  /// [autoRefreshIntervalInSeconds] is the updated value of autoRefreshInterval
+  /// [inventoryCode] is the optional banner inventory code
+  /// [placementID] is the optional banner placement ID
+  /// At least one of [inventoryCode] or [placementID] must be filled
+  /// to identify the banner
+  Future<bool> setAutoRefreshInterval(
+    int autoRefreshIntervalInSeconds,
+    String? inventoryCode,
+    String? placementID,
+  ) {
+    return _instance.setAutoRefreshInterval(
+      autoRefreshIntervalInSeconds,
+      inventoryCode,
+      placementID,
+    );
+  }
 }

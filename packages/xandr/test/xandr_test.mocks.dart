@@ -255,4 +255,23 @@ class MockMethodChannelXandr extends _i1.Mock
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<bool> setAutoRefreshInterval(
+    int? autoRefreshIntervalInSeconds,
+    String? inventoryCode,
+    String? placementID,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setAutoRefreshInterval,
+          [
+            autoRefreshIntervalInSeconds,
+            inventoryCode,
+            placementID,
+          ],
+        ),
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 }

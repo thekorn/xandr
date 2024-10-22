@@ -72,6 +72,27 @@ public class FlutterState {
     }
   }
 
+  func getXandrBannerWithCode(inventoryCode: String?, placementID: String?) throws -> XandrBanner {
+    for (widgetId, bannerAdView) in flutterBannerAdviews {
+      if (inventoryCode != nil && bannerAdView.banner?.inventoryCode == inventoryCode) ||
+        (placementID != nil && bannerAdView.banner?.placementId == placementID) {
+        logger
+          .debug(
+            message: "Return XandrBanner for inventoryCode=\(inventoryCode), placementID=\(placementID)"
+          )
+        return bannerAdView
+      }
+    }
+    logger
+      .error(
+        message: "XandrBanner for inventoryCode=\(inventoryCode), placementID=\(placementID) not found!"
+      )
+    throw XandrPluginError
+      .runtimeError(
+        "Unable to find Banner for inventoryCode=\(inventoryCode), placementID=\(placementID)"
+      )
+  }
+
   public func onAdLoadedAPI(viewId: Int64, width: CGFloat, height: CGFloat, creativeId: String,
                             adType: ANAdType, tagId: String, auctionId: String, cpm: Double,
                             memberId: Int) {
