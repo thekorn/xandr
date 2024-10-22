@@ -114,7 +114,7 @@ class XandrController {
       'placementID or inventoryCode must not be null',
     );
     debugPrint(
-      'setAutoRefreshInterval: ${inventoryCode ?? placementID} to ${duration.inSeconds} seconds',
+      '''setAutoRefreshInterval: ${inventoryCode ?? placementID} to ${duration.inSeconds} seconds''',
     );
 
     return _platform.setAutoRefreshInterval(
