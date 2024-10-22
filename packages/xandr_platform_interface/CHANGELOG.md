@@ -1,3 +1,8 @@
+## 0.2.11
+
+ - **FIX**: assert.
+ - **FEAT**: add setAutoRefreshInterval method to xandr controller.
+
 ## 0.2.10
 
  - Bump "xandr_platform_interface" to `0.2.10`.

@@ -1,3 +1,7 @@
+## 0.2.11
+
+ - **FEAT**: add setAutoRefreshInterval method to xandr controller.
+
 ## 0.2.10
 
  - Downgrade appNexusSDK to 8.11.4

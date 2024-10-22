@@ -13,7 +13,6 @@ Please the [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 ## example usage:
 
 **The flutter api is work in progress and will likely change.**
-**NOTE: up to this point there is only an android implementation of basic banner ads**
 
 However there are three main concepts:
 - there is a central `XandrController()` which:
@@ -26,11 +25,36 @@ However there are three main concepts:
 - there is an `AdBanner()` widget which:
   - can request banners by size options, `placementId` and/or `inventoryCode`
   - `customKeywords` are also supported
-  - behind the scenes the widget size is adjusted accordingly, and the ad is reloaded after a given amount of time
+  - behind the scenes the widget size is adjusted accordingly
+  - is shown by default when created (can be adjusted through `loadMode`)
+  - can be set to refresh every X seconds (regardless whether it's in the viewport or not)
+  - provides a `onBannerFinishLoading` callback when loading is done
+  - can provide native ads
 - there is an `InterstitialAd()` which:
   - can request an interstitial by `placementId` and/or `inventoryCode`
   - `customKeywords` are also supported
   - after the ad is loaded, it can be shown by calling `show()`
+
+## AdBanner
+Used to display a simple advertisement banner.
+|name|mandatory|description|example|
+|--|--|--|--|
+|controller|yes|`XandrController` instance|-|
+|adSizes|yes|list of `AdSize` to request the banner|[AdSize(300, 250), AdSize(1, 1)]
+|placementID|yes if inventoryCode not filled|Xandr banner placement ID|-|
+|inventoryCode|yes if placementID not filled|Xandr banner inventory code|-|
+|width|no|`double` of the initial ad width|null|
+|height|no|`double` of the initial ad height|null|
+|onBannerFinishLoading|no|`Function` callback which is called when the banner finished loading, with the following params: `success` (bool, whether the ad was loaded successfully), `width` (nullable double, if ad was loaded provides its width), `height` (nullable double, if the ad was loaded provides its height), `nativeAd` (nullable `NativeAdData`, if the ad was loaded and is a native ad this provides its data such as title, description, ...)|`onBannerFinishLoading: ({                    required success,                    height,                    width,                    nativeAd,                  }) =>                      print('on banner finish loading: success: $success')`|
+|customKeywords|no|list of keywords to request the Xandr banner|{'kw': ['test-kw', 'demoads'] }
+|autoRefreshInterval|no|`Duration` of each banner auto refresh (can be set to `Duration.zero` to prevent auto refresh)|Duration(seconds: 30)|
+|allowNativeDemand|no|`bool` whether to allow requesting native ads or not - If set to true you must also include `AdSize(1, 1)` in the adSizes|false|
+|nativeAdBuilder|no|widget rendering function to render a native ad - provides a `NativeAdData` which contains: `title`, `description`, `imageUrl`, `clickUrl` of the native ad|`nativeAdBuilder: (nativeAd) => Text(nativeAd.title)`
+|clickThroughAction|no|`ClickThroughAction` to handle ad behavior when clicked|`ClickThroughAction.returnUrl` (does not handle ad click, needs to be handled by developer on `onAdClicked` callback), `ClickThroughAction.openSdkBrowser` (opens an internal app browser through the SDK), `ClickThroughAction.openDeviceBrowser` (opens the ad externally through the device browser)|
+|onAdClicked|no|`Function` callback called when the ad is clicked and clickThroughAction is `ClickThroughAction.returnUrl`|`onAdClicked: (url) =>  print('click url: $url')`|
+|loadMode|no|`LoadMode` to handle ad creation logic|`LoadModeWhenCreated` to start loading the ad as soon as it's created, `LoadMode.whenInViewport` to only start loading the ad when in viewport|
+|multiAdRequestController|no|`MultiAdRequestController` if this placement should be included in a multi ad request||
+|shouldServePSAs|no|`bool` determines whether PSAs (Public Service Announcements) should be served. PSAs (Public Service Announcements) are ads that can be served as a last resort, if there are no other ads to show.|false|
 
 ### sample code:
 
@@ -195,7 +219,7 @@ FutureBuilder<bool>(
 )
 ```
 
-clicking on the `load ads` button will load the ads in a single request. 
+clicking on the `load ads` button will load the ads in a single request.
 
 ***Result:***
 

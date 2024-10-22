@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-10-22
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`xandr` - `v0.2.11`](#xandr---v0211)
+ - [`xandr_android` - `v0.2.11`](#xandr_android---v0211)
+ - [`xandr_ios` - `v0.2.11`](#xandr_ios---v0211)
+ - [`xandr_platform_interface` - `v0.2.11`](#xandr_platform_interface---v0211)
+
+---
+
+#### `xandr` - `v0.2.11`
+
+ - **FIX**: add assert on xandr controller.
+ - **FIX**: analyze issues.
+ - **FIX**: convert autoRefreshInterval to seconds.
+ - **FEAT**: add setAutoRefreshInterval method to xandr controller.
+
+#### `xandr_android` - `v0.2.11`
+
+ - **FIX**(deps): update dependency com.android.tools.build:gradle to v8.7.0.
+ - **FIX**(deps): update dependency com.android.tools.build:gradle to v8.6.0.
+ - **FEAT**: add setAutoRefreshInterval method to xandr controller.
+
+#### `xandr_ios` - `v0.2.11`
+
+ - **FEAT**: add setAutoRefreshInterval method to xandr controller.
+
+#### `xandr_platform_interface` - `v0.2.11`
+
+ - **FIX**: assert.
+ - **FEAT**: add setAutoRefreshInterval method to xandr controller.
+
+
 ## 2024-08-15
 
 ### Changes

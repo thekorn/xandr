@@ -1,7 +1,7 @@
 name: xandr_android
 description: flutter plugin for the Xandr,
   with integrations for Android and iOS - Android implementation
-version: 0.2.10
+version: 0.2.11
 homepage: https://github.com/thekorn/xandr
 repository: https://github.com/thekorn/xandr
 
@@ -23,7 +23,7 @@ dependencies:
   collection: ^1.18.0
   flutter:
     sdk: flutter
-  xandr_platform_interface: ^0.2.10
+  xandr_platform_interface: ^0.2.11
 
 dev_dependencies:
   build_runner: ^2.4.11

@@ -1,3 +1,10 @@
+## 0.2.11
+
+ - **FIX**: add assert on xandr controller.
+ - **FIX**: analyze issues.
+ - **FIX**: convert autoRefreshInterval to seconds.
+ - **FEAT**: add setAutoRefreshInterval method to xandr controller.
+
 ## 0.2.10
 
  - Bump "xandr" to `0.2.10`.

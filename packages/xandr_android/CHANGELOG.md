@@ -1,3 +1,9 @@
+## 0.2.11
+
+ - **FIX**(deps): update dependency com.android.tools.build:gradle to v8.7.0.
+ - **FIX**(deps): update dependency com.android.tools.build:gradle to v8.6.0.
+ - **FEAT**: add setAutoRefreshInterval method to xandr controller.
+
 ## 0.2.10
 
  - Bump "xandr_android" to `0.2.10`.
