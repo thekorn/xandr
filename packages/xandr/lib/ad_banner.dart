@@ -47,6 +47,8 @@ class AdBanner extends StatefulWidget {
               (allowNativeDemand == true && nativeAdBuilder != null),
           'nativeAdBuilder must be set if allowNativeDemand is true',
         ),
+      //opensdk:auto_refresh_interval or adview.setAutoRefreshInterval(long interval): ....
+      // see: https://learn.microsoft.com/en-us/xandr/mobile-sdk/show-banners-on-android
         assert(
           autoRefreshInterval.inSeconds == 0 ||
               autoRefreshInterval.inSeconds >= 15,
