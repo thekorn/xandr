@@ -15,7 +15,7 @@ class BannerViewContainer(
     widgetId: Int,
     private val bannerViewOptions: BannerViewOptions?
 ) : PlatformView {
-    private val banner: BannerAd
+    val banner: BannerAd
 
     init {
         Log.d(

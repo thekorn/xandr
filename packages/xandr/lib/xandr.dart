@@ -96,6 +96,37 @@ class XandrController {
         .where((event) => event.viewId == widgetId)
         .listen(callback);
   }
+
+  /// Sets the autoRefreshInterval value of a banner view
+  ///
+  /// [duration] is the updated duration of autoRefreshInterval
+  /// [inventoryCode] is the optional banner inventory code
+  /// [placementID] is the optional banner placement ID
+  /// At least one of [inventoryCode] or [placementID] must be filled
+  /// to identify the banner
+  Future<bool> setAutoRefreshInterval({
+    required Duration duration,
+    String? inventoryCode,
+    String? placementID,
+  }) {
+    assert(
+      placementID != null || inventoryCode != null,
+      'placementID or inventoryCode must not be null',
+    );
+    assert(
+      placementID != null && inventoryCode != null,
+      'only one of placementID and inventoryCode can be set',
+    );
+    debugPrint(
+      '''setAutoRefreshInterval: ${inventoryCode ?? placementID} to ${duration.inSeconds} seconds''',
+    );
+
+    return _platform.setAutoRefreshInterval(
+      duration.inSeconds,
+      inventoryCode,
+      placementID,
+    );
+  }
 }
 
 /// The controller for handling multi ad requests.

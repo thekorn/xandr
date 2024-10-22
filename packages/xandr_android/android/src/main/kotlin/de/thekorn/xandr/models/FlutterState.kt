@@ -51,4 +51,25 @@ class FlutterState(var applicationContext: Context, private var binaryMessenger:
         Log.e("Xandr.BannerViewFactory", "Banner for widgetId=$id not found!")
         throw RuntimeException("Unable to find Banner for widgetId=$id")
     }
+
+    fun getBannerViewWithCode(inventoryCode: String?, placementID: String?): BannerViewContainer {
+        for ((widgetId, bannerAdView) in flutterBannerAdViews) {
+            if ((inventoryCode != null && inventoryCode == bannerAdView.banner.inventoryCode) ||
+                (placementID != null && placementID == bannerAdView.banner.placementID)
+            ) {
+                Log.d(
+                    "Xandr.BannerViewFactory",
+                    "Return XandrBanner for inventoryCode=$inventoryCode, placementID=$placementID"
+                )
+                return bannerAdView
+            }
+        }
+        Log.e(
+            "Xandr.BannerViewFactory",
+            "Banner for  inventoryCode=$inventoryCode, placementID=$placementID not found!"
+        )
+        throw RuntimeException(
+            "Unable to find Banner for inventoryCode=$inventoryCode, placementID=$placementID"
+        )
+    }
 }

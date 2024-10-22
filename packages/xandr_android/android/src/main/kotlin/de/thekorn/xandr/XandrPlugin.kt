@@ -255,4 +255,24 @@ class XandrPlugin :
         ANGDPRSettings.setPurposeConsents(activity, purposeConsents)
         callback(Result.success(Unit))
     }
+
+    override fun setAutoRefreshInterval(
+        autoRefreshIntervalInSeconds: Long,
+        inventoryCode: String?,
+        placementID: String?,
+        callback: (Result<Boolean>) -> Unit
+    ) {
+        Log.d(
+            "Xandr",
+            "setAutoRefreshInterval got called, with inventoryCode=$inventoryCode, placementID=$placementID, autoRefreshIntervalInSeconds=$autoRefreshIntervalInSeconds"
+        )
+        this.flutterState.isInitialized.invokeOnCompletion {
+            this.flutterState.getBannerViewWithCode(inventoryCode, placementID)?.let {
+                it.banner.autoRefreshInterval = autoRefreshIntervalInSeconds.toInt()
+                callback(Result.success(true))
+            } ?: run {
+                callback(Result.success(false))
+            }
+        }
+    }
 }

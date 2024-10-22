@@ -162,6 +162,19 @@ class XandrAndroid extends XandrPlatform {
   Future<void> setGDPRPurposeConsents(String purposeConsents) {
     return _api.setGDPRPurposeConsents(purposeConsents);
   }
+
+  @override
+  Future<bool> setAutoRefreshInterval(
+    int autoRefreshIntervalInSeconds,
+    String? inventoryCode,
+    String? placementID,
+  ) {
+    return _api.setAutoRefreshInterval(
+      autoRefreshIntervalInSeconds,
+      inventoryCode,
+      placementID,
+    );
+  }
 }
 
 /// A class that implements the XandrFlutterApi interface for handling Xandr

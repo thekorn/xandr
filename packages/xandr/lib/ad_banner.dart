@@ -47,6 +47,19 @@ class AdBanner extends StatefulWidget {
               (allowNativeDemand == true && nativeAdBuilder != null),
           'nativeAdBuilder must be set if allowNativeDemand is true',
         ),
+        //Note: opensdk:auto_refresh_interval or
+        // adview.setAutoRefreshInterval(long interval): The interval, in
+        // milliseconds, at which the ad view will request new ads, if
+        // autorefresh is enabled. The minimum period is 15 seconds. The default
+        // period is 30 seconds. Set this to 0 to disable autorefresh.
+        //Note: while the docs says its in milliseconds, seconds seems to be the
+        // right unit.
+        // see: https://learn.microsoft.com/en-us/xandr/mobile-sdk/show-banners-on-android
+        assert(
+          autoRefreshInterval.inSeconds == 0 ||
+              autoRefreshInterval.inSeconds >= 15,
+          'autoRefreshInterval must be either 0 seconds or >= 15 seconds',
+        ),
         width = width ?? adSizes.first.width.toDouble(),
         height = height ?? adSizes.first.height.toDouble(),
         loadMode = loadMode ?? LoadMode.whenCreated();
@@ -376,7 +389,7 @@ class _HostAdBannerView extends StatelessWidget {
         creationParams = <String, dynamic>{
           'placementID': placementID,
           'inventoryCode': inventoryCode,
-          'autoRefreshInterval': autoRefreshInterval.inMilliseconds,
+          'autoRefreshInterval': autoRefreshInterval.inSeconds,
           'adSizes': adSizes.map((e) => e.toJson()).toList(),
           'customKeywords': customKeywords,
           'allowNativeDemand': allowNativeDemand,
