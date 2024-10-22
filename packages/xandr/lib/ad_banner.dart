@@ -47,6 +47,11 @@ class AdBanner extends StatefulWidget {
               (allowNativeDemand == true && nativeAdBuilder != null),
           'nativeAdBuilder must be set if allowNativeDemand is true',
         ),
+        assert(
+          autoRefreshInterval.inSeconds == 0 ||
+              autoRefreshInterval.inSeconds >= 15,
+          'autoRefreshInterval must be either 0 seconds or >= 15 seconds',
+        ),
         width = width ?? adSizes.first.width.toDouble(),
         height = height ?? adSizes.first.height.toDouble(),
         loadMode = loadMode ?? LoadMode.whenCreated();
@@ -376,7 +381,7 @@ class _HostAdBannerView extends StatelessWidget {
         creationParams = <String, dynamic>{
           'placementID': placementID,
           'inventoryCode': inventoryCode,
-          'autoRefreshInterval': autoRefreshInterval.inMilliseconds,
+          'autoRefreshInterval': autoRefreshInterval.inSeconds,
           'adSizes': adSizes.map((e) => e.toJson()).toList(),
           'customKeywords': customKeywords,
           'allowNativeDemand': allowNativeDemand,
