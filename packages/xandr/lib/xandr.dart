@@ -113,6 +113,10 @@ class XandrController {
       placementID != null || inventoryCode != null,
       'placementID or inventoryCode must not be null',
     );
+    assert(
+      placementID != null && inventoryCode != null,
+      'only one of placementID and inventoryCode can be set',
+    );
     debugPrint(
       '''setAutoRefreshInterval: ${inventoryCode ?? placementID} to ${duration.inSeconds} seconds''',
     );
