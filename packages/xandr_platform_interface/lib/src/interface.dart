@@ -197,6 +197,14 @@ abstract class XandrPlatform extends PlatformInterface {
     String? inventoryCode,
     String? placementID,
   ) {
+    assert(
+      placementID != null || inventoryCode != null,
+      'placementID or inventoryCode must not be null',
+    );
+    assert(
+      placementID != null && inventoryCode != null,
+      'only one of placementID and inventoryCode can be set',
+    );
     return _instance.setAutoRefreshInterval(
       autoRefreshIntervalInSeconds,
       inventoryCode,
