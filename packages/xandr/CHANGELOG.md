@@ -1,3 +1,7 @@
+## 0.2.12
+
+ - **FIX**: assert on set auto refresh interval method.
+
 ## 0.2.11
 
  - **FIX**: add assert on xandr controller.

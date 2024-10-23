@@ -1,3 +1,7 @@
+## 0.2.12
+
+ - Bump "xandr_ios" to `0.2.12`.
+
 ## 0.2.11
 
  - **FEAT**: add setAutoRefreshInterval method to xandr controller.

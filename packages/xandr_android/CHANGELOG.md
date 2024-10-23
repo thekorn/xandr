@@ -1,3 +1,7 @@
+## 0.2.12
+
+ - Bump "xandr_android" to `0.2.12`.
+
 ## 0.2.11
 
  - **FIX**(deps): update dependency com.android.tools.build:gradle to v8.7.0.
