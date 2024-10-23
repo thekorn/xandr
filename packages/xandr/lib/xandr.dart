@@ -114,7 +114,8 @@ class XandrController {
       'placementID or inventoryCode must not be null',
     );
     assert(
-      placementID != null && inventoryCode != null,
+      (placementID != null && inventoryCode == null) ||
+          (placementID == null && inventoryCode != null),
       'only one of placementID and inventoryCode can be set',
     );
     debugPrint(
