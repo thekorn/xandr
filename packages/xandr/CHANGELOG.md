@@ -1,3 +1,5 @@
+## 0.2.13
+
 ## 0.2.12
 
  - **FIX**: assert on set auto refresh interval method.
