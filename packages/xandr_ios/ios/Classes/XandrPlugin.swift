@@ -204,7 +204,7 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
                   completion: @escaping (Result<Bool, Error>) -> Void) {
     var uIds: [ANUserId] = []
     for it in userIds {
-      var newId = ANUserId(anUserIdSource: it.source.toANUserIdSource(), userId: it.userId)
+      let newId = ANUserId(anUserIdSource: it.source.toANUserIdSource(), userId: it.userId)
       if newId != nil {
         uIds.append(newId!)
       }
@@ -217,7 +217,7 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
     var userIds: [HostAPIUserId] = []
     ANSDKSettings.sharedInstance().userIdArray?.forEach { it in
       do {
-        var newUserIds = try HostAPIUserId(
+        let newUserIds = try HostAPIUserId(
           source: it.source.toHostAPIUserIdSource(),
           userId: it.userId
         )
@@ -257,14 +257,14 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
       )
       logger
         .debug(
-          message: "setAutoRefreshInterval found ad for inventoryCode=\(inventoryCode), placementID=\(placementID), ad=\(String(describing: ad))"
+          message: "setAutoRefreshInterval found ad for inventoryCode=\(String(describing: inventoryCode)), placementID=\(String(describing: placementID)), ad=\(String(describing: ad))"
         )
       ad?.banner?.autoRefreshInterval = Double(autoRefreshIntervalInSeconds)
       completion(.success(true))
     } catch let err {
       logger
         .error(
-          message: "Loading ad for inventoryCode=\(inventoryCode), placementID=\(placementID) results in error=\(err)"
+          message: "Loading ad for inventoryCode=\(String(describing: inventoryCode)), placementID=\(String(describing: placementID)) results in error=\(err)"
         )
       completion(.success(false))
     }

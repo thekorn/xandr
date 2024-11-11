@@ -179,7 +179,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
 
   public func adWasClicked(_ ad: Any, withURL urlString: String) {
     if ad is ANBannerAdView {
-      let a = ad as? ANBannerAdView
+      let _ = ad as? ANBannerAdView
       state?.onAdClickedAPI(
         viewId: viewId,
         url: urlString
