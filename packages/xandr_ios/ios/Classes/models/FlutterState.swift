@@ -73,23 +73,23 @@ public class FlutterState {
   }
 
   func getXandrBannerWithCode(inventoryCode: String?, placementID: String?) throws -> XandrBanner {
-    for (widgetId, bannerAdView) in flutterBannerAdviews {
+    for (_, bannerAdView) in flutterBannerAdviews {
       if (inventoryCode != nil && bannerAdView.banner?.inventoryCode == inventoryCode) ||
         (placementID != nil && bannerAdView.banner?.placementId == placementID) {
         logger
           .debug(
-            message: "Return XandrBanner for inventoryCode=\(inventoryCode), placementID=\(placementID)"
+            message: "Return XandrBanner for inventoryCode=\(String(describing: inventoryCode)), placementID=\(String(describing: placementID))"
           )
         return bannerAdView
       }
     }
     logger
       .error(
-        message: "XandrBanner for inventoryCode=\(inventoryCode), placementID=\(placementID) not found!"
+        message: "XandrBanner for inventoryCode=\(String(describing: inventoryCode)), placementID=\(String(describing: placementID)) not found!"
       )
     throw XandrPluginError
       .runtimeError(
-        "Unable to find Banner for inventoryCode=\(inventoryCode), placementID=\(placementID)"
+        "Unable to find Banner for inventoryCode=\(String(describing: inventoryCode)), placementID=\(String(describing: placementID))"
       )
   }
 
