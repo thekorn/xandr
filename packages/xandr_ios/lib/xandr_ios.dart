@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:collection/collection.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:xandr_ios/src/messages.g.dart' as messages;
@@ -123,7 +122,7 @@ class XandrIOS extends XandrPlatform {
   @override
   Future<List<UserId>> getUserIds() async {
     final userIds = await _api.getUserIds();
-    return userIds.whereNotNull().map((uId) => uId.toUserId()).toList();
+    return userIds.nonNulls.map((uId) => uId.toUserId()).toList();
   }
 
   @override
