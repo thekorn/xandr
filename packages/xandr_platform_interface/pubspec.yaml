@@ -1,10 +1,9 @@
 name: xandr_platform_interface
 description: flutter plugin for the Xandr,
-  with integrations for Android and iOS - platform interface  
+  with integrations for Android and iOS - platform interface
 version: 0.2.13
 homepage: https://github.com/thekorn/xandr
 repository: https://github.com/thekorn/xandr
-
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
