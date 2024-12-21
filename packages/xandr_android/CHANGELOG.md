@@ -1,3 +1,7 @@
+## 0.2.14
+
+ - **FIX**(deps): update dependency com.android.tools.build:gradle to v8.7.3.
+
 ## 0.2.13
 
  - **FIX**(deps): update dependency com.appnexus.opensdk:appnexus-sdk to v9.2.0.
