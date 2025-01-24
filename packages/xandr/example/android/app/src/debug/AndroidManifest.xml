@@ -3,4 +3,8 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Network security config / used by proxyman to debug network traffic locally -->
+    <application
+        android:networkSecurityConfig="@xml/network_security_config">
+    </application>
 </manifest>
