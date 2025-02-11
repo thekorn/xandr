@@ -11,10 +11,10 @@ Pod::Spec.new do |s|
   s.homepage         = 'http://example.com'
   s.license          = { :type => 'BSD', :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
-  s.source           = { :path => '.' }  
+  s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'AppNexusSDK', '9.2.0'
+  s.dependency 'AppNexusSDK', '9.2.1'
   s.platform = :ios, '12.0'
   s.static_framework = true
 

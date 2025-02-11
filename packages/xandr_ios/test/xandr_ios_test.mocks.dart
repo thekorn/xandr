@@ -47,15 +47,11 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
     bool? testMode = false,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #initXandrSdk,
-          [],
-          {
-            #memberId: memberId,
-            #publisherId: publisherId,
-            #testMode: testMode,
-          },
-        ),
+        Invocation.method(#initXandrSdk, [], {
+          #memberId: memberId,
+          #publisherId: publisherId,
+          #testMode: testMode,
+        }),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
@@ -68,16 +64,12 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
     Map<String, List<String>>? customKeywords,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #loadInterstitialAd,
-          [],
-          {
-            #widgetId: widgetId,
-            #placementID: placementID,
-            #inventoryCode: inventoryCode,
-            #customKeywords: customKeywords,
-          },
-        ),
+        Invocation.method(#loadInterstitialAd, [], {
+          #widgetId: widgetId,
+          #placementID: placementID,
+          #inventoryCode: inventoryCode,
+          #customKeywords: customKeywords,
+        }),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
@@ -85,11 +77,9 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
   @override
   _i4.Future<bool> showInterstitialAd({int? autoDismissDelay}) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #showInterstitialAd,
-          [],
-          {#autoDismissDelay: autoDismissDelay},
-        ),
+        Invocation.method(#showInterstitialAd, [], {
+          #autoDismissDelay: autoDismissDelay,
+        }),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
@@ -97,44 +87,32 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
   @override
   _i4.Future<bool> setPublisherUserId(String? publisherUserId) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #setPublisherUserId,
-          [publisherUserId],
-        ),
+        Invocation.method(#setPublisherUserId, [publisherUserId]),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
 
   @override
   _i4.Future<String> initMultiAdRequest() => (super.noSuchMethod(
-        Invocation.method(
-          #initMultiAdRequest,
-          [],
+        Invocation.method(#initMultiAdRequest, []),
+        returnValue: _i4.Future<String>.value(
+          _i3.dummyValue<String>(
+            this,
+            Invocation.method(#initMultiAdRequest, []),
+          ),
         ),
-        returnValue: _i4.Future<String>.value(_i3.dummyValue<String>(
-          this,
-          Invocation.method(
-            #initMultiAdRequest,
-            [],
+        returnValueForMissingStub: _i4.Future<String>.value(
+          _i3.dummyValue<String>(
+            this,
+            Invocation.method(#initMultiAdRequest, []),
           ),
-        )),
-        returnValueForMissingStub:
-            _i4.Future<String>.value(_i3.dummyValue<String>(
-          this,
-          Invocation.method(
-            #initMultiAdRequest,
-            [],
-          ),
-        )),
+        ),
       ) as _i4.Future<String>);
 
   @override
   _i4.Future<bool> disposeMultiAdRequest(String? multiAdRequestID) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #disposeMultiAdRequest,
-          [multiAdRequestID],
-        ),
+        Invocation.method(#disposeMultiAdRequest, [multiAdRequestID]),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
@@ -142,78 +120,58 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
   @override
   _i4.Future<bool> loadAdsForMultiAdRequest(String? multiAdRequestID) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #loadAdsForMultiAdRequest,
-          [multiAdRequestID],
-        ),
+        Invocation.method(#loadAdsForMultiAdRequest, [multiAdRequestID]),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
 
   @override
   _i4.Future<bool> loadAd({required int? widgetId}) => (super.noSuchMethod(
-        Invocation.method(
-          #loadAd,
-          [],
-          {#widgetId: widgetId},
-        ),
+        Invocation.method(#loadAd, [], {#widgetId: widgetId}),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
 
   @override
   _i4.Future<String> getPublisherUserId() => (super.noSuchMethod(
-        Invocation.method(
-          #getPublisherUserId,
-          [],
+        Invocation.method(#getPublisherUserId, []),
+        returnValue: _i4.Future<String>.value(
+          _i3.dummyValue<String>(
+            this,
+            Invocation.method(#getPublisherUserId, []),
+          ),
         ),
-        returnValue: _i4.Future<String>.value(_i3.dummyValue<String>(
-          this,
-          Invocation.method(
-            #getPublisherUserId,
-            [],
+        returnValueForMissingStub: _i4.Future<String>.value(
+          _i3.dummyValue<String>(
+            this,
+            Invocation.method(#getPublisherUserId, []),
           ),
-        )),
-        returnValueForMissingStub:
-            _i4.Future<String>.value(_i3.dummyValue<String>(
-          this,
-          Invocation.method(
-            #getPublisherUserId,
-            [],
-          ),
-        )),
+        ),
       ) as _i4.Future<String>);
 
   @override
   _i4.Future<bool> setUserIds(List<_i2.HostAPIUserId>? userIds) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #setUserIds,
-          [userIds],
-        ),
+        Invocation.method(#setUserIds, [userIds]),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
 
   @override
   _i4.Future<List<_i2.HostAPIUserId>> getUserIds() => (super.noSuchMethod(
-        Invocation.method(
-          #getUserIds,
-          [],
+        Invocation.method(#getUserIds, []),
+        returnValue: _i4.Future<List<_i2.HostAPIUserId>>.value(
+          <_i2.HostAPIUserId>[],
         ),
-        returnValue:
-            _i4.Future<List<_i2.HostAPIUserId>>.value(<_i2.HostAPIUserId>[]),
-        returnValueForMissingStub:
-            _i4.Future<List<_i2.HostAPIUserId>>.value(<_i2.HostAPIUserId>[]),
+        returnValueForMissingStub: _i4.Future<List<_i2.HostAPIUserId>>.value(
+          <_i2.HostAPIUserId>[],
+        ),
       ) as _i4.Future<List<_i2.HostAPIUserId>>);
 
   @override
   _i4.Future<bool> setGDPRConsentRequired(bool? isConsentRequired) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #setGDPRConsentRequired,
-          [isConsentRequired],
-        ),
+        Invocation.method(#setGDPRConsentRequired, [isConsentRequired]),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
@@ -221,10 +179,7 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
   @override
   _i4.Future<bool> setGDPRConsentString(String? consentString) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #setGDPRConsentString,
-          [consentString],
-        ),
+        Invocation.method(#setGDPRConsentString, [consentString]),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
@@ -232,10 +187,7 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
   @override
   _i4.Future<bool> setGDPRPurposeConsents(String? purposeConsents) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #setGDPRPurposeConsents,
-          [purposeConsents],
-        ),
+        Invocation.method(#setGDPRPurposeConsents, [purposeConsents]),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
@@ -247,14 +199,11 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
     String? placementID,
   ) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #setAutoRefreshInterval,
-          [
-            autoRefreshIntervalInSeconds,
-            inventoryCode,
-            placementID,
-          ],
-        ),
+        Invocation.method(#setAutoRefreshInterval, [
+          autoRefreshIntervalInSeconds,
+          inventoryCode,
+          placementID,
+        ]),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
