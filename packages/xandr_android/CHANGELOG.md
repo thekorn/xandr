@@ -1,3 +1,8 @@
+## 0.2.15
+
+ - **FEAT**: add optional nativeAdRendererId to add requests (#218) (#222).
+ - **FEAT**: Update packages and dependencies (#219).
+
 ## 0.2.14
 
  - **FIX**(deps): update dependency com.android.tools.build:gradle to v8.7.3.

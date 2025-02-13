@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-02-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`xandr` - `v0.2.15`](#xandr---v0215)
+ - [`xandr_android` - `v0.2.15`](#xandr_android---v0215)
+ - [`xandr_ios` - `v0.2.15`](#xandr_ios---v0215)
+ - [`xandr_platform_interface` - `v0.2.15`](#xandr_platform_interface---v0215)
+
+---
+
+#### `xandr` - `v0.2.15`
+
+ - **FEAT**: add optional nativeAdRendererId to add requests (#218) (#222).
+ - **FEAT**: Update packages and dependencies (#219).
+
+#### `xandr_android` - `v0.2.15`
+
+ - **FEAT**: add optional nativeAdRendererId to add requests (#218) (#222).
+ - **FEAT**: Update packages and dependencies (#219).
+
+#### `xandr_ios` - `v0.2.15`
+
+ - **FEAT**: add optional nativeAdRendererId to add requests (#218) (#222).
+ - **FEAT**: Update packages and dependencies (#219).
+
+#### `xandr_platform_interface` - `v0.2.15`
+
+ - Bump "xandr_platform_interface" to `0.2.15`.
+
+
 ## 2024-12-21
 
 ### Changes
