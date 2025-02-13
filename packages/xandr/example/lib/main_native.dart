@@ -102,6 +102,7 @@ class _XandrExampleState extends State<XandrExample> {
                   clickThroughAction: ClickThroughAction.returnUrl,
                   onAdClicked: (url) => debugPrint('click url: $url'),
                   allowNativeDemand: true,
+                  nativeAdRendererId: 1,
                   nativeAdBuilder: (nativeAd) => InkWell(
                     onTap: () => debugPrint(
                       'native ad click: ${nativeAd.clickUrl}',
