@@ -81,7 +81,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
       banner?.enableLazyLoad = enableLazyLoad
       if nativeAdRendererId != nil {
         banner?.nativeAdRendererId = nativeAdRendererId!
-          logger.debug(message: "using nativeAdRendererId=\(String(describing: nativeAdRendererId))")
+        logger.debug(message: "using nativeAdRendererId=\(String(describing: nativeAdRendererId))")
       }
 
       if clickThroughAction != nil {

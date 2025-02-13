@@ -44,7 +44,6 @@ fun Map<*, *>.toBannerAdViewOptions(): BannerViewOptions {
         "using 'nativeAdRendererId' -> '${this["nativeAdRendererId"]}'"
     )
 
-
     val customKeywords = HashMap<String, List<String>>()
     val keywords = this["customKeywords"] as HashMap<*, *>?
     keywords?.forEach {
