@@ -7,6 +7,7 @@ data class BannerViewOptions(
     val adSizes: ArrayList<AdSize>? = null,
     val customKeywords: HashMap<String, List<String>>? = null,
     val allowNativeDemand: Boolean? = null,
+    val nativeAdRendererId: Int? = null,
     val layoutWidth: Int? = null,
     val layoutHeight: Int? = null,
     val shouldServePSAs: Boolean? = null,
@@ -38,6 +39,11 @@ fun Map<*, *>.toBannerAdViewOptions(): BannerViewOptions {
         "Xandr.BannerViewOptions",
         "using '$adSizes' -> '$sizes'"
     )
+    Log.d(
+        "Xandr.BannerViewOptions",
+        "using 'nativeAdRendererId' -> '${this["nativeAdRendererId"]}'"
+    )
+
 
     val customKeywords = HashMap<String, List<String>>()
     val keywords = this["customKeywords"] as HashMap<*, *>?
@@ -60,6 +66,7 @@ fun Map<*, *>.toBannerAdViewOptions(): BannerViewOptions {
         autoRefreshInterval = this["autoRefreshInterval"] as Int?,
         resizeWhenLoaded = this["resizeWhenLoaded"] as Boolean?,
         allowNativeDemand = this["allowNativeDemand"] as Boolean?,
+        nativeAdRendererId = this["nativeAdRendererId"] as Int?,
         loadWhenCreated = this["loadWhenCreated"] as Boolean?,
         enableLazyLoad = this["enableLazyLoad"] as Boolean?,
         multiAdRequestId = this["multiAdRequestId"] as String?
