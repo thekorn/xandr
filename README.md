@@ -49,6 +49,7 @@ Used to display a simple advertisement banner.
 |customKeywords|no|list of keywords to request the Xandr banner|{'kw': ['test-kw', 'demoads'] }
 |autoRefreshInterval|no|`Duration` of each banner auto refresh (can be set to `Duration.zero` to prevent auto refresh)|Duration(seconds: 30)|
 |allowNativeDemand|no|`bool` whether to allow requesting native ads or not - If set to true you must also include `AdSize(1, 1)` in the adSizes|false|
+|nativeAdRendererId|no|`Int` of the native ad renderer ID to use when requesting native ads, requires `allowNativeDemand = true` to be set|1|
 |nativeAdBuilder|no|widget rendering function to render a native ad - provides a `NativeAdData` which contains: `title`, `description`, `imageUrl`, `clickUrl` of the native ad|`nativeAdBuilder: (nativeAd) => Text(nativeAd.title)`
 |clickThroughAction|no|`ClickThroughAction` to handle ad behavior when clicked|`ClickThroughAction.returnUrl` (does not handle ad click, needs to be handled by developer on `onAdClicked` callback), `ClickThroughAction.openSdkBrowser` (opens an internal app browser through the SDK), `ClickThroughAction.openDeviceBrowser` (opens the ad externally through the device browser)|
 |onAdClicked|no|`Function` callback called when the ad is clicked and clickThroughAction is `ClickThroughAction.returnUrl`|`onAdClicked: (url) =>  print('click url: $url')`|
