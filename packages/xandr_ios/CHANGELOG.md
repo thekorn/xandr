@@ -1,3 +1,7 @@
+## 0.2.15+1
+
+ - Bump "xandr_ios" to `0.2.15+1`.
+
 ## 0.2.15
 
  - **FEAT**: add optional nativeAdRendererId to add requests (#218) (#222).
