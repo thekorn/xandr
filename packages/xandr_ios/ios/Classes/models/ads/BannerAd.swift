@@ -43,6 +43,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
     let autoRefreshInterval = arguments["autoRefreshInterval"] as? Double ?? 30
     // let resizeWhenLoaded = arguments["resizeWhenLoaded"] as? Bool ?? false
     let allowNativeDemand = arguments["allowNativeDemand"] as? Bool ?? false
+    let nativeAdRendererId = arguments["nativeAdRendererId"] as? Int
     // let loadWhenCreated = arguments["loadWhenCreated"] as? Bool ?? false
     let enableLazyLoad = arguments["enableLazyLoad"] as? Bool ?? false
     // let multiAdRequestId = arguments["multiAdRequestId"] as? String
@@ -78,6 +79,10 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
       banner?.autoRefreshInterval = autoRefreshInterval
       banner?.shouldAllowNativeDemand = allowNativeDemand
       banner?.enableLazyLoad = enableLazyLoad
+      if nativeAdRendererId != nil {
+        banner?.nativeAdRendererId = nativeAdRendererId!
+          logger.debug(message: "using nativeAdRendererId=\(String(describing: nativeAdRendererId))")
+      }
 
       if clickThroughAction != nil {
         switch clickThroughAction {
