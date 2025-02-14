@@ -25,6 +25,7 @@ class AdBanner extends StatefulWidget {
     this.autoRefreshInterval = const Duration(seconds: 30),
     this.resizeWhenLoaded = false,
     this.allowNativeDemand = false,
+    this.nativeAdRendererId,
     this.nativeAdBuilder,
     this.clickThroughAction,
     this.resizeAdToFitContainer = false,
@@ -46,6 +47,11 @@ class AdBanner extends StatefulWidget {
           (allowNativeDemand == false && nativeAdBuilder == null) ||
               (allowNativeDemand == true && nativeAdBuilder != null),
           'nativeAdBuilder must be set if allowNativeDemand is true',
+        ),
+        assert(
+          (nativeAdRendererId != null && allowNativeDemand == true) ||
+              nativeAdRendererId == null,
+          'allowNativeDemand must be true if nativeAdRendererId is set',
         ),
         //Note: opensdk:auto_refresh_interval or
         // adview.setAutoRefreshInterval(long interval): The interval, in
@@ -97,6 +103,12 @@ class AdBanner extends StatefulWidget {
 
   /// Whether to allow native ads to be served
   final bool allowNativeDemand;
+
+  /// The ID of the native ad renderer.
+  ///
+  /// This is an optional field that can be used to specify a custom renderer
+  /// for native ads. If not provided, the default renderer will be used.
+  final int? nativeAdRendererId;
 
   /// The width of the ad banner.
   final double width;
@@ -282,6 +294,7 @@ class _AdBannerState extends State<AdBanner> {
               multiAdRequestId: widget.multiAdRequestController?.requestId,
               onAdClicked: widget.onAdClicked,
               allowNativeDemand: widget.allowNativeDemand,
+              nativeAdRendererId: widget.nativeAdRendererId,
               nativeAdWidget: nativeAdWidget(),
             );
           } else {
@@ -373,6 +386,7 @@ class _HostAdBannerView extends StatelessWidget {
     required List<AdSize> adSizes,
     required CustomKeywords customKeywords,
     required bool allowNativeDemand,
+    required int? nativeAdRendererId,
     required Duration autoRefreshInterval,
     required bool resizeWhenLoaded,
     required this.controller,
@@ -417,6 +431,9 @@ class _HostAdBannerView extends StatelessWidget {
     }
     if (multiAdRequestId != null) {
       creationParams['multiAdRequestId'] = multiAdRequestId;
+    }
+    if (nativeAdRendererId != null) {
+      creationParams['nativeAdRendererId'] = nativeAdRendererId;
     }
   }
 

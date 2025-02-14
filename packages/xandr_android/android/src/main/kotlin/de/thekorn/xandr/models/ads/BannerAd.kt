@@ -47,6 +47,10 @@ class BannerAd(
                 this.allowNativeDemand = allowNativeDemand
             }
 
+            it.nativeAdRendererId?.let { nativeAdRendererId ->
+                this.rendererId = nativeAdRendererId
+            }
+
             it.shouldServePSAs?.let { shouldServePSAs ->
                 this.shouldServePSAs = shouldServePSAs
             }
