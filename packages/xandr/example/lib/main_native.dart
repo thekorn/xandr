@@ -112,6 +112,7 @@ class _XandrExampleState extends State<XandrExample> {
                       child: Column(
                         children: [
                           Text(
+                            // ignore: lines_longer_than_80_chars
                             "title1 = ${nativeAd.customElements['title1'] ?? 'unknown'}",
                           ),
                           Text(nativeAd.title),
