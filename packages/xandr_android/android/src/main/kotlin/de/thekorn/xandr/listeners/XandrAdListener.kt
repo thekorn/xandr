@@ -67,7 +67,6 @@ open class XandrAdListener(private var widgetId: Int, private var flutterApi: Xa
                 "Xandr.BannerView",
                 ">>> Ad Loaded, NativeAdResponse customElements=$customElements"
             )
-
         }
 
         if (adResponse != null && clickUrl != null) {
