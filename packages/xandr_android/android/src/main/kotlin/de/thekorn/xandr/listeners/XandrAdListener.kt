@@ -41,18 +41,19 @@ open class XandrAdListener(private var widgetId: Int, private var flutterApi: Xa
         }
     }
 
-    override fun onAdLoaded(adResonse: NativeAdResponse?) {
+    override fun onAdLoaded(adResponse: NativeAdResponse?) {
         Log.d(
             "Xandr.BannerView",
-            ">>> Ad Loaded, NativeAdResponse=$adResonse, title=${adResonse?.title} " +
+            ">>> Ad Loaded, NativeAdResponse=$adResponse, title=${adResponse?.title} " +
                 "for $widgetId"
         )
         var clickUrl: String? = null
-        if ((adResonse?.networkIdentifier == NativeAdResponse.Network.APPNEXUS) &&
-            (adResonse?.nativeElements?.get(NativeAdResponse.NATIVE_ELEMENT_OBJECT)) is JSONObject
+        var customElements: String = ""
+        if ((adResponse?.networkIdentifier == NativeAdResponse.Network.APPNEXUS) &&
+            (adResponse?.nativeElements?.get(NativeAdResponse.NATIVE_ELEMENT_OBJECT)) is JSONObject
         ) {
             val nativeResponseJSON = (
-                adResonse.nativeElements
+                adResponse.nativeElements
                 [NativeAdResponse.NATIVE_ELEMENT_OBJECT]
                 )
                 as JSONObject
@@ -61,15 +62,22 @@ open class XandrAdListener(private var widgetId: Int, private var flutterApi: Xa
                 clickUrl =
                     JsonUtil.getJSONObject(nativeResponseJSON, "link").getString("fallback_url")
             }
+            customElements = nativeResponseJSON.toString()
+            Log.d(
+                "Xandr.BannerView",
+                ">>> Ad Loaded, NativeAdResponse customElements=$customElements"
+            )
+
         }
 
-        if (adResonse != null && clickUrl != null) {
+        if (adResponse != null && clickUrl != null) {
             flutterApi.onNativeAdLoaded(
                 widgetId.toLong(),
-                adResonse.title,
-                adResonse.description,
-                adResonse.imageUrl,
-                clickUrl
+                adResponse.title,
+                adResponse.description,
+                adResponse.imageUrl,
+                clickUrl,
+                customElements
             ) { }
         } else {
             flutterApi.onNativeAdLoadedError(

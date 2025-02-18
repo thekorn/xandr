@@ -564,7 +564,7 @@ abstract class XandrFlutterApi {
   void onAdLoadedError(int viewId, String reason);
 
   void onNativeAdLoaded(int viewId, String title, String description,
-      String imageUrl, String clickUrl);
+      String imageUrl, String clickUrl, String customElements);
 
   void onNativeAdLoadedError(int viewId, String reason);
 
@@ -700,9 +700,12 @@ abstract class XandrFlutterApi {
           final String? arg_clickUrl = (args[4] as String?);
           assert(arg_clickUrl != null,
               'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.');
+          final String? arg_customElements = (args[5] as String?);
+          assert(arg_customElements != null,
+              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.');
           try {
             api.onNativeAdLoaded(arg_viewId!, arg_title!, arg_description!,
-                arg_imageUrl!, arg_clickUrl!);
+                arg_imageUrl!, arg_clickUrl!, arg_customElements!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);

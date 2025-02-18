@@ -527,7 +527,7 @@ protocol XandrFlutterApiProtocol {
                        completion: @escaping (Result<Void, PigeonError>) -> Void)
   func onNativeAdLoaded(viewId viewIdArg: Int64, title titleArg: String,
                         description descriptionArg: String, imageUrl imageUrlArg: String,
-                        clickUrl clickUrlArg: String,
+                        clickUrl clickUrlArg: String, customElements customElementsArg: String,
                         completion: @escaping (Result<Void, PigeonError>) -> Void)
   func onNativeAdLoadedError(viewId viewIdArg: Int64, reason reasonArg: String,
                              completion: @escaping (Result<Void, PigeonError>) -> Void)
@@ -612,7 +612,7 @@ class XandrFlutterApi: XandrFlutterApiProtocol {
 
   func onNativeAdLoaded(viewId viewIdArg: Int64, title titleArg: String,
                         description descriptionArg: String, imageUrl imageUrlArg: String,
-                        clickUrl clickUrlArg: String,
+                        clickUrl clickUrlArg: String, customElements customElementsArg: String,
                         completion: @escaping (Result<Void, PigeonError>) -> Void) {
     let channelName =
       "dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded\(messageChannelSuffix)"
@@ -621,22 +621,27 @@ class XandrFlutterApi: XandrFlutterApiProtocol {
       binaryMessenger: binaryMessenger,
       codec: codec
     )
-    channel
-      .sendMessage([viewIdArg, titleArg, descriptionArg, imageUrlArg,
-                    clickUrlArg] as [Any?]) { response in
-        guard let listResponse = response as? [Any?] else {
-          completion(.failure(createConnectionError(withChannelName: channelName)))
-          return
-        }
-        if listResponse.count > 1 {
-          let code: String = listResponse[0] as! String
-          let message: String? = nilOrValue(listResponse[1])
-          let details: String? = nilOrValue(listResponse[2])
-          completion(.failure(PigeonError(code: code, message: message, details: details)))
-        } else {
-          completion(.success(()))
-        }
+    channel.sendMessage([
+      viewIdArg,
+      titleArg,
+      descriptionArg,
+      imageUrlArg,
+      clickUrlArg,
+      customElementsArg,
+    ] as [Any?]) { response in
+      guard let listResponse = response as? [Any?] else {
+        completion(.failure(createConnectionError(withChannelName: channelName)))
+        return
       }
+      if listResponse.count > 1 {
+        let code: String = listResponse[0] as! String
+        let message: String? = nilOrValue(listResponse[1])
+        let details: String? = nilOrValue(listResponse[2])
+        completion(.failure(PigeonError(code: code, message: message, details: details)))
+      } else {
+        completion(.success(()))
+      }
+    }
   }
 
   func onNativeAdLoadedError(viewId viewIdArg: Int64, reason reasonArg: String,
