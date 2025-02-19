@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
@@ -236,11 +237,14 @@ class XandrEventHandler implements messages.XandrFlutterApi {
     String description,
     String imageUrl,
     String clickUrl,
+    String customElements,
   ) {
     debugPrint(
       "xandr.onNativeAdLoaded: $viewId, title='$title', "
       "description='$description', imageUrl='$imageUrl', clickUrl='$clickUrl'",
     );
+    final jsonCustomElements =
+        jsonDecode(customElements) as Map<String, dynamic>;
     _controller.add(
       NativeBannerAdLoadedEvent(
         viewId: viewId,
@@ -248,6 +252,7 @@ class XandrEventHandler implements messages.XandrFlutterApi {
         description: description,
         imageUrl: imageUrl,
         clickUrl: clickUrl,
+        customElements: jsonCustomElements,
       ),
     );
   }

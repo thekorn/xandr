@@ -84,7 +84,7 @@ class _XandrExampleState extends State<XandrExample> {
                 ),
                 AdBanner(
                   controller: _controller,
-                  inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
+                  inventoryCode: 'tvt_webapp_home_homepage_hor_special',
                   adSizes: const [AdSize(1, 1)],
                   customKeywords: const {
                     'kw': ['test-kw', 'demoads_native'],
@@ -102,8 +102,8 @@ class _XandrExampleState extends State<XandrExample> {
                   clickThroughAction: ClickThroughAction.returnUrl,
                   onAdClicked: (url) => debugPrint('click url: $url'),
                   allowNativeDemand: true,
-                  nativeAdRendererId: 1,
-                  nativeAdBuilder: (nativeAd) => InkWell(
+                  nativeAdRendererId: 1287,
+                  nativeAdBuilder: (NativeAdData nativeAd) => InkWell(
                     onTap: () => debugPrint(
                       'native ad click: ${nativeAd.clickUrl}',
                     ),
@@ -111,6 +111,10 @@ class _XandrExampleState extends State<XandrExample> {
                       color: Colors.amber,
                       child: Column(
                         children: [
+                          Text(
+                            // ignore: lines_longer_than_80_chars
+                            "title1 = ${nativeAd.customElements['title1'] ?? 'unknown'}",
+                          ),
                           Text(nativeAd.title),
                           Text(nativeAd.description),
                           Image.network(nativeAd.imageUrl),

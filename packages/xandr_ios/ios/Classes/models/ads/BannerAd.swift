@@ -9,6 +9,21 @@ import AppNexusSDK
 import Flutter
 import Foundation
 
+func jsonDump(_ object: [String: Any?]) -> String? {
+  // Convert nil values to NSNull
+  let sanitizedObject = object.mapValues { $0 ?? NSNull() }
+
+  // Try to serialize to JSON data
+  if let jsonData = try? JSONSerialization.data(
+    withJSONObject: sanitizedObject,
+    options: .prettyPrinted
+  ) {
+    return String(data: jsonData, encoding: .utf8)
+  }
+
+  return nil
+}
+
 class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
   public var banner: ANBannerAdView?
   public var state: FlutterState?
@@ -161,7 +176,8 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
           title: title,
           description: description,
           imageUrl: imageUrl.absoluteString,
-          clickUrl: clickUrl ?? clickFallbackUrl ?? ""
+          clickUrl: clickUrl ?? clickFallbackUrl ?? "",
+          customElements: jsonDump(customElements) ?? "{}"
         )
       } else {
         logger
