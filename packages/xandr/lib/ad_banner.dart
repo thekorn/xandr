@@ -349,6 +349,7 @@ class NativeAdData {
     required this.description,
     required this.imageUrl,
     required this.clickUrl,
+    required this.customElements,
   });
 
   /// native ad viewId
@@ -365,6 +366,9 @@ class NativeAdData {
 
   /// native ad clickUrl
   final String clickUrl;
+
+  /// A map containing custom elements for the ad banner.
+  final Map<String, dynamic> customElements;
 }
 
 /// Represents a callback which is called when an ad is either loaded or
@@ -508,6 +512,7 @@ class _HostAdBannerView extends StatelessWidget {
             description: event.description,
             imageUrl: event.imageUrl,
             clickUrl: event.clickUrl,
+            customElements: event.customElements,
           ),
         );
       } else if (event is NativeBannerAdLoadedErrorEvent) {

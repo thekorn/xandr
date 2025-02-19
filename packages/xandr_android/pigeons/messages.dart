@@ -115,6 +115,7 @@ abstract class XandrFlutterApi {
     String description,
     String imageUrl,
     String clickUrl,
+    String customElements,
   ) {}
   void onNativeAdLoadedError(int viewId, String reason) {}
   void onAdClicked(int viewId, String url) {}

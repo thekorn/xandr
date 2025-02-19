@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-02-19
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`xandr` - `v0.2.16`](#xandr---v0216)
+ - [`xandr_android` - `v0.2.16`](#xandr_android---v0216)
+ - [`xandr_ios` - `v0.2.16`](#xandr_ios---v0216)
+ - [`xandr_platform_interface` - `v0.2.16`](#xandr_platform_interface---v0216)
+
+---
+
+#### `xandr` - `v0.2.16`
+
+ - **FEAT**: return customelements in native ad response (fixes 227) (#228).
+
+#### `xandr_android` - `v0.2.16`
+
+ - **FEAT**: return customelements in native ad response (fixes 227) (#228).
+
+#### `xandr_ios` - `v0.2.16`
+
+ - **FEAT**: return customelements in native ad response (fixes 227) (#228).
+
+#### `xandr_platform_interface` - `v0.2.16`
+
+ - **FEAT**: return customelements in native ad response (fixes 227) (#228).
+
+
 ## 2025-02-13
 
 ### Changes

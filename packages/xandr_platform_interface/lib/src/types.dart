@@ -109,6 +109,7 @@ class NativeBannerAdLoadedEvent extends BannerAdEvent {
     required this.description,
     required this.imageUrl,
     required this.clickUrl,
+    required this.customElements,
   });
 
   /// The title which should be shown within the native ad.
@@ -122,6 +123,11 @@ class NativeBannerAdLoadedEvent extends BannerAdEvent {
 
   /// The click URL of the main image within in the native ad.
   final String clickUrl;
+
+  /// A map containing custom elements for the native ad.
+  ///
+  /// This is the raw custom data send in the native Ad Response
+  final Map<String, dynamic> customElements;
 }
 
 /// Represents an event that is triggered when a native banner ad fails to load.
