@@ -86,9 +86,9 @@ class _XandrExampleState extends State<XandrExample> {
                   controller: _controller,
                   inventoryCode: 'tvt_webapp_home_homepage_hor_special',
                   adSizes: const [AdSize(1, 1)],
-                  //customKeywords: const {
-                  //  'kw': ['test-kw', 'demoads_native'],
-                  //},
+                  customKeywords: const {
+                    'kw': ['test-kw', 'demoads_native'],
+                  },
                   onBannerFinishLoading: ({
                     required success,
                     height,
@@ -103,7 +103,7 @@ class _XandrExampleState extends State<XandrExample> {
                   onAdClicked: (url) => debugPrint('click url: $url'),
                   allowNativeDemand: true,
                   nativeAdRendererId: 1287,
-                  nativeAdBuilder: (nativeAd) => InkWell(
+                  nativeAdBuilder: (NativeAdData nativeAd) => InkWell(
                     onTap: () => debugPrint(
                       'native ad click: ${nativeAd.clickUrl}',
                     ),
