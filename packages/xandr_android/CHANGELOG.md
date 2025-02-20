@@ -1,6 +1,6 @@
 ## 0.2.16
 
- - **FEAT**: return customelements in native ad response (fixes 227) (#228).
+ - **FEAT**: return customElements in native ad response (fixes 227) (#228).
 
 ## 0.2.15+1
 

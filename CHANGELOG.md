@@ -24,19 +24,19 @@ Packages with other changes:
 
 #### `xandr` - `v0.2.16`
 
- - **FEAT**: return customelements in native ad response (fixes 227) (#228).
+ - **FEAT**: return customElements in native ad response (fixes 227) (#228).
 
 #### `xandr_android` - `v0.2.16`
 
- - **FEAT**: return customelements in native ad response (fixes 227) (#228).
+ - **FEAT**: return customElements in native ad response (fixes 227) (#228).
 
 #### `xandr_ios` - `v0.2.16`
 
- - **FEAT**: return customelements in native ad response (fixes 227) (#228).
+ - **FEAT**: return customElements in native ad response (fixes 227) (#228).
 
 #### `xandr_platform_interface` - `v0.2.16`
 
- - **FEAT**: return customelements in native ad response (fixes 227) (#228).
+ - **FEAT**: return customElements in native ad response (fixes 227) (#228).
 
 
 ## 2025-02-13
@@ -1699,4 +1699,3 @@ Packages with other changes:
  - **FEAT**: initial implementation of an event stream for banner ads.
  - **FEAT**(xandr_platform_interface): add new interface and method channel classes.
  - **DOCS**(xandr): add detailed comments to public classes and methods for better understanding.
-
