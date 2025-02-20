@@ -121,7 +121,15 @@ scripts:
 
   run:example:native:
     run: fvm flutter run -t lib/main_native.dart
-    description: Run the example app inclusing just a native ad banner.
+    description: Run the example app including just a native ad banner.
+    exec:
+      concurrency: 1
+    packageFilters:
+      scope: "xandr_example"
+
+  run:example:multiscreen:
+    run: fvm flutter run -t lib/main_multiscreen.dart
+    description: Run the example app composed of multiple screens.
     exec:
       concurrency: 1
     packageFilters:
