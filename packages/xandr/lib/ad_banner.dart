@@ -183,7 +183,7 @@ class _AdBannerState extends State<AdBanner> {
 
   /// trigger ad loading via [MethodChannel]
   void loadAd() {
-    if (!_loaded && !_loading) {
+    if (mounted && !_loaded && !_loading) {
       setState(() {
         _loading = true;
       });
@@ -215,10 +215,12 @@ class _AdBannerState extends State<AdBanner> {
 
   void changeSize(double width, double height) {
     debugPrint('>>>> changeSize: $width x $height');
-    setState(() {
-      _width = width;
-      _height = height;
-    });
+    if (mounted) {
+      setState(() {
+        _width = width;
+        _height = height;
+      });
+    }
   }
 
   void onDoneLoading({
@@ -234,11 +236,13 @@ class _AdBannerState extends State<AdBanner> {
     );
 
     debugPrint('>>>> onDoneLoading: $success');
-    setState(() {
-      _loading = false;
-      _loaded = success;
-      _nativeAd = nativeAd;
-    });
+    if (mounted) {
+      setState(() {
+        _loading = false;
+        _loaded = success;
+        _nativeAd = nativeAd;
+      });
+    }
     if (!widget.doneLoading.isCompleted) {
       widget.doneLoading.complete(success);
     }
