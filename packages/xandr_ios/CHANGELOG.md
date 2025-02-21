@@ -1,3 +1,7 @@
+## 0.2.17
+
+ - **FIX**: Correct 'customelements' typo in changelogs.
+
 ## 0.2.16
 
  - **FEAT**: return customElements in native ad response (fixes 227) (#228).

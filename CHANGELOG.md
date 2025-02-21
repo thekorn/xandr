@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-02-21
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`xandr` - `v0.2.17`](#xandr---v0217)
+ - [`xandr_android` - `v0.2.17`](#xandr_android---v0217)
+ - [`xandr_ios` - `v0.2.17`](#xandr_ios---v0217)
+ - [`xandr_platform_interface` - `v0.2.17`](#xandr_platform_interface---v0217)
+
+---
+
+#### `xandr` - `v0.2.17`
+
+ - **FIX**: defunct state on ad disposal (fixes #225).
+ - **FIX**: Correct 'customelements' typo in changelogs.
+
+#### `xandr_android` - `v0.2.17`
+
+ - **FIX**: defunct state on ad disposal (fixes #225).
+ - **FIX**: Correct 'customelements' typo in changelogs.
+
+#### `xandr_ios` - `v0.2.17`
+
+ - **FIX**: Correct 'customelements' typo in changelogs.
+
+#### `xandr_platform_interface` - `v0.2.17`
+
+ - **FIX**: Correct 'customelements' typo in changelogs.
+
+
 ## 2025-02-19
 
 ### Changes
