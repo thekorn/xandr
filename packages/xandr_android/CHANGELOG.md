@@ -1,3 +1,7 @@
+## 0.2.17+1
+
+ - Bump "xandr_android" to `0.2.17+1`.
+
 ## 0.2.17
 
  - **FIX**: defunct state on ad disposal (fixes #225).

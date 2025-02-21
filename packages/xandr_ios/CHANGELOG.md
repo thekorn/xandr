@@ -1,3 +1,7 @@
+## 0.2.17+1
+
+ - Bump "xandr_ios" to `0.2.17+1`.
+
 ## 0.2.17
 
  - **FIX**: Correct 'customelements' typo in changelogs.
