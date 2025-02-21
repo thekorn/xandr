@@ -25,20 +25,20 @@ Packages with other changes:
 #### `xandr` - `v0.2.17`
 
  - **FIX**: defunct state on ad disposal (fixes #225).
- - **FIX**: Correct 'customelements' typo in changelogs.
+ - **FIX**: Correct 'customElements' typo in changelogs.
 
 #### `xandr_android` - `v0.2.17`
 
  - **FIX**: defunct state on ad disposal (fixes #225).
- - **FIX**: Correct 'customelements' typo in changelogs.
+ - **FIX**: Correct 'customElements' typo in changelogs.
 
 #### `xandr_ios` - `v0.2.17`
 
- - **FIX**: Correct 'customelements' typo in changelogs.
+ - **FIX**: Correct 'customElements' typo in changelogs.
 
 #### `xandr_platform_interface` - `v0.2.17`
 
- - **FIX**: Correct 'customelements' typo in changelogs.
+ - **FIX**: Correct 'customElements' typo in changelogs.
 
 
 ## 2025-02-19
