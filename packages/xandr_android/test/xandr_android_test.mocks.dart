@@ -64,6 +64,13 @@ class MockXandrHostApi extends _i1.Mock implements _i2.XandrHostApi {
       ) as _i4.Future<bool>);
 
   @override
+  _i4.Future<void> resetController() => (super.noSuchMethod(
+        Invocation.method(#resetController, []),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
   _i4.Future<bool> loadInterstitialAd({
     required int? widgetId,
     String? placementID,

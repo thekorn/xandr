@@ -81,6 +81,11 @@ class XandrIOS extends XandrPlatform {
   }
 
   @override
+  Future<void> resetController() async {
+    return _api.resetController();
+  }
+
+  @override
   Future<bool> loadInterstitialAd(
     String? placementID,
     String? inventoryCode,

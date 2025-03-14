@@ -48,7 +48,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
     let customKeywords = arguments["customKeywords"] as? [String: [String]]
     // let layoutHeight = arguments["layoutHeight"] as? Int
     // let layoutWidth = arguments["layoutWidth"] as? Int
-    // let shouldServePSAs = arguments["shouldServePSAs"] as? Bool ?? false
+    let shouldServePSAs = arguments["shouldServePSAs"] as? Bool ?? false
     // let loadsInBackground = arguments["loadsInBackground"] as? Bool ?? false
     let resizeAdToFitContainer = arguments["resizeAdToFitContainer"] as? Bool ?? false
     let placementID = arguments["placementID"] as? String
@@ -93,6 +93,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
       banner?.shouldResizeAdToFitContainer = resizeAdToFitContainer
       banner?.autoRefreshInterval = autoRefreshInterval
       banner?.shouldAllowNativeDemand = allowNativeDemand
+      banner?.shouldServePublicServiceAnnouncements = shouldServePSAs
       banner?.enableLazyLoad = enableLazyLoad
       if nativeAdRendererId != nil {
         banner?.nativeAdRendererId = nativeAdRendererId!

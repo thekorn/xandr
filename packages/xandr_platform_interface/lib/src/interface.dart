@@ -51,6 +51,11 @@ abstract class XandrPlatform extends PlatformInterface {
     );
   }
 
+  /// Resets XandrController instance
+  Future<void> resetController() async {
+    await _instance.resetController();
+  }
+
   /// loads an ad.
   Future<bool> loadAd(int widgetId) async {
     return _instance.loadAd(widgetId);

@@ -42,6 +42,12 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
     )
     registrar.register(factory, withId: "de.thekorn.xandr/ad_banner")
   }
+    
+  public func onDetachFromEngine(_: FlutterEngine) {
+    logger.debug(message: "detached from engine")
+    flutterState?.stopListening()
+    flutterState?.flushBannerAdViewList()
+  }
 
   func initXandrSdk(memberId: Int64, publisherId: Int64?, testMode: Bool,
                     completion: @escaping (Result<Bool, Error>) -> Void) {
@@ -78,6 +84,16 @@ public class XandrPlugin: UIViewController, FlutterPlugin,
             }
         }
     }
+  }
+    
+  func resetController(completion: @escaping (Result<Void, any Error>) -> Void) {
+    logger
+      .debug(
+        message: "Trying to reset the XandrController instance"
+      )
+    flutterState?.stopListening()
+    flutterState?.flushBannerAdViewList()
+    flutterState?.startListening(api: self)
   }
 
   func loadAd(widgetId: Int64, completion: @escaping (Result<Bool, any Error>) -> Void) {

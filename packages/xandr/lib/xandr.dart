@@ -50,6 +50,11 @@ class XandrController {
     return result;
   }
 
+  /// Resets XandrController instance
+  Future<void> resetController() async {
+    await _platform.resetController();
+  }
+
   /// loads an ad.
   Future<bool> loadAd(int widgetId) async {
     debugPrint('loadAd');

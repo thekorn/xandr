@@ -97,6 +97,14 @@ class XandrPlugin :
         }
     }
 
+    override fun resetController(callback: (Result<Unit>) -> Unit) {
+        Log.d("Xandr", "Resetting list of managed banners")
+        this.flutterState.stopListening()
+        flutterState.flushBannerAdViewList()
+        this.flutterState.startListening(this)
+        callback(Result.success(Unit))
+    }
+
     override fun loadAd(widgetId: Long, callback: (Result<Boolean>) -> Unit) {
         Log.d("Xandr", "loadAd got called, with widgetId=$widgetId")
         this.flutterState.isInitialized.invokeOnCompletion {
@@ -267,11 +275,9 @@ class XandrPlugin :
             "setAutoRefreshInterval got called, with inventoryCode=$inventoryCode, placementID=$placementID, autoRefreshIntervalInSeconds=$autoRefreshIntervalInSeconds"
         )
         this.flutterState.isInitialized.invokeOnCompletion {
-            this.flutterState.getBannerViewWithCode(inventoryCode, placementID)?.let {
+            this.flutterState.getBannerViewWithCode(inventoryCode, placementID).let {
                 it.banner.autoRefreshInterval = autoRefreshIntervalInSeconds.toInt()
                 callback(Result.success(true))
-            } ?: run {
-                callback(Result.success(false))
             }
         }
     }

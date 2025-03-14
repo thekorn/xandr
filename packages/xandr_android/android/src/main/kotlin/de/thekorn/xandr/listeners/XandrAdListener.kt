@@ -50,7 +50,7 @@ open class XandrAdListener(private var widgetId: Int, private var flutterApi: Xa
         var clickUrl: String? = null
         var customElements: String = ""
         if ((adResponse?.networkIdentifier == NativeAdResponse.Network.APPNEXUS) &&
-            (adResponse?.nativeElements?.get(NativeAdResponse.NATIVE_ELEMENT_OBJECT)) is JSONObject
+            (adResponse.nativeElements?.get(NativeAdResponse.NATIVE_ELEMENT_OBJECT)) is JSONObject
         ) {
             val nativeResponseJSON = (
                 adResponse.nativeElements
