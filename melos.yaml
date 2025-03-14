@@ -64,7 +64,6 @@ scripts:
 
   merge-trace-files:
     # Merge all packages coverage trace files ignoring data related to generated files.
-    # FIXME: include all webview extension packages once they ship tests
     description: Merge all packages coverage trace files ignoring data related to generated files.
     run: >
       coverde rm MELOS_ROOT_PATH/coverage/filtered.lcov.info &&
