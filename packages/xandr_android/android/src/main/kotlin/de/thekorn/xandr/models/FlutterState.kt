@@ -29,6 +29,10 @@ class FlutterState(var applicationContext: Context, private var binaryMessenger:
         XandrHostApi.setUp(this.binaryMessenger, null)
     }
 
+    fun flushBannerAdViewList() {
+        this.flutterBannerAdViews.clear()
+    }
+
     fun getOrCreateBannerView(activity: Activity, id: Int, args: Any?): BannerViewContainer {
         if (!flutterBannerAdViews.containsKey(id)) {
             Log.d("Xandr.BannerViewFactory", "Create new FlutterBannerAdView for id=$id")
@@ -53,7 +57,7 @@ class FlutterState(var applicationContext: Context, private var binaryMessenger:
     }
 
     fun getBannerViewWithCode(inventoryCode: String?, placementID: String?): BannerViewContainer {
-        for ((widgetId, bannerAdView) in flutterBannerAdViews) {
+        for ((_, bannerAdView) in flutterBannerAdViews) {
             if ((inventoryCode != null && inventoryCode == bannerAdView.banner.inventoryCode) ||
                 (placementID != null && placementID == bannerAdView.banner.placementID)
             ) {

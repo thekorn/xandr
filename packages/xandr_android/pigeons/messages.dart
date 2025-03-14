@@ -46,6 +46,9 @@ abstract class XandrHostApi {
   });
 
   @async
+  void resetController();
+
+  @async
   bool loadInterstitialAd({
     required int widgetId,
     String? placementID,
