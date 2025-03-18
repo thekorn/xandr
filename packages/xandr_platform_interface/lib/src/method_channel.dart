@@ -18,6 +18,11 @@ class MethodChannelXandr extends XandrPlatform {
   }
 
   @override
+  Future<void> resetController() async {
+    await methodChannel.invokeMethod<void>('resetController');
+  }
+
+  @override
   Future<bool> loadAd(int widgetId) async {
     return (await methodChannel.invokeMethod<bool>('loadAd'))!;
   }

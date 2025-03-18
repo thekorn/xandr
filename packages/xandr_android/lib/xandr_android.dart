@@ -81,6 +81,11 @@ class XandrAndroid extends XandrPlatform {
   }
 
   @override
+  Future<void> resetController() async {
+    await _api.resetController();
+  }
+
+  @override
   Future<bool> loadAd(int widgetId) async {
     return _api.loadAd(
       widgetId: widgetId,

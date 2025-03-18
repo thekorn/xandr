@@ -65,6 +65,13 @@ class MockMethodChannelXandr extends _i1.Mock
       ) as _i4.Future<bool>);
 
   @override
+  _i4.Future<void> resetController() => (super.noSuchMethod(
+        Invocation.method(#resetController, []),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
   _i4.Future<bool> loadAd(int? widgetId) => (super.noSuchMethod(
         Invocation.method(#loadAd, [widgetId]),
         returnValue: _i4.Future<bool>.value(false),

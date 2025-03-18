@@ -38,6 +38,10 @@ public class FlutterState {
     XandrHostApiSetup.setUp(binaryMessenger: binaryMessenger, api: nil)
   }
 
+  func flushBannerAdViewList() {
+    flutterBannerAdviews.removeAll()
+  }
+
   public func setIsInitialized(success: Bool) {
     isInitialized.complete(success)
   }
