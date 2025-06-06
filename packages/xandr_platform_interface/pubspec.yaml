@@ -20,4 +20,4 @@ dev_dependencies:
     sdk: flutter
   mockito: ^5.4.4
   pana: ^0.22.9
-  very_good_analysis: ^7.0.0
+  very_good_analysis: ">=7.0.0 <10.0.0"
