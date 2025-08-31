@@ -31,4 +31,4 @@ dev_dependencies:
   pana: ^0.22.9
   pigeon: ^25.3.0
   plugin_platform_interface: ^2.1.8
-  very_good_analysis: ^7.0.0
+  very_good_analysis: ">=7.0.0 <10.0.0"
