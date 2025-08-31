@@ -1,3 +1,5 @@
+## 0.3.0
+
 ## 0.2.18
 
  - Bump "xandr_platform_interface" to `0.2.18`.
