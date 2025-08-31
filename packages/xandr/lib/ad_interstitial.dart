@@ -16,11 +16,11 @@ class InterstitialAd {
     this.placementID,
     this.inventoryCode,
     this.customKeywords,
-  })  : assert(
-          placementID != null || inventoryCode != null,
-          'we need either a placementID or an inventoryCode',
-        ),
-        _controller = controller;
+  }) : assert(
+         placementID != null || inventoryCode != null,
+         'we need either a placementID or an inventoryCode',
+       ),
+       _controller = controller;
 
   final XandrController _controller;
 

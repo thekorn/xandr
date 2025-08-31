@@ -39,11 +39,7 @@ abstract class XandrPlatform extends PlatformInterface {
   }
 
   /// Return the current platform name.
-  Future<bool> init(
-    int memberId, {
-    int? publisherId,
-    bool testMode = false,
-  }) {
+  Future<bool> init(int memberId, {int? publisherId, bool testMode = false}) {
     return _instance.init(
       memberId,
       publisherId: publisherId,

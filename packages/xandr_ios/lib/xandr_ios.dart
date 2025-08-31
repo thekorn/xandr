@@ -62,9 +62,7 @@ class XandrIOS extends XandrPlatform {
   void registerEventStream({
     required StreamController<BannerAdEvent> controller,
   }) {
-    messages.XandrFlutterApi.setUp(
-      XandrEventHandler(controller: controller),
-    );
+    messages.XandrFlutterApi.setUp(XandrEventHandler(controller: controller));
   }
 
   @override
@@ -148,9 +146,7 @@ class XandrIOS extends XandrPlatform {
 
   @override
   Future<bool> loadAd(int widgetId) async {
-    return _api.loadAd(
-      widgetId: widgetId,
-    );
+    return _api.loadAd(widgetId: widgetId);
   }
 
   @override
@@ -195,7 +191,7 @@ class XandrEventHandler implements messages.XandrFlutterApi {
   /// const XandrEventHandler();
   /// ```
   const XandrEventHandler({required StreamController<BannerAdEvent> controller})
-      : _controller = controller;
+    : _controller = controller;
 
   final StreamController<BannerAdEvent> _controller;
 
@@ -211,9 +207,11 @@ class XandrEventHandler implements messages.XandrFlutterApi {
     double cpm,
     int memberId,
   ) {
-    debugPrint('xandr.onAdLoaded: $viewId, size=${width}x$height, '
-        'creativeId=$creativeId, adType=$adType, tagId=$tagId, '
-        'auctionId=$auctionId, cpm=$cpm, memberId=$memberId');
+    debugPrint(
+      'xandr.onAdLoaded: $viewId, size=${width}x$height, '
+      'creativeId=$creativeId, adType=$adType, tagId=$tagId, '
+      'auctionId=$auctionId, cpm=$cpm, memberId=$memberId',
+    );
     _controller.add(
       BannerAdLoadedEvent(
         width: width,
@@ -266,8 +264,9 @@ class XandrEventHandler implements messages.XandrFlutterApi {
   @override
   void onNativeAdLoadedError(int viewId, String reason) {
     debugPrint("xandr.onNativeAdLoadedError: $viewId, reason='$reason'");
-    _controller
-        .add(NativeBannerAdLoadedErrorEvent(viewId: viewId, reason: reason));
+    _controller.add(
+      NativeBannerAdLoadedErrorEvent(viewId: viewId, reason: reason),
+    );
   }
 
   @override

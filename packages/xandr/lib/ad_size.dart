@@ -27,8 +27,5 @@ class AdSize {
   ///
   /// Returns a [Map] containing the JSON representation of the [AdSize] object.
   /// The keys in the map are of type [String] and the values are of type [int].
-  Map<String, int> toJson() => <String, int>{
-        'width': width,
-        'height': height,
-      };
+  Map<String, int> toJson() => <String, int>{'width': width, 'height': height};
 }

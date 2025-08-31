@@ -76,9 +76,7 @@ class _XandrExampleState extends State<XandrExample> {
                     alignment: Alignment.topLeft,
                     child: Text(
                       'native ad below:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -89,24 +87,23 @@ class _XandrExampleState extends State<XandrExample> {
                   customKeywords: const {
                     'kw': ['test-kw', 'demoads_native'],
                   },
-                  onBannerFinishLoading: ({
-                    required success,
-                    height,
-                    width,
-                    nativeAd,
-                  }) =>
-                      debugPrint(
-                    'on native banner finish loading: success: $success',
-                  ),
+                  onBannerFinishLoading:
+                      ({
+                        required success,
+                        height,
+                        width,
+                        nativeAd,
+                      }) => debugPrint(
+                        'on native banner finish loading: success: $success',
+                      ),
                   autoRefreshInterval: Duration.zero,
                   clickThroughAction: ClickThroughAction.returnUrl,
                   onAdClicked: (url) => debugPrint('click url: $url'),
                   allowNativeDemand: true,
                   nativeAdRendererId: 1287,
                   nativeAdBuilder: (NativeAdData nativeAd) => InkWell(
-                    onTap: () => debugPrint(
-                      'native ad click: ${nativeAd.clickUrl}',
-                    ),
+                    onTap: () =>
+                        debugPrint('native ad click: ${nativeAd.clickUrl}'),
                     child: ColoredBox(
                       color: Colors.amber,
                       child: Column(

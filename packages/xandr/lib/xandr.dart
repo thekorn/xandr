@@ -142,7 +142,7 @@ class MultiAdRequestController {
   /// This controller is responsible for managing multiple ad requests
   /// and coordinating with the XandrController.
   MultiAdRequestController({required XandrController controller})
-      : _controller = controller;
+    : _controller = controller;
 
   String? _multiAdRequestID;
   final XandrController _controller;

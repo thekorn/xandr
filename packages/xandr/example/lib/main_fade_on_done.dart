@@ -68,10 +68,12 @@ class _XandrExampleState extends State<XandrExample> {
           controller: _scrollController,
           child: Column(
             children: [
-              const Text('Lorem Ipsum is simply dummy text of the printing and '
-                  'typesetting industry. Lorem Ipsum has been the boo '
-                  'standard dummy text ever since the 1500s, when an aha '
-                  'printer took a galley of type and scrambled it to m'),
+              const Text(
+                'Lorem Ipsum is simply dummy text of the printing and '
+                'typesetting industry. Lorem Ipsum has been the boo '
+                'standard dummy text ever since the 1500s, when an aha '
+                'printer took a galley of type and scrambled it to m',
+              ),
               FadeAd(
                 adBanner: AdBanner(
                   controller: _controller,
@@ -85,14 +87,18 @@ class _XandrExampleState extends State<XandrExample> {
                   //enableLazyLoad: true,
                 ),
               ),
-              const Text('Lorem Ipsum is simply dummy text of the printing and '
-                  'typesetting industry. Lorem Ipsum has been the boo '
-                  'standard dummy text ever since the 1500s, when an aha '
-                  'printer took a galley of type and scrambled it to v'),
-              const Text('Lorem Ipsum is simply dummy text of the printing and '
-                  'typesetting industry. Lorem Ipsum has been the boo '
-                  'standard dummy text ever since the 1500s, when an aha '
-                  'printer took a galley of type and scrambled it to v'),
+              const Text(
+                'Lorem Ipsum is simply dummy text of the printing and '
+                'typesetting industry. Lorem Ipsum has been the boo '
+                'standard dummy text ever since the 1500s, when an aha '
+                'printer took a galley of type and scrambled it to v',
+              ),
+              const Text(
+                'Lorem Ipsum is simply dummy text of the printing and '
+                'typesetting industry. Lorem Ipsum has been the boo '
+                'standard dummy text ever since the 1500s, when an aha '
+                'printer took a galley of type and scrambled it to v',
+              ),
             ],
           ),
         ),

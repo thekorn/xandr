@@ -49,8 +49,9 @@ class MethodChannelXandr extends XandrPlatform {
 
   @override
   Future<void> setPublisherUserId(String publisherUserId) async {
-    await methodChannel
-        .invokeMethod<void>('setPublisherUserId', [publisherUserId]);
+    await methodChannel.invokeMethod<void>('setPublisherUserId', [
+      publisherUserId,
+    ]);
   }
 
   @override
@@ -65,7 +66,8 @@ class MethodChannelXandr extends XandrPlatform {
 
   @override
   Future<List<UserId>> getUserIds() async {
-    return (await methodChannel
-        .invokeMethod<List<UserId>>('getPublisherUserId'))!;
+    return (await methodChannel.invokeMethod<List<UserId>>(
+      'getPublisherUserId',
+    ))!;
   }
 }

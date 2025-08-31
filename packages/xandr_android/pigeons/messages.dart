@@ -2,13 +2,7 @@
 
 import 'package:pigeon/pigeon.dart';
 
-enum HostAPIUserIdSource {
-  criteo,
-  theTradeDesk,
-  netId,
-  liveramp,
-  uid2,
-}
+enum HostAPIUserIdSource { criteo, theTradeDesk, netId, liveramp, uid2 }
 
 class HostAPIUserId {
   HostAPIUserId({required this.userId, required this.source});
@@ -34,16 +28,10 @@ class HostAPIUserId {
 @HostApi()
 abstract class XandrHostApi {
   @async
-  bool init({
-    required int memberId,
-    int? publisherId,
-    bool testMode = false,
-  });
+  bool init({required int memberId, int? publisherId, bool testMode = false});
 
   @async
-  bool loadAd({
-    required int widgetId,
-  });
+  bool loadAd({required int widgetId});
 
   @async
   void resetController();
