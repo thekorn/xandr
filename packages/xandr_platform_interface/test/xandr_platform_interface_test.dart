@@ -15,9 +15,7 @@ void main() {
   });
 
   test('init', () async {
-    when(
-      api.init(123456),
-    ).thenAnswer((_) async => true);
+    when(api.init(123456)).thenAnswer((_) async => true);
     final success = await api.init(123456);
     expect(success, true);
   });

@@ -72,19 +72,18 @@ class _XandrExampleState extends State<XandrExample> {
             child: Column(
               children: [
                 const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and '
-                    'typesetting industry. Lorem Ipsum has been the boo '
-                    'standard dummy text ever since the 1500s, when an aha '
-                    'printer took a galley of type and scrambled it to m'),
+                  'Lorem Ipsum is simply dummy text of the printing and '
+                  'typesetting industry. Lorem Ipsum has been the boo '
+                  'standard dummy text ever since the 1500s, when an aha '
+                  'printer took a galley of type and scrambled it to m',
+                ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       'fit to container:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -96,55 +95,57 @@ class _XandrExampleState extends State<XandrExample> {
                   customKeywords: const {
                     'kw': ['test-kw', 'demoads'],
                   },
-                  onBannerFinishLoading: ({
-                    required success,
-                    height,
-                    width,
-                    nativeAd,
-                  }) =>
-                      debugPrint('on banner finish loading: success: $success'),
+                  onBannerFinishLoading:
+                      ({required success, height, width, nativeAd}) =>
+                          debugPrint(
+                            'on banner finish loading: success: $success',
+                          ),
                   //resizeAdToFitContainer: false,
                   //enableLazyLoad: true,
                 ),
                 const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and '
-                    'typesetting industry. Lorem Ipsum has been the boo '
-                    'standard dummy text ever since the 1500s, when an aha '
-                    'printer took a galley of type and scrambled it to v'),
+                  'Lorem Ipsum is simply dummy text of the printing and '
+                  'typesetting industry. Lorem Ipsum has been the boo '
+                  'standard dummy text ever since the 1500s, when an aha '
+                  'printer took a galley of type and scrambled it to v',
+                ),
                 const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and '
-                    'typesetting industry. Lorem Ipsum has been the boo '
-                    'standard dummy text ever since the 1500s, when an aha '
-                    'printer took a galley of type and scrambled it to v'),
+                  'Lorem Ipsum is simply dummy text of the printing and '
+                  'typesetting industry. Lorem Ipsum has been the boo '
+                  'standard dummy text ever since the 1500s, when an aha '
+                  'printer took a galley of type and scrambled it to v',
+                ),
                 const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and '
-                    'typesetting industry. Lorem Ipsum has been the boo '
-                    'standard dummy text ever since the 1500s, when an aha '
-                    'printer took a galley of type and scrambled it to v'),
+                  'Lorem Ipsum is simply dummy text of the printing and '
+                  'typesetting industry. Lorem Ipsum has been the boo '
+                  'standard dummy text ever since the 1500s, when an aha '
+                  'printer took a galley of type and scrambled it to v',
+                ),
                 const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and '
-                    'typesetting industry. Lorem Ipsum has been the boo '
-                    'standard dummy text ever since the 1500s, when an aha '
-                    'printer took a galley of type and scrambled it to v'),
+                  'Lorem Ipsum is simply dummy text of the printing and '
+                  'typesetting industry. Lorem Ipsum has been the boo '
+                  'standard dummy text ever since the 1500s, when an aha '
+                  'printer took a galley of type and scrambled it to v',
+                ),
                 const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and '
-                    'typesetting industry. Lorem Ipsum has been the boo '
-                    'standard dummy text ever since the 1500s, when an aha '
-                    'printer took a galley of type and scrambled it to v'),
+                  'Lorem Ipsum is simply dummy text of the printing and '
+                  'typesetting industry. Lorem Ipsum has been the boo '
+                  'standard dummy text ever since the 1500s, when an aha '
+                  'printer took a galley of type and scrambled it to v',
+                ),
                 const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and '
-                    'typesetting industry. Lorem Ipsum has been the boo '
-                    'standard dummy text ever since the 1500s, when an aha '
-                    'printer took a galley of type and scrambled it to v'),
+                  'Lorem Ipsum is simply dummy text of the printing and '
+                  'typesetting industry. Lorem Ipsum has been the boo '
+                  'standard dummy text ever since the 1500s, when an aha '
+                  'printer took a galley of type and scrambled it to v',
+                ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       'use winning ad size:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -162,24 +163,24 @@ class _XandrExampleState extends State<XandrExample> {
                   //customKeywords: useDemoAds,
                 ),
                 const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and '
-                    'typesetting industry. Lorem Ipsum has been the boo '
-                    'standard dummy text ever since the 1500s, when an aha '
-                    'printer took a galley of type and scrambled it to g'),
+                  'Lorem Ipsum is simply dummy text of the printing and '
+                  'typesetting industry. Lorem Ipsum has been the boo '
+                  'standard dummy text ever since the 1500s, when an aha '
+                  'printer took a galley of type and scrambled it to g',
+                ),
                 const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and '
-                    'typesetting industry. Lorem Ipsum has been the boo '
-                    'standard dummy text ever since the 1500s, when an aha '
-                    'printer took a galley of type and scrambled it to g'),
+                  'Lorem Ipsum is simply dummy text of the printing and '
+                  'typesetting industry. Lorem Ipsum has been the boo '
+                  'standard dummy text ever since the 1500s, when an aha '
+                  'printer took a galley of type and scrambled it to g',
+                ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       'load when in viewport:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -187,10 +188,7 @@ class _XandrExampleState extends State<XandrExample> {
                   controller: _controller,
                   //placementID: '17058950',
                   inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
-                  adSizes: const [
-                    AdSize(728, 90),
-                    AdSize(1, 1),
-                  ],
+                  adSizes: const [AdSize(728, 90), AdSize(1, 1)],
                   //customKeywords: useDemoAds,
                   resizeAdToFitContainer: true,
                   loadMode: LoadMode.whenInViewport(
@@ -198,15 +196,17 @@ class _XandrExampleState extends State<XandrExample> {
                   ),
                 ),
                 const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and '
-                    'typesetting industry. Lorem Ipsum has been the boo '
-                    'standard dummy text ever since the 1500s, when an aha '
-                    'printer took a galley of type and scrambled it to g'),
+                  'Lorem Ipsum is simply dummy text of the printing and '
+                  'typesetting industry. Lorem Ipsum has been the boo '
+                  'standard dummy text ever since the 1500s, when an aha '
+                  'printer took a galley of type and scrambled it to g',
+                ),
                 const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and '
-                    'typesetting industry. Lorem Ipsum has been the boo '
-                    'standard dummy text ever since the 1500s, when an aha '
-                    'printer took a galley of type and scrambled it to g'),
+                  'Lorem Ipsum is simply dummy text of the printing and '
+                  'typesetting industry. Lorem Ipsum has been the boo '
+                  'standard dummy text ever since the 1500s, when an aha '
+                  'printer took a galley of type and scrambled it to g',
+                ),
                 AdBanner(
                   controller: _controller,
                   inventoryCode: 'bunte_webdesktop_home_homepage_hor_1',
@@ -214,31 +214,28 @@ class _XandrExampleState extends State<XandrExample> {
                   customKeywords: const {
                     'kw': ['demoads'],
                   },
-                  onBannerFinishLoading: ({
-                    required success,
-                    height,
-                    width,
-                    nativeAd,
-                  }) =>
-                      debugPrint('on banner finish loading: success: $success'),
+                  onBannerFinishLoading:
+                      ({required success, height, width, nativeAd}) =>
+                          debugPrint(
+                            'on banner finish loading: success: $success',
+                          ),
                   autoRefreshInterval: Duration.zero,
                   clickThroughAction: ClickThroughAction.returnUrl,
                   onAdClicked: (url) => debugPrint('click url: $url'),
                 ),
                 const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and '
-                    'typesetting industry. Lorem Ipsum has been the boo '
-                    'standard dummy text ever since the 1500s, when an aha '
-                    'printer took a galley of type and scrambled it to g'),
+                  'Lorem Ipsum is simply dummy text of the printing and '
+                  'typesetting industry. Lorem Ipsum has been the boo '
+                  'standard dummy text ever since the 1500s, when an aha '
+                  'printer took a galley of type and scrambled it to g',
+                ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       'native ad below:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -249,23 +246,22 @@ class _XandrExampleState extends State<XandrExample> {
                   customKeywords: const {
                     'kw': ['test-kw', 'demoads_native'],
                   },
-                  onBannerFinishLoading: ({
-                    required success,
-                    height,
-                    width,
-                    nativeAd,
-                  }) =>
-                      debugPrint(
-                    'on native banner finish loading: success: $success',
-                  ),
+                  onBannerFinishLoading:
+                      ({
+                        required success,
+                        height,
+                        width,
+                        nativeAd,
+                      }) => debugPrint(
+                        'on native banner finish loading: success: $success',
+                      ),
                   autoRefreshInterval: Duration.zero,
                   clickThroughAction: ClickThroughAction.returnUrl,
                   onAdClicked: (url) => debugPrint('click url: $url'),
                   allowNativeDemand: true,
                   nativeAdBuilder: (nativeAd) => InkWell(
-                    onTap: () => debugPrint(
-                      'native ad click: ${nativeAd.clickUrl}',
-                    ),
+                    onTap: () =>
+                        debugPrint('native ad click: ${nativeAd.clickUrl}'),
                     child: ColoredBox(
                       color: Colors.amber,
                       child: Column(

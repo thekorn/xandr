@@ -25,9 +25,9 @@ func jsonDump(_ object: [String: Any?]) -> String? {
 }
 
 class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
-  public var banner: ANBannerAdView?
-  public var state: FlutterState?
-  public var viewId: Int64
+  var banner: ANBannerAdView?
+  var state: FlutterState?
+  var viewId: Int64
 
   init(state: FlutterState, frame: CGRect,
        viewIdentifier viewId: Int64,
@@ -136,7 +136,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
     banner?.loadAd()
   }
 
-  public func adDidReceiveAd(_ ad: Any) {
+  func adDidReceiveAd(_ ad: Any) {
     if ad is ANBannerAdView {
       let a = ad as? ANBannerAdView
       if let info = a?.adResponseInfo {
@@ -163,7 +163,7 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
     }
   }
 
-  public func ad(_ loadInstance: Any, didReceiveNativeAd responseInstance: Any) {
+  func ad(_ loadInstance: Any, didReceiveNativeAd responseInstance: Any) {
     if let nativeAdResponse = responseInstance as? ANNativeAdResponse,
        let title = nativeAdResponse.title, let description = nativeAdResponse.body,
        let imageUrl = nativeAdResponse.mainImageURL,
@@ -199,9 +199,9 @@ class XandrBanner: NSObject, FlutterPlatformView, ANBannerAdViewDelegate {
     state?.onAdLoadedError(viewId: viewId, reason: error.localizedDescription)
   }
 
-  public func adWasClicked(_ ad: Any, withURL urlString: String) {
+  func adWasClicked(_ ad: Any, withURL urlString: String) {
     if ad is ANBannerAdView {
-      let _ = ad as? ANBannerAdView
+      _ = ad as? ANBannerAdView
       state?.onAdClickedAPI(
         viewId: viewId,
         url: urlString

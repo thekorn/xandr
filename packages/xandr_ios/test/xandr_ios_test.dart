@@ -15,9 +15,7 @@ void main() {
   });
 
   test('initXandrSdk', () async {
-    when(
-      api.initXandrSdk(memberId: 123456),
-    ).thenAnswer((_) async => true);
+    when(api.initXandrSdk(memberId: 123456)).thenAnswer((_) async => true);
     final success = await api.initXandrSdk(memberId: 123456);
     expect(success, true);
   });

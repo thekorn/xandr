@@ -2,13 +2,7 @@
 
 import 'package:pigeon/pigeon.dart';
 
-enum HostAPIUserIdSource {
-  criteo,
-  theTradeDesk,
-  netId,
-  liveramp,
-  uid2,
-}
+enum HostAPIUserIdSource { criteo, theTradeDesk, netId, liveramp, uid2 }
 
 class HostAPIUserId {
   HostAPIUserId({required this.userId, required this.source});
@@ -67,9 +61,7 @@ abstract class XandrHostApi {
   bool loadAdsForMultiAdRequest(String multiAdRequestID);
 
   @async
-  bool loadAd({
-    required int widgetId,
-  });
+  bool loadAd({required int widgetId});
 
   @async
   String getPublisherUserId();

@@ -16,10 +16,7 @@ abstract class BannerAdErrorEvent extends BannerAdEvent {
   /// Represents an event that occurs when a banner ad encounters an error.
   ///
   /// This event provides information about the error that occurred.
-  BannerAdErrorEvent({
-    required super.viewId,
-    required this.reason,
-  });
+  BannerAdErrorEvent({required super.viewId, required this.reason});
 
   /// The reason describing the error.
   final String reason;
@@ -74,10 +71,7 @@ class BannerAdLoadedEvent extends BannerAdEvent {
 /// This class is an abstract class that extends [BannerAdEvent].
 class BannerAdClickedEvent extends BannerAdEvent {
   /// Event that occurs when an ad is clicked
-  BannerAdClickedEvent({
-    required super.viewId,
-    required this.url,
-  });
+  BannerAdClickedEvent({required super.viewId, required this.url});
 
   /// The URL of the ad
   final String url;
@@ -90,10 +84,7 @@ class BannerAdLoadedErrorEvent extends BannerAdErrorEvent {
   ///
   /// This event is triggered when there is an error while loading a banner ad.
   /// It provides information about the error that occurred.
-  BannerAdLoadedErrorEvent({
-    required super.viewId,
-    required super.reason,
-  });
+  BannerAdLoadedErrorEvent({required super.viewId, required super.reason});
 }
 
 /// Represents an event indicating that a native banner ad has been loaded.

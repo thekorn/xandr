@@ -65,8 +65,10 @@ class _XandrExampleState extends State<XandrExample> {
                 interstitialAd: _interstitialAd,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    debugPrint('Xandr interstitial ad loaded, '
-                        'success=${snapshot.hasData}');
+                    debugPrint(
+                      'Xandr interstitial ad loaded, '
+                      'success=${snapshot.hasData}',
+                    );
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
