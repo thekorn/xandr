@@ -10,8 +10,8 @@ Packages:
 - ktlint
 
 ```bash
-dart pub global activate melos
-dart pub global activate very_good_cli
+flutter pub global activate melos
+flutter pub global activate very_good_cli
 ```
 
 ## important commands
