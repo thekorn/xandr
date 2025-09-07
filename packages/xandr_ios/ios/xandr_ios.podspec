@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'AppNexusSDK', '9.7.0'
+  s.dependency 'AppNexusSDK', '9.8.0'
   s.platform = :ios, '12.0'
   s.static_framework = true
 
