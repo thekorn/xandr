@@ -12,5 +12,5 @@
     "editor.wordBasedSuggestions": "off"
   },
   "editor.bracketPairColorization.enabled": true,
-  "dart.flutterSdkPath": ".fvm/versions/3.35.0"
+  "dart.flutterSdkPath": ".fvm/versions/3.38.0"
 }

@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-MELOS_VERSION="7.1.0"
-FVM_VERSION="3.2.1"
+MELOS_VERSION="7.3.0"
+FVM_VERSION="4.0.0"
 POD_VERSION="1.16.2"
 
 function isInstalled() {
@@ -23,6 +23,8 @@ if [ $(version $(fvm --version)) -lt $(version "$FVM_VERSION") ]; then
     echo "fvm is installed but needs to be updated to version '$FVM_VERSION' or higher."
     exit 1
 fi
+
+fvm use
 
 isInstalled "melos" || {
     echo "melos is not installed, installing..."
@@ -54,11 +56,11 @@ if [[ "$1" == "--all" ]]; then
     fvm use
 else
     fvm use
-    melos clean
+    fvm exec melos clean
 fi
 
 echo "bootstrapping monorepo..."
-melos bootstrap
+fvm exec melos bootstrap
 
 echo "update CocoaPods..."
 pod repo update
