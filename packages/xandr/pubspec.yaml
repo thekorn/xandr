@@ -31,6 +31,6 @@ dev_dependencies:
     sdk: flutter
   mockito: ^5.5.0
   mocktail: ^1.0.4
-  pana: ^0.22.21
+  pana: ^0.23.1
   plugin_platform_interface: ^2.1.8
-  very_good_analysis: ^9.0.0
+  very_good_analysis: ^10.0.0

@@ -30,7 +30,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.5.0
-  pana: ^0.22.21
+  pana: ^0.23.1
   pigeon: ">=25.3.0 <27.0.0"
   plugin_platform_interface: ^2.1.8
-  very_good_analysis: ^9.0.0
+  very_good_analysis: ^10.0.0

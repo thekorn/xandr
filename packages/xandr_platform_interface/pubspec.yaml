@@ -20,5 +20,5 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.5.0
-  pana: ^0.22.21
-  very_good_analysis: ^9.0.0
+  pana: ^0.23.1
+  very_good_analysis: ^10.0.0
