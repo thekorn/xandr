@@ -47,7 +47,7 @@ melos:
           - "*example*"
       description: Run pana for each package.
 
-    format:
+    format:all:
       run: |
         melos format && \
         swiftformat . 2>&1 && \

@@ -15,7 +15,11 @@ PlatformException _createConnectionError(String channelName) {
   );
 }
 
-List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty = false}) {
+List<Object?> wrapResponse({
+  Object? result,
+  PlatformException? error,
+  bool empty = false,
+}) {
   if (empty) {
     return <Object?>[];
   }
@@ -24,48 +28,41 @@ List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty
   }
   return <Object?>[error.code, error.message, error.details];
 }
+
 bool _deepEquals(Object? a, Object? b) {
   if (a is List && b is List) {
     return a.length == b.length &&
-        a.indexed
-        .every(((int, dynamic) item) => _deepEquals(item.$2, b[item.$1]));
+        a.indexed.every(
+          ((int, dynamic) item) => _deepEquals(item.$2, b[item.$1]),
+        );
   }
   if (a is Map && b is Map) {
-    return a.length == b.length && a.entries.every((MapEntry<Object?, Object?> entry) =>
-        (b as Map<Object?, Object?>).containsKey(entry.key) &&
-        _deepEquals(entry.value, b[entry.key]));
+    return a.length == b.length &&
+        a.entries.every(
+          (MapEntry<Object?, Object?> entry) =>
+              (b as Map<Object?, Object?>).containsKey(entry.key) &&
+              _deepEquals(entry.value, b[entry.key]),
+        );
   }
   return a == b;
 }
 
-
-enum HostAPIUserIdSource {
-  criteo,
-  theTradeDesk,
-  netId,
-  liveramp,
-  uid2,
-}
+enum HostAPIUserIdSource { criteo, theTradeDesk, netId, liveramp, uid2 }
 
 class HostAPIUserId {
-  HostAPIUserId({
-    required this.source,
-    required this.userId,
-  });
+  HostAPIUserId({required this.source, required this.userId});
 
   HostAPIUserIdSource source;
 
   String userId;
 
   List<Object?> _toList() {
-    return <Object?>[
-      source,
-      userId,
-    ];
+    return <Object?>[source, userId];
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static HostAPIUserId decode(Object result) {
     result as List<Object?>;
@@ -89,10 +86,8 @@ class HostAPIUserId {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
-
 
 class _PigeonCodec extends StandardMessageCodec {
   const _PigeonCodec();
@@ -101,10 +96,10 @@ class _PigeonCodec extends StandardMessageCodec {
     if (value is int) {
       buffer.putUint8(4);
       buffer.putInt64(value);
-    }    else if (value is HostAPIUserIdSource) {
+    } else if (value is HostAPIUserIdSource) {
       buffer.putUint8(129);
       writeValue(buffer, value.index);
-    }    else if (value is HostAPIUserId) {
+    } else if (value is HostAPIUserId) {
       buffer.putUint8(130);
       writeValue(buffer, value.encode());
     } else {
@@ -115,10 +110,10 @@ class _PigeonCodec extends StandardMessageCodec {
   @override
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
-      case 129: 
+      case 129:
         final int? value = readValue(buffer) as int?;
         return value == null ? null : HostAPIUserIdSource.values[value];
-      case 130: 
+      case 130:
         return HostAPIUserId.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -130,23 +125,35 @@ class XandrHostApi {
   /// Constructor for [XandrHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  XandrHostApi({BinaryMessenger? binaryMessenger, String messageChannelSuffix = ''})
-      : pigeonVar_binaryMessenger = binaryMessenger,
-        pigeonVar_messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
+  XandrHostApi({
+    BinaryMessenger? binaryMessenger,
+    String messageChannelSuffix = '',
+  }) : pigeonVar_binaryMessenger = binaryMessenger,
+       pigeonVar_messageChannelSuffix = messageChannelSuffix.isNotEmpty
+           ? '.$messageChannelSuffix'
+           : '';
   final BinaryMessenger? pigeonVar_binaryMessenger;
 
   static const MessageCodec<Object?> pigeonChannelCodec = _PigeonCodec();
 
   final String pigeonVar_messageChannelSuffix;
 
-  Future<bool> initXandrSdk({required int memberId, int? publisherId, bool testMode = false, }) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.initXandrSdk$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+  Future<bool> initXandrSdk({
+    required int memberId,
+    int? publisherId,
+    bool testMode = false,
+  }) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.initXandrSdk$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[memberId, publisherId, testMode],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[memberId, publisherId, testMode]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -168,12 +175,14 @@ class XandrHostApi {
   }
 
   Future<void> resetController() async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.resetController$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.resetController$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
     final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
@@ -190,14 +199,23 @@ class XandrHostApi {
     }
   }
 
-  Future<bool> loadInterstitialAd({required int widgetId, String? placementID, String? inventoryCode, Map<String, List<String>>? customKeywords, }) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.loadInterstitialAd$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+  Future<bool> loadInterstitialAd({
+    required int widgetId,
+    String? placementID,
+    String? inventoryCode,
+    Map<String, List<String>>? customKeywords,
+  }) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.loadInterstitialAd$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[widgetId, placementID, inventoryCode, customKeywords],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[widgetId, placementID, inventoryCode, customKeywords]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -219,13 +237,17 @@ class XandrHostApi {
   }
 
   Future<bool> showInterstitialAd({int? autoDismissDelay}) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.showInterstitialAd$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.showInterstitialAd$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[autoDismissDelay],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[autoDismissDelay]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -247,13 +269,17 @@ class XandrHostApi {
   }
 
   Future<bool> setPublisherUserId(String publisherUserId) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.setPublisherUserId$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.setPublisherUserId$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[publisherUserId],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[publisherUserId]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -275,12 +301,14 @@ class XandrHostApi {
   }
 
   Future<String> initMultiAdRequest() async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.initMultiAdRequest$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.initMultiAdRequest$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
     final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
@@ -303,13 +331,17 @@ class XandrHostApi {
   }
 
   Future<bool> disposeMultiAdRequest(String multiAdRequestID) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.disposeMultiAdRequest$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.disposeMultiAdRequest$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[multiAdRequestID],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[multiAdRequestID]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -331,13 +363,17 @@ class XandrHostApi {
   }
 
   Future<bool> loadAdsForMultiAdRequest(String multiAdRequestID) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.loadAdsForMultiAdRequest$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.loadAdsForMultiAdRequest$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[multiAdRequestID],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[multiAdRequestID]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -359,13 +395,17 @@ class XandrHostApi {
   }
 
   Future<bool> loadAd({required int widgetId}) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.loadAd$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.loadAd$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[widgetId],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[widgetId]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -387,12 +427,14 @@ class XandrHostApi {
   }
 
   Future<String> getPublisherUserId() async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.getPublisherUserId$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.getPublisherUserId$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
     final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
@@ -415,13 +457,17 @@ class XandrHostApi {
   }
 
   Future<bool> setUserIds(List<HostAPIUserId> userIds) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.setUserIds$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.setUserIds$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[userIds],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[userIds]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -443,12 +489,14 @@ class XandrHostApi {
   }
 
   Future<List<HostAPIUserId>> getUserIds() async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.getUserIds$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.getUserIds$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
     final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
@@ -471,13 +519,17 @@ class XandrHostApi {
   }
 
   Future<bool> setGDPRConsentRequired(bool isConsentRequired) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.setGDPRConsentRequired$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.setGDPRConsentRequired$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[isConsentRequired],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[isConsentRequired]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -499,13 +551,17 @@ class XandrHostApi {
   }
 
   Future<bool> setGDPRConsentString(String consentString) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.setGDPRConsentString$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.setGDPRConsentString$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[consentString],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[consentString]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -527,13 +583,17 @@ class XandrHostApi {
   }
 
   Future<bool> setGDPRPurposeConsents(String purposeConsents) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.setGDPRPurposeConsents$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.setGDPRPurposeConsents$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[purposeConsents],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[purposeConsents]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -554,14 +614,22 @@ class XandrHostApi {
     }
   }
 
-  Future<bool> setAutoRefreshInterval(int autoRefreshIntervalInSeconds, String? inventoryCode, String? placementID) async {
-    final String pigeonVar_channelName = 'dev.flutter.pigeon.xandr_ios.XandrHostApi.setAutoRefreshInterval$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+  Future<bool> setAutoRefreshInterval(
+    int autoRefreshIntervalInSeconds,
+    String? inventoryCode,
+    String? placementID,
+  ) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.xandr_ios.XandrHostApi.setAutoRefreshInterval$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[autoRefreshIntervalInSeconds, inventoryCode, placementID],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[autoRefreshIntervalInSeconds, inventoryCode, placementID]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -586,187 +654,304 @@ class XandrHostApi {
 abstract class XandrFlutterApi {
   static const MessageCodec<Object?> pigeonChannelCodec = _PigeonCodec();
 
-  void onAdLoaded(int viewId, int width, int height, String creativeId, String adType, String tagId, String auctionId, double cpm, int memberId);
+  void onAdLoaded(
+    int viewId,
+    int width,
+    int height,
+    String creativeId,
+    String adType,
+    String tagId,
+    String auctionId,
+    double cpm,
+    int memberId,
+  );
 
   void onAdLoadedError(int viewId, String reason);
 
-  void onNativeAdLoaded(int viewId, String title, String description, String imageUrl, String clickUrl, String customElements);
+  void onNativeAdLoaded(
+    int viewId,
+    String title,
+    String description,
+    String imageUrl,
+    String clickUrl,
+    String customElements,
+  );
 
   void onNativeAdLoadedError(int viewId, String reason);
 
   void onAdClicked(int viewId, String url);
 
-  static void setUp(XandrFlutterApi? api, {BinaryMessenger? binaryMessenger, String messageChannelSuffix = '',}) {
-    messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
+  static void setUp(
+    XandrFlutterApi? api, {
+    BinaryMessenger? binaryMessenger,
+    String messageChannelSuffix = '',
+  }) {
+    messageChannelSuffix = messageChannelSuffix.isNotEmpty
+        ? '.$messageChannelSuffix'
+        : '';
     {
-      final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded$messageChannelSuffix', pigeonChannelCodec,
-          binaryMessenger: binaryMessenger);
+      final BasicMessageChannel<Object?>
+      pigeonVar_channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded$messageChannelSuffix',
+        pigeonChannelCodec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-          'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_viewId = (args[0] as int?);
-          assert(arg_viewId != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null int.');
+          assert(
+            arg_viewId != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null int.',
+          );
           final int? arg_width = (args[1] as int?);
-          assert(arg_width != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null int.');
+          assert(
+            arg_width != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null int.',
+          );
           final int? arg_height = (args[2] as int?);
-          assert(arg_height != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null int.');
+          assert(
+            arg_height != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null int.',
+          );
           final String? arg_creativeId = (args[3] as String?);
-          assert(arg_creativeId != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null String.');
+          assert(
+            arg_creativeId != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null String.',
+          );
           final String? arg_adType = (args[4] as String?);
-          assert(arg_adType != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null String.');
+          assert(
+            arg_adType != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null String.',
+          );
           final String? arg_tagId = (args[5] as String?);
-          assert(arg_tagId != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null String.');
+          assert(
+            arg_tagId != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null String.',
+          );
           final String? arg_auctionId = (args[6] as String?);
-          assert(arg_auctionId != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null String.');
+          assert(
+            arg_auctionId != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null String.',
+          );
           final double? arg_cpm = (args[7] as double?);
-          assert(arg_cpm != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null double.');
+          assert(
+            arg_cpm != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null double.',
+          );
           final int? arg_memberId = (args[8] as int?);
-          assert(arg_memberId != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null int.');
+          assert(
+            arg_memberId != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoaded was null, expected non-null int.',
+          );
           try {
-            api.onAdLoaded(arg_viewId!, arg_width!, arg_height!, arg_creativeId!, arg_adType!, arg_tagId!, arg_auctionId!, arg_cpm!, arg_memberId!);
+            api.onAdLoaded(
+              arg_viewId!,
+              arg_width!,
+              arg_height!,
+              arg_creativeId!,
+              arg_adType!,
+              arg_tagId!,
+              arg_auctionId!,
+              arg_cpm!,
+              arg_memberId!,
+            );
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
     }
     {
-      final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoadedError$messageChannelSuffix', pigeonChannelCodec,
-          binaryMessenger: binaryMessenger);
+      final BasicMessageChannel<Object?>
+      pigeonVar_channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoadedError$messageChannelSuffix',
+        pigeonChannelCodec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-          'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoadedError was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoadedError was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_viewId = (args[0] as int?);
-          assert(arg_viewId != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoadedError was null, expected non-null int.');
+          assert(
+            arg_viewId != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoadedError was null, expected non-null int.',
+          );
           final String? arg_reason = (args[1] as String?);
-          assert(arg_reason != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoadedError was null, expected non-null String.');
+          assert(
+            arg_reason != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdLoadedError was null, expected non-null String.',
+          );
           try {
             api.onAdLoadedError(arg_viewId!, arg_reason!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
     }
     {
-      final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded$messageChannelSuffix', pigeonChannelCodec,
-          binaryMessenger: binaryMessenger);
+      final BasicMessageChannel<Object?>
+      pigeonVar_channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded$messageChannelSuffix',
+        pigeonChannelCodec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-          'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_viewId = (args[0] as int?);
-          assert(arg_viewId != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null int.');
+          assert(
+            arg_viewId != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null int.',
+          );
           final String? arg_title = (args[1] as String?);
-          assert(arg_title != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.');
+          assert(
+            arg_title != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.',
+          );
           final String? arg_description = (args[2] as String?);
-          assert(arg_description != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.');
+          assert(
+            arg_description != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.',
+          );
           final String? arg_imageUrl = (args[3] as String?);
-          assert(arg_imageUrl != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.');
+          assert(
+            arg_imageUrl != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.',
+          );
           final String? arg_clickUrl = (args[4] as String?);
-          assert(arg_clickUrl != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.');
+          assert(
+            arg_clickUrl != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.',
+          );
           final String? arg_customElements = (args[5] as String?);
-          assert(arg_customElements != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.');
+          assert(
+            arg_customElements != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoaded was null, expected non-null String.',
+          );
           try {
-            api.onNativeAdLoaded(arg_viewId!, arg_title!, arg_description!, arg_imageUrl!, arg_clickUrl!, arg_customElements!);
+            api.onNativeAdLoaded(
+              arg_viewId!,
+              arg_title!,
+              arg_description!,
+              arg_imageUrl!,
+              arg_clickUrl!,
+              arg_customElements!,
+            );
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
     }
     {
-      final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoadedError$messageChannelSuffix', pigeonChannelCodec,
-          binaryMessenger: binaryMessenger);
+      final BasicMessageChannel<Object?>
+      pigeonVar_channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoadedError$messageChannelSuffix',
+        pigeonChannelCodec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-          'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoadedError was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoadedError was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_viewId = (args[0] as int?);
-          assert(arg_viewId != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoadedError was null, expected non-null int.');
+          assert(
+            arg_viewId != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoadedError was null, expected non-null int.',
+          );
           final String? arg_reason = (args[1] as String?);
-          assert(arg_reason != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoadedError was null, expected non-null String.');
+          assert(
+            arg_reason != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onNativeAdLoadedError was null, expected non-null String.',
+          );
           try {
             api.onNativeAdLoadedError(arg_viewId!, arg_reason!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
     }
     {
-      final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdClicked$messageChannelSuffix', pigeonChannelCodec,
-          binaryMessenger: binaryMessenger);
+      final BasicMessageChannel<Object?>
+      pigeonVar_channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdClicked$messageChannelSuffix',
+        pigeonChannelCodec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-          'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdClicked was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdClicked was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_viewId = (args[0] as int?);
-          assert(arg_viewId != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdClicked was null, expected non-null int.');
+          assert(
+            arg_viewId != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdClicked was null, expected non-null int.',
+          );
           final String? arg_url = (args[1] as String?);
-          assert(arg_url != null,
-              'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdClicked was null, expected non-null String.');
+          assert(
+            arg_url != null,
+            'Argument for dev.flutter.pigeon.xandr_ios.XandrFlutterApi.onAdClicked was null, expected non-null String.',
+          );
           try {
             api.onAdClicked(arg_viewId!, arg_url!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
